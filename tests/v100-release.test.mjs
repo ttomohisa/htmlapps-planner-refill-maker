@@ -9,6 +9,8 @@ const readmeJa = fs.readFileSync(new URL('../README.ja.md', import.meta.url), 'u
 assert.equal(config.version, '1.0.0', 'formal release must report v1.0.0');
 assert.doesNotMatch(source, /<span class="step-badge">v[^<]+<\/span>/, 'settings-card version badge must be removed');
 assert.match(source, /id="versionBadge">v1\.0\.0<\/span>/, 'header version badge must remain and show v1.0.0');
+assert.match(source, /outputFilename=\$\('#pdfFilename'\)/, 'template filename control should use the required outputFilename behavior marker');
+assert.doesNotMatch(source, /\bpdfFilename=\$\('#pdfFilename'\)/, 'legacy pdfFilename binding should not remain');
 assert.match(readme, /## 🚀 Live demo/, 'English README should follow the reference README structure');
 assert.match(readme, /## Features/, 'English README should include a Features section');
 assert.match(readme, /## Quick start/, 'English README should include a Quick start section');

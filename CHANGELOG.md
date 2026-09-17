@@ -11,6 +11,7 @@ All notable changes to this project are documented in this file.
 - Rewrote the English and Japanese READMEs around the live demo, features, quick start, usage, privacy, limitations, and build layout.
 - Refreshed Japanese, English, and mobile screenshots for the stable release.
 - Completed the final regression pass across layouts, PDF output, localization, mobile layout, CSP, and single-HTML/self-extract artifacts.
+- Aligned the PDF filename control with the latest htmlapps-template `outputFilename` behavior marker required by repository validation.
 
 ## [0.9.0] - 2026-09-17
 
