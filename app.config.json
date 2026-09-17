@@ -1,0 +1,26 @@
+{
+  "$schema": "./schemas/app-config.schema.json",
+  "name": "Planner Refill Maker",
+  "nameJa": "システム手帳リフィルメーカー",
+  "slug": "planner-refill-maker",
+  "version": "1.0.0",
+  "description": "Create printable planner refills with monthly, yearly, weekly, daily, and note layouts, five-step text sizing, Japanese holidays, ring-side margins, and exact-size or imposed PDF export entirely in the browser.",
+  "descriptionJa": "月間・年間・週間・日間・メモのシステム手帳リフィルを、5段階の文字サイズ、日本の祝日、リング側余白、実寸・面付けPDF出力に対応してブラウザー内だけで作成できます。",
+  "defaultLanguage": "auto",
+  "repository": {
+    "owner": "ttomohisa",
+    "name": "htmlapps-planner-refill-maker"
+  },
+  "build": {
+    "output": "dist/index.html",
+    "blockRuntimeNetwork": true,
+    "selfExtract": {
+      "enabled": true,
+      "output": "dist/index.self-extract.html"
+    },
+    "sizeBudget": {
+      "readableWarningMb": 25,
+      "selfExtractWarningMb": 12
+    }
+  }
+}
