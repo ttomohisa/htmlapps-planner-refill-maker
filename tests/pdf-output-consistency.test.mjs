@@ -156,3 +156,14 @@ test('changing settings A to B to A cannot publish a mixed-page PDF', async () =
   assert.equal(h.app.generatedPdf.blob, null, 'matching final values cannot restore an obsolete generation');
   await h.run(() => h.app.createPdf()); assert.equal(h.app.generatedPdf.pageCount, 3);
 });
+
+
+test('restored manual ring margin matches the visible field, preview and PDF settings', async () => {
+  const h = loadPlanner(undefined, { savedSettings: { ringMarginMode: 'manual', ringMarginManual: 20, refillType: 'notes', notesCount: 3 } });
+  assert.equal(h.get('ringMarginValue').value, '20');
+  assert.equal(h.app.state.ringMarginManual, 20);
+  assert.match(h.get('ringMarginSummaryText').textContent, /20 mm/);
+  await h.run(() => h.app.createPdf()); assert.ok(h.app.generatedPdf.blob);
+  await h.input('ringMarginValue', ''); assert.equal(h.get('generatePdfButton').disabled, true);
+  await h.input('ringMarginValue', '20'); assert.equal(h.get('generatePdfButton').disabled, false);
+});

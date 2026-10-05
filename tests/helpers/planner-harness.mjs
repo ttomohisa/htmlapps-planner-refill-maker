@@ -4,7 +4,7 @@ import vm from 'node:vm';
 // A small DOM/Canvas adapter: the production script, event handlers, validators,
 // page calculations, and PDF writer all run unchanged. Canvas calls are recorded
 // because Node has no browser renderer; browser QA covers the actual raster output.
-export function loadPlanner(file = process.env.PLANNER_HTML || 'src/index.template.html') {
+export function loadPlanner(file = process.env.PLANNER_HTML || 'src/index.template.html', { savedSettings } = {}) {
   const html = fs.readFileSync(file, 'utf8');
   const elements = [], downloads = [], revoked = [], errors = [], frames = [];
   const raster = { paused: false, pending: [] };
@@ -76,7 +76,7 @@ export function loadPlanner(file = process.env.PLANNER_HTML || 'src/index.templa
   const urls = new Map();
   const context = vm.createContext({
     document, navigator: { language: 'en' }, HTMLInputElement: Element,
-    localStorage: { getItem: () => null, setItem() {}, removeItem() {} },
+    localStorage: { getItem: key => savedSettings && key.endsWith(':settings:v1') ? JSON.stringify(savedSettings) : null, setItem() {}, removeItem() {} },
     Blob, TextEncoder, TextDecoder, Uint8Array, Response, DecompressionStream, atob,
     console: { error: error => errors.push(error) },
     URL: { createObjectURL: blob => { const url = `blob:test-${urls.size}`; urls.set(url, blob); return url; }, revokeObjectURL: url => revoked.push(url) },
