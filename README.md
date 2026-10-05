@@ -18,6 +18,8 @@ GitHub Pages delivers the initial HTML. After it loads, calendar generation, pre
 
 ## Features
 
+- Empty or invalid active inputs keep the last valid preview visible, but block PDF creation and saving until corrected. Note-paper previews use the same physical spacing as exported PDFs.
+
 - **Planner sizes that match real paper** — A5, Bible, Mini 6, Davinci Pocket, Micro5, HB×WA5, portrait / landscape, and custom dimensions.
 - **Monthly, yearly, weekly, daily, and notes** — Monthly one-page / spread, yearly one-page / spread, weekly block / weekly + notes / vertical, daily, ruled, grid, and dot-grid refills.
 - **Monthly spread built for facing pages** — Equal-size day cells across both pages, with month/year and previous/next mini calendars on the left page.
@@ -86,7 +88,7 @@ The repository includes a GitHub Pages workflow.
    └─ index.self-extract.html
 ```
 
-Build on Windows:
+Build on Windows with PowerShell and Node.js 22 or newer (for the regression suite):
 
 ```powershell
 .\build-standalone.bat

@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [Unreleased]
+
+### Fixed
+
+- Incomplete or invalid active settings now invalidate earlier PDFs and block creation/saving while keeping the last valid preview. Hidden date/custom/hour/count fields no longer affect unrelated output modes.
+- Ruled, grid, and dot note previews now share the PDF Canvas renderer, preserving the configured physical spacing across styles, orientation, and mirrored margins.
+- Print-size tests reject invalid dimensions, stale asynchronous results, and repeated requests while busy. Both PDF paths reject intervening edits even when settings are restored before completion. Added runtime/event regression coverage for editing recovery, calendar boundaries, duplex, and unscaled imposition.
+
 ## [1.0.0] - 2026-09-17
 
 ### Changed
