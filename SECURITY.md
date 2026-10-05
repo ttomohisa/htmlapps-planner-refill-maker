@@ -42,6 +42,14 @@ Applications created from this template may parse untrusted local files. Impleme
 - Make destructive transformations reversible where practical.
 - Never upload a selected file unless the product explicitly requires it and the user is clearly informed.
 
+### Planner settings boundary
+
+Planner Refill Maker accepts only local, user-selected settings JSON up to 64 KiB. Both the selected file size and decoded UTF-8 size are checked. The fixed app discriminator and format version must match. Required configuration fields are copied through an allowlist and validated for type, bounds, enums, date/hour relationships, colors, and layout/type pairing. Unknown keys, including prototype-shaped keys, never become application state. Imported strings are never rendered as HTML.
+
+The same decoder validates legacy browser storage, allowing missing known settings to use defaults. Derived base dimensions are ignored and recomputed from the built-in named preset or validated Custom dimensions. Invalid records are preserved without an initial autosave overwrite; recovery requires a confirmed import/reset. Storage failures remain visible. Import confirmation does not include or execute arbitrary file metadata, and stale asynchronous work is discarded.
+
+Settings downloads contain configuration only, without PDF bytes, Blob URLs, runtime state, or language preference. Files are not uploaded or fetched. The existing `connect-src 'none'` policy and no-runtime-dependency boundary are unchanged.
+
 ## Dependency review
 
 Before adding or upgrading a package:

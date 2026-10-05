@@ -534,6 +534,126 @@
       .preview-status { display:none; }
     }
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important;transition:none!important;animation:none!important; } }
+
+  .app-confirm-dialog {
+    width: min(420px, calc(100% - 24px));
+    max-width: 100%;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid var(--line, #dadbd6);
+    border-radius: 17px;
+    background: var(--surface, #fff);
+    color: var(--text, #20211f);
+    box-shadow: var(--shadow-md, 0 12px 34px rgba(25, 28, 24, .10));
+  }
+  .app-confirm-dialog::backdrop {
+    background: rgba(15, 17, 14, .48);
+    backdrop-filter: blur(3px);
+  }
+  .app-confirm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 15px 18px 13px;
+    border-bottom: 1px solid var(--line, #dadbd6);
+  }
+  .app-confirm-title { margin: 0; font-size: 17px; letter-spacing: -.01em; }
+  .app-confirm-close {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text, #20211f);
+    cursor: pointer;
+  }
+  .app-confirm-close:hover { background: var(--surface-hover, #e9e9e5); }
+  .app-confirm-close svg { width: 19px; height: 19px; }
+  .app-confirm-body { padding: 18px; }
+  .app-confirm-message {
+    margin: 0;
+    color: var(--muted, #666963);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+  }
+  .app-confirm-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .app-confirm-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 12px;
+    border: 1px solid var(--line, #dadbd6);
+    border-radius: 11px;
+    background: var(--surface, #fff);
+    color: var(--text, #20211f);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 760;
+    cursor: pointer;
+  }
+  .app-confirm-button:hover {
+    border-color: var(--line-strong, #bfc1ba);
+    background: var(--surface-hover, #e9e9e5);
+  }
+  .app-confirm-button.primary {
+    border-color: var(--accent, #16624f);
+    background: var(--accent, #16624f);
+    color: #fff;
+  }
+  .app-confirm-button.primary:hover {
+    border-color: var(--accent-hover, #0e503f);
+    background: var(--accent-hover, #0e503f);
+  }
+  .app-confirm-button.danger {
+    border-color: var(--danger, #b3261e);
+    background: var(--danger, #b3261e);
+    color: #fff;
+  }
+  .app-confirm-button:focus-visible,
+  .app-confirm-close:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--focus, #4d8bc7) 55%, transparent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 520px) {
+    .app-confirm-dialog {
+      width: 100%;
+      max-width: none;
+      margin: auto 0 0;
+      border-width: 1px 0 0;
+      border-radius: 22px 22px 0 0;
+    }
+    .app-confirm-dialog::backdrop {
+      background: rgba(0, 0, 0, .42);
+      backdrop-filter: blur(2px);
+    }
+    .app-confirm-header { padding: 14px 18px 12px; }
+    .app-confirm-body { padding: 12px 18px calc(env(safe-area-inset-bottom) + 18px); }
+    .app-confirm-message { font-size: 14px; line-height: 1.75; }
+    .app-confirm-actions { grid-template-columns: 1fr; gap: 10px; margin-top: 16px; }
+    .app-confirm-button { min-height: 48px; font-size: 14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .app-confirm-dialog, .app-confirm-button, .app-confirm-close { transition: none !important; }
+  }
+
+    .app-confirm-dialog { max-height:calc(100dvh - 24px); }
+    .app-confirm-dialog[open] { display:flex; flex-direction:column; }
+    .app-confirm-header { flex:none; }
+    .app-confirm-body { overflow:auto; min-height:0; }
+    .app-confirm-message { white-space:pre-line; }
   </style>
 </head>
 <body>
@@ -744,7 +864,11 @@
               <div class="switch-row"><div class="switch-copy"><strong data-i18n="weekNumberTitle">週番号</strong><span data-i18n="weekNumberHelp">週間リフィルの見出しに表示</span></div><label class="switch"><input id="showWeekNumbers" type="checkbox"><span class="switch-track" aria-hidden="true"></span><span class="sr-only" data-i18n="weekNumberTitle">週番号</span></label></div>
             </div>
             <div class="advanced-block advanced-actions">
-              <div class="local-save-note" data-i18n="settingsSavedLocally">設定はこのブラウザー内に自動保存され、次回起動時に復元されます。</div>
+              <div class="local-save-note" id="settingsStorageStatus" role="status" data-i18n="settingsSavedLocally">設定はこのブラウザー内に自動保存され、次回起動時に復元されます。</div>
+              <button class="secondary-action" id="saveSettingsButton" type="button"><span data-i18n="saveSettingsFile">設定を保存（.settings.json）</span></button>
+              <button class="secondary-action" id="loadSettingsButton" type="button"><span data-i18n="loadSettingsFile">設定を読み込む（JSON）</span></button>
+              <input id="settingsFileInput" type="file" accept=".json,application/json" hidden>
+              <div class="local-save-note" id="settingsFileStatus" role="status" aria-live="polite"></div>
               <button class="secondary-action" id="resetSettingsButton" type="button"><span data-i18n="resetSettings">設定を初期状態に戻す</span></button>
             </div>
           </div>
@@ -830,6 +954,24 @@
 
   <div class="app-toast" id="appToast" role="status" aria-live="polite" aria-atomic="true"><span class="app-toast-message" id="appToastMessage"></span><button class="app-toast-action" id="appToastAction" type="button" hidden></button></div>
 
+<dialog class="app-confirm-dialog" id="appConfirmDialog" aria-labelledby="appConfirmTitle" aria-describedby="appConfirmMessage">
+  <div class="app-confirm-header">
+    <h2 class="app-confirm-title" id="appConfirmTitle">Confirm</h2>
+    <button class="app-confirm-close" id="appConfirmClose" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18"/>
+      </svg>
+    </button>
+  </div>
+  <div class="app-confirm-body">
+    <p class="app-confirm-message" id="appConfirmMessage"></p>
+    <div class="app-confirm-actions">
+      <button class="app-confirm-button" id="appConfirmCancel" type="button">Cancel</button>
+      <button class="app-confirm-button primary" id="appConfirmOk" type="button">OK</button>
+    </div>
+  </div>
+</dialog>
+
   <dialog id="helpDialog" aria-labelledby="helpTitle">
     <div class="dialog-shell"><div class="dialog-header"><h2 id="helpTitle" data-i18n="helpTitle">使い方と注意事項</h2><button class="dialog-close" id="closeHelpButton" type="button" data-i18n-title="close" data-i18n-aria-label="close" title="閉じる" aria-label="閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="m7 7 10 10M17 7 7 17"/></svg></button></div>
       <div class="dialog-body">
@@ -839,6 +981,7 @@
         <h3 data-i18n="helpLayoutsTitle">この版のレイアウト</h3><p data-i18n="helpLayoutsBody">月間は1ページ／見開き、年間は1ページ／見開き、週間はブロック／週間+メモ／バーチカルに対応しています。</p>
         <h3 data-i18n="helpWeeklyTitle">週間の期間</h3><p data-i18n="helpWeeklyBody">指定した開始月の1日を含む週から、終了月の末日を含む週までを生成します。月をまたぐ週も1週間として表示します。</p>
         <h3 data-i18n="helpPdfTitle">PDF保存</h3><p data-i18n="helpInvalidDraft">入力欄が空欄・無効の間は最後の有効なプレビューを表示し、PDFの作成・保存を停止します。入力を直してからPDFを作り直してください。</p><p data-i18n="helpPatternSpacing">メモの横罫・方眼・ドットは、プレビューとPDFで同じ実寸間隔を使用します。</p><p data-i18n="helpPdfBody">「PDFを作成」で全ページをブラウザー内で生成します。完成後に「PDFを保存」を押してください。印刷時は100%（実際のサイズ）を選びます。</p>
+        <h3 data-i18n="helpSettingsTitle">設定ファイル</h3><p data-i18n="helpSettingsBody">見た目の設定欄からJSONを保存・読み込みできます。</p>
         <h3 data-i18n="helpPrivacyTitle">プライバシー</h3><p data-i18n="helpPrivacyBody">設定とカレンダー生成はブラウザー内だけで処理されます。このアプリから外部サーバーへデータを送信しません。</p>
         <h3 data-i18n="helpNotesTitle">現在の版について</h3><ul><li data-i18n="helpNotePreview">v1.0.0はリリース候補です。月間見開きの年位置と祝日名の読みやすさを最終調整し、機能追加を止めて全体回帰を行っています。</li><li data-i18n="helpNotePdf">実寸PDFに加え、A4 / US Letterへ複数のリフィルを自動配置できます。収まらない場合は縮小せず警告します。パンチ位置は位置合わせの目安で、穴位置を保証するものではありません。</li><li data-i18n="helpNoteRange">日付範囲は1900年1月〜2100年12月、最大60か月です。</li></ul>
         <p class="dialog-note" data-i18n="helpOffline">単一HTML版はローカルで直接開けます。実行時の外部ネットワーク通信はありません。</p>
@@ -873,8 +1016,65 @@
       let language=readStorage(storageKeys.language)||detectLanguage();
       const MONTHLY_SPREAD_RAIL=Object.freeze({monthTop:.038,yearTop:.115,minisTop:.38,miniHeight:.27,miniGap:.03,inset:.05,pdfRailOffsetX:-.085,yearOffsetX:-.05,pdfMonthScale:1.42,pdfYearScale:1.78});
       const DEFAULT_STATE=Object.freeze({sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
-      function loadSavedSettings(){try{const raw=readStorage(storageKeys.settings);if(!raw)return{};const value=JSON.parse(raw);return value&&typeof value==='object'?value:{};}catch{return{};}}
-      const state={...DEFAULT_STATE,...loadSavedSettings(),layoutByType:{...DEFAULT_STATE.layoutByType,...(loadSavedSettings().layoutByType||{})},viewIndex:0};
+      // File and local-storage boundaries share an allowlisted, canonical decoder.
+      // Derived geometry is never trusted, including in legacy local records.
+      const SETTINGS_MAX_BYTES=64*1024;
+      const SETTINGS_ENUMS={
+        sizeKey:[...Object.keys(PRESETS),'custom'],orientation:['portrait','landscape'],
+        refillType:['monthly','yearly','weekly','daily','notes'],weekStart:['monday','sunday'],
+        ringMarginMode:['auto','manual'],firstPageSide:['left','right'],printMode:['exact','a4','letter'],
+        duplexMode:['off','long','short'],stylePreset:['minimal','classic','compact'],pageColor:['mono','accent'],
+        fontSize:['small','standard','large','xlarge','xxlarge'],lineWeight:['light','standard']
+      };
+      const SETTINGS_NUMBERS={customWidth:[40,300],customHeight:[60,400],startHour:[0,23,true],endHour:[1,24,true],notesCount:[1,100,true],noteSpacing:[4,5,true],ringMarginManual:[4,30]};
+      const SETTINGS_BOOLEANS=['showAdjacent','showHolidays','showHolidayNames','showPunchGuides','showCropGuides','showPageNumbers','showWeekNumbers'];
+      const SETTINGS_COLORS=['saturdayColor','sundayColor','holidayColor'];
+      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot']};
+      const SETTINGS_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
+      let settingsStorageIssue='',settingsStorageBlocked=false;
+      function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
+      function decodeSettings(value,{legacy=false}={}){
+        if(!settingsRecord(value))throw new Error('Invalid settings object');
+        const decoded={};
+        for(const key of SETTINGS_KEYS){
+          if(!legacy&&!Object.hasOwn(value,key))throw new Error('Missing setting');
+          decoded[key]=Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key];
+        }
+        for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
+        for(const [key,[min,max,integer]] of Object.entries(SETTINGS_NUMBERS)){
+          const number=decoded[key];
+          if(typeof number!=='number'||!Number.isFinite(number)||number<min||number>max||(integer&&!Number.isInteger(number)))throw new Error('Invalid setting number');
+        }
+        for(const key of SETTINGS_BOOLEANS)if(typeof decoded[key]!=='boolean')throw new Error('Invalid setting flag');
+        for(const key of SETTINGS_COLORS)if(typeof decoded[key]!=='string'||!/^#[0-9a-f]{6}$/i.test(decoded[key]))throw new Error('Invalid setting color');
+        const start=monthSerial(decoded.startMonth),end=monthSerial(decoded.endMonth);
+        if(start===null||end===null||end<start||end-start+1>60||decoded.endHour<=decoded.startHour)throw new Error('Invalid setting range');
+        if(!settingsRecord(decoded.layoutByType))throw new Error('Invalid layouts');
+        const layouts={};
+        for(const [type,choices] of Object.entries(SETTINGS_LAYOUTS)){
+          const layout=Object.hasOwn(decoded.layoutByType,type)?decoded.layoutByType[type]:(legacy?DEFAULT_STATE.layoutByType[type]:null);
+          if(!choices.includes(layout))throw new Error('Invalid layout');
+          layouts[type]=layout;
+        }
+        decoded.layoutByType=layouts;
+        const dimensions=decoded.sizeKey==='custom'?{width:decoded.customWidth,height:decoded.customHeight}:PRESETS[decoded.sizeKey];
+        return {...decoded,baseWidth:dimensions.width,baseHeight:dimensions.height,viewIndex:0};
+      }
+      function settingsSnapshot(value=state){
+        const data={};
+        for(const key of SETTINGS_KEYS)data[key]=key==='layoutByType'?{...value.layoutByType}:value[key];
+        return data;
+      }
+      function loadSavedSettings(){
+        let raw;
+        try{raw=localStorage.getItem(storageKeys.settings);}catch{settingsStorageIssue='settingsStorageUnavailable';settingsStorageBlocked=true;return decodeSettings({}, {legacy:true});}
+        if(raw===null)return decodeSettings({}, {legacy:true});
+        try{
+          if(new TextEncoder().encode(raw).length>SETTINGS_MAX_BYTES)throw new Error('Settings too large');
+          return decodeSettings(JSON.parse(raw),{legacy:true});
+        }catch{settingsStorageIssue='settingsStorageInvalid';settingsStorageBlocked=true;return decodeSettings({}, {legacy:true});}
+      }
+      const state=loadSavedSettings();
       const FONT_SIZE_STEPS=['small','standard','large','xlarge','xxlarge'];
       function normalizeFontSize(value){return FONT_SIZE_STEPS.includes(value)?value:'standard';}
       function fontSizeStep(value){return Math.max(1,FONT_SIZE_STEPS.indexOf(normalizeFontSize(value))+1);}
@@ -891,9 +1091,106 @@
         }
       };
 
+      Object.assign(translations.ja,{
+        saveSettingsFile:'設定を保存（.settings.json）',loadSettingsFile:'設定を読み込む（JSON）',
+        settingsFileConfirm:'この設定に置き換えますか？',settingsFileReplace:'設定を置き換える',settingsCancel:'キャンセル',
+        settingsFileSummary:'サイズ: {size} · {width} × {height} mm · {orientation}\nレイアウト: {layout}\n{period}\n現在の設定を置き換え、作成済みPDFを無効にします。PDFは自動作成されません。',
+        settingsFilePeriod:'期間: {start} 〜 {end}',settingsFileCount:'枚数: {count}',
+        settingsFileInvalid:'設定ファイルを読み込めません。対応するJSON形式・バージョン・設定値を確認してください。',
+        settingsFileTooLarge:'設定ファイルは64 KiB以下にしてください。',settingsFileReading:'設定ファイルを読み込んでいます…',
+        settingsFileLoaded:'設定を読み込みました。PDFを作り直してください。',settingsFileSaved:'設定JSONのダウンロードを開始しました。',
+        settingsFileDraft:'空欄や無効な入力を直してから設定を保存してください。',settingsFileCancelled:'設定の読み込みをキャンセルしました。',
+        settingsFileStale:'設定が変更されたため、読み込みを取り消しました。もう一度ファイルを選んでください。',
+        settingsStorageInvalid:'保存済み設定を読み込めなかったため、初期設定を表示しています。元のデータは保持されています。自動保存を再開するには、設定ファイルを読み込むか設定をリセットしてください。',
+        settingsStorageUnavailable:'このブラウザーに設定を保存・復元できません。変更は次回に残らない可能性があります。設定JSONを保存してください。',
+        helpSettingsTitle:'設定ファイル',helpSettingsBody:'「見た目」内の保存で、PDFファイル名の末尾を.settings.jsonに変えた設定JSONをダウンロードします。空欄・無効な入力を直してから保存してください。64 KiB以下の対応JSONを読み込み、サイズ・レイアウト・期間／枚数を確認して置き換えます。キャンセル時は変更されません。置き換え後はPDFを作り直してください。設定ファイルにPDF・言語設定は含まれません。処理はブラウザー内だけで行います。保存済み設定が読めない場合は保持し、読み込みかリセットまで自動保存を停止します。'
+      });
+      Object.assign(translations.en,{
+        saveSettingsFile:'Save settings (.settings.json)',loadSettingsFile:'Load settings (JSON)',
+        settingsFileConfirm:'Replace current settings?',settingsFileReplace:'Replace settings',settingsCancel:'Cancel',
+        settingsFileSummary:'Size: {size} · {width} × {height} mm · {orientation}\nLayout: {layout}\n{period}\nThis replaces the current settings and discards the generated PDF. A new PDF is not created automatically.',
+        settingsFilePeriod:'Period: {start} to {end}',settingsFileCount:'Pages: {count}',
+        settingsFileInvalid:'Could not load settings. Check the JSON format, supported version, and setting values.',
+        settingsFileTooLarge:'Choose a settings file no larger than 64 KiB.',settingsFileReading:'Reading settings file…',
+        settingsFileLoaded:'Settings loaded. Create the PDF again.',settingsFileSaved:'Settings JSON download started.',
+        settingsFileDraft:'Correct empty or invalid inputs before saving settings.',settingsFileCancelled:'Settings import cancelled.',
+        settingsFileStale:'Settings changed, so the import was cancelled. Choose the file again.',
+        settingsStorageInvalid:'Saved settings could not be read. Defaults are shown and the original data is preserved. Load a settings file or reset settings to resume automatic saving.',
+        settingsStorageUnavailable:'Browser storage is unavailable. These settings may not survive reload. Save a settings JSON file to keep them.',
+        helpSettingsTitle:'Settings files',helpSettingsBody:'Under Appearance, Save downloads a settings JSON using the editable PDF filename stem and .settings.json. Correct empty or invalid active inputs first. Load a supported JSON file up to 64 KiB, review its size, layout, and period/page count, then confirm replacement. Cancel keeps the current setup. Create the PDF again after replacement. Files contain configuration only, without PDF data or language preference, and are processed locally. Unreadable saved settings are preserved and automatic saving pauses until a confirmed import or reset.'
+      });
+
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       const previewStage=$('#previewStage'),previewPages=$('#previewPages'),customFields=$('#customFields'),customWidth=$('#customWidth'),customHeight=$('#customHeight'),widthError=$('#widthError'),heightError=$('#heightError'),startMonthInput=$('#startMonth'),endMonthInput=$('#endMonth'),dateRangeError=$('#dateRangeError'),startHourInput=$('#startHour'),endHourInput=$('#endHour'),timeRangeError=$('#timeRangeError'),outputFilename=$('#pdfFilename'),generatePdfButton=$('#generatePdfButton'),pdfProgress=$('#pdfProgress'),pdfProgressText=$('#pdfProgressText'),pdfProgressBar=$('#pdfProgressBar'),pdfResult=$('#pdfResult'),pdfResultMeta=$('#pdfResultMeta'),pdfError=$('#pdfError'),savePdfButton=$('#savePdfButton'),printLayoutCard=$('#printLayoutCard'),paperMini=$('#paperMini'),paperMiniSlots=$('#paperMiniSlots'),paperMiniBack=$('#paperMiniBack'),paperMiniBackSlots=$('#paperMiniBackSlots'),paperMiniBackSide=$('#paperMiniBackSide'),duplexNote=$('#duplexNote'),printLayoutSummary=$('#printLayoutSummary'),printLayoutDetail=$('#printLayoutDetail'),cropGuideRow=$('#cropGuideRow'),printFitError=$('#printFitError'),saveSizeTestButton=$('#saveSizeTestButton'),pdfOutputNote=$('#pdfOutputNote');
       const generatedPdf={blob:null,url:null,signature:'',pageCount:0};let filenameTouched=false,pdfBusy=false,sizeTestBusy=false,outputRevision=0,lastOutputDraft='';
+      let settingsImportToken=0,settingsEditRevision=0,settingsFileMessage='';
+
+
+  (() => {
+    'use strict';
+
+    const dialog = document.querySelector('#appConfirmDialog');
+    const title = document.querySelector('#appConfirmTitle');
+    const message = document.querySelector('#appConfirmMessage');
+    const closeButton = document.querySelector('#appConfirmClose');
+    const cancelButton = document.querySelector('#appConfirmCancel');
+    const okButton = document.querySelector('#appConfirmOk');
+    let resolver = null;
+    let restoreFocus = null;
+
+    function defaults() {
+      const ja = (document.documentElement.lang || navigator.language || '').toLowerCase().startsWith('ja');
+      return ja
+        ? { title: '確認', confirmLabel: '実行する', cancelLabel: 'キャンセル' }
+        : { title: 'Confirm', confirmLabel: 'Continue', cancelLabel: 'Cancel' };
+    }
+
+    function finish(result) {
+      if (!dialog.open) return;
+      const currentResolver = resolver;
+      resolver = null;
+      dialog.close();
+      if (restoreFocus instanceof HTMLElement && restoreFocus.isConnected) restoreFocus.focus({ preventScroll: true });
+      restoreFocus = null;
+      if (currentResolver) currentResolver(result);
+    }
+
+    function ask(options = {}) {
+      if (dialog.open) finish(false);
+      const fallback = defaults();
+      closeButton.setAttribute('aria-label', t('close'));
+      title.textContent = options.title || fallback.title;
+      message.textContent = options.message || '';
+      cancelButton.textContent = options.cancelLabel || fallback.cancelLabel;
+      okButton.textContent = options.confirmLabel || fallback.confirmLabel;
+      okButton.classList.toggle('danger', options.tone === 'danger');
+      okButton.classList.toggle('primary', options.tone !== 'danger');
+      restoreFocus = document.activeElement;
+
+      return new Promise(resolve => {
+        resolver = resolve;
+        dialog.showModal();
+        requestAnimationFrame(() => { if (dialog.open && resolver === resolve) cancelButton.focus({ preventScroll: true }); });
+      });
+    }
+
+    closeButton.addEventListener('click', () => finish(false));
+    cancelButton.addEventListener('click', () => finish(false));
+    okButton.addEventListener('click', () => finish(true));
+    dialog.addEventListener('cancel', event => {
+      event.preventDefault();
+      finish(false);
+    });
+    dialog.addEventListener('click', event => {
+      const rect = dialog.getBoundingClientRect();
+      const outside = event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom;
+      if (outside) finish(false);
+    });
+
+    window.AppConfirm = Object.freeze({ ask, cancel: () => finish(false) });
+  })();
+
+      const AppConfirm=window.AppConfirm;
 
       function readStorage(key){try{return localStorage.getItem(key);}catch{return null;}}
       function writeStorage(key,value){try{localStorage.setItem(key,value);}catch{}}
@@ -909,7 +1206,14 @@
       function dateAccentColor(date,holiday=holidayInfo(date)){if(holiday)return state.holidayColor;const kind=dayKind(date);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function weekdayAccentColor(index){const kind=weekdayKindAtColumn(index);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function holidayRangeFullyCovered(){const start=monthSerial(state.startMonth),end=monthSerial(state.endMonth);if(start==null||end==null)return true;return monthFromSerial(start).year>=2026&&monthFromSerial(end).year<=2027;}
-      function persistSettings(){const keys=['sizeKey','baseWidth','baseHeight','customWidth','customHeight','orientation','refillType','layoutByType','startMonth','endMonth','weekStart','showAdjacent','showHolidays','showHolidayNames','saturdayColor','sundayColor','holidayColor','startHour','endHour','notesCount','noteSpacing','ringMarginMode','ringMarginManual','firstPageSide','showPunchGuides','printMode','showCropGuides','duplexMode','stylePreset','pageColor','fontSize','lineWeight','showPageNumbers','showWeekNumbers'];const data={};keys.forEach(key=>{data[key]=state[key];});writeStorage(storageKeys.settings,JSON.stringify(data));}
+      function persistSettings(){
+        // Unreadable records are preserved until an explicit reset or confirmed replacement.
+        if(!settingsStorageBlocked){
+          try{localStorage.setItem(storageKeys.settings,JSON.stringify(settingsSnapshot()));settingsStorageIssue='';}
+          catch{settingsStorageIssue='settingsStorageUnavailable';}
+        }
+        $('#settingsStorageStatus').textContent=t(settingsStorageIssue||'settingsSavedLocally');
+      }
       function applyPageStyle(){document.documentElement.dataset.refillStyle=state.stylePreset;document.documentElement.dataset.pageColor=state.pageColor;document.documentElement.dataset.fontSize=state.fontSize;document.documentElement.dataset.lineWeight=state.lineWeight;document.documentElement.style.setProperty('--saturday-color',state.saturdayColor);document.documentElement.style.setProperty('--sunday-color',state.sundayColor);document.documentElement.style.setProperty('--holiday-color',state.holidayColor);}
       function pageMarginRatio(){return state.stylePreset==='compact'?.04:state.stylePreset==='minimal'?.055:.052;}
       function pageFontScale(){return({small:.9,standard:1,large:1.12,xlarge:1.24,xxlarge:1.36})[normalizeFontSize(state.fontSize)]??1;}
@@ -1060,16 +1364,76 @@
       function countText(count,unitKey){let unit=t(unitKey);if(language==='en'&&count===1)unit=unit.replace(/s$/,'');return `${count} ${unit}`;}
       function unitCountText(items){if(state.refillType==='monthly')return countText(items.length,'monthUnit');if(state.refillType==='yearly')return countText(items.length,'yearUnit');if(state.refillType==='weekly')return countText(items.length,'weekUnit');if(state.refillType==='daily')return countText(items.length,'dayUnit');return countText(items.length,'pageUnit');}
       function previewNote(){if(state.refillType==='monthly'&&currentLayout()==='monthly-spread')return t('previewNoteMonthly');if(state.refillType==='yearly'&&currentLayout()==='year-spread')return t('previewNoteYearly');if(state.refillType==='weekly'&&currentLayout()==='weekly-notes')return t('previewNoteWeekly');return t('previewNote');}
-      function render(){const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;$('#weeklyHours').hidden=!(currentLayout()==='weekly-vertical'||state.refillType==='daily');$('#noteSpacingGroup').hidden=state.refillType!=='notes'||currentLayout()==='notes-lined';const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays;holidayNameRow.hidden=!state.showHolidays;holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();persistSettings();}
+      function render(){const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;$('#weeklyHours').hidden=!(currentLayout()==='weekly-vertical'||state.refillType==='daily');$('#noteSpacingGroup').hidden=state.refillType!=='notes'||currentLayout()==='notes-lined';const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays;holidayNameRow.hidden=!state.showHolidays;holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();persistSettings();$('#saveSettingsButton').disabled=!draftInputsValid();$('#settingsFileStatus').textContent=settingsFileMessage?t(settingsFileMessage):'';}
       function applyLanguage(){document.documentElement.lang=language;document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});document.querySelectorAll('[data-i18n-title]').forEach(el=>{el.title=t(el.dataset.i18nTitle);});document.querySelectorAll('[data-i18n-aria-label]').forEach(el=>{el.setAttribute('aria-label',t(el.dataset.i18nAriaLabel));});$('#languageButton').textContent=language==='ja'?'EN':'日本語';$('#languageButton').setAttribute('aria-label',language==='ja'?'英語に切り替え':'Switch to Japanese');document.title=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#brandName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#footerName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;render();}
+
+      function showSettingsFileStatus(key){settingsFileMessage=key;$('#settingsFileStatus').textContent=key?t(key):'';}
+      function cancelSettingsImport(){settingsImportToken+=1;AppConfirm.cancel();if(settingsFileMessage==='settingsFileReading')showSettingsFileStatus('settingsFileCancelled');}
+      function replaceSettings(next){
+        // Replacement is a boundary even if its values match A -> B -> A or the same file.
+        outputRevision+=1;settingsEditRevision+=1;clearGeneratedPdf();
+        Object.keys(state).forEach(key=>delete state[key]);Object.assign(state,next);
+        settingsStorageBlocked=false;
+        if(!settingsStorageBlocked)settingsStorageIssue='';
+        syncControlsFromState();
+        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError']){const error=$('#'+id);if(error)error.textContent='';}
+        setRefillType(state.refillType);
+      }
+      function saveSettingsFile(){
+        if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
+        const data={app:'planner-refill-maker',formatVersion:1,settings:settingsSnapshot()};
+        const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
+        const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
+        document.body.append(link);
+        try{link.click();showSettingsFileStatus('settingsFileSaved');}finally{link.remove();URL.revokeObjectURL(url);}
+      }
+      function settingsImportSummary(next){
+        const landscape=next.orientation==='landscape',width=landscape?next.baseHeight:next.baseWidth,height=landscape?next.baseWidth:next.baseHeight;
+        const layoutKeys={'monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'};
+        return formatTemplate(t('settingsFileSummary'),{size:next.sizeKey==='custom'?t('customName'):PRESETS[next.sizeKey][language],width:formatMm(width),height:formatMm(height),orientation:t(landscape?'orientationLandscape':'orientationPortrait'),layout:t(layoutKeys[next.layoutByType[next.refillType]]),period:next.refillType==='notes'?formatTemplate(t('settingsFileCount'),{count:next.notesCount}):formatTemplate(t('settingsFilePeriod'),{start:next.startMonth,end:next.endMonth})});
+      }
+      async function loadSettingsFile(event){
+        const input=event.currentTarget,file=input.files?.[0];input.value='';
+        cancelSettingsImport();
+        if(!file)return;
+        const token=settingsImportToken,revision=settingsEditRevision;
+        const current=()=>token===settingsImportToken&&revision===settingsEditRevision;
+        showSettingsFileStatus('settingsFileReading');
+        try{
+          if(!Number.isFinite(file.size)||file.size>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
+          const text=await file.text();
+          if(!current())return;
+          if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
+          const data=JSON.parse(text);
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||data.formatVersion!==1)throw new Error('Unsupported settings format');
+          const next=decodeSettings(data.settings);
+          const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
+          if(!current())return;
+          if(!accepted){showSettingsFileStatus('settingsFileCancelled');return;}
+          replaceSettings(next);showSettingsFileStatus('settingsFileLoaded');
+        }catch{if(current())showSettingsFileStatus('settingsFileInvalid');}
+      }
 
       function syncControlsFromState(){
         const checks={plannerSize:state.sizeKey,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),weekStart:state.weekStart,ringMarginMode:state.ringMarginMode,firstPageSide:state.firstPageSide,printMode:state.printMode,duplexMode:state.duplexMode,noteSpacing:String(state.noteSpacing),stylePreset:state.stylePreset,pageColor:state.pageColor,lineWeight:state.lineWeight};
-        Object.entries(checks).forEach(([name,value])=>{const input=document.querySelector(`input[name="${name}"][value="${value}"]`);if(input)input.checked=true;});
+        Object.entries(checks).forEach(([name,value])=>{$$(`input[name="${name}"]`).forEach(input=>{input.checked=input.value===value;});});
         $('#ringMarginValue').value=formatMm(state.ringMarginManual);customWidth.value=String(state.customWidth);customHeight.value=String(state.customHeight);startMonthInput.value=state.startMonth;endMonthInput.value=state.endMonth;startHourInput.value=String(state.startHour);endHourInput.value=String(state.endHour);$('#notesCount').value=String(state.notesCount);$('#showAdjacent').checked=state.showAdjacent;$('#showHolidays').checked=state.showHolidays;$('#showHolidayNames').checked=state.showHolidayNames;$('#saturdayColor').value=state.saturdayColor;$('#sundayColor').value=state.sundayColor;$('#holidayColor').value=state.holidayColor;$('#showPunchGuides').checked=state.showPunchGuides;$('#showCropGuides').checked=state.showCropGuides;$('#showPageNumbers').checked=state.showPageNumbers;$('#showWeekNumbers').checked=state.showWeekNumbers;customFields.hidden=state.sizeKey!=='custom';
       }
-      function resetSettings(){if(!confirm(t('resetSettingsConfirm')))return;try{localStorage.removeItem(storageKeys.settings);}catch{}Object.keys(state).forEach(key=>delete state[key]);Object.assign(state,JSON.parse(JSON.stringify(DEFAULT_STATE)),{showHolidays:language==='ja',viewIndex:0});syncControlsFromState();setRefillType(state.refillType);AppToast.show({message:t('settingsReset')});}
+      async function resetSettings(){
+        cancelSettingsImport();const token=settingsImportToken,revision=settingsEditRevision;
+        const accepted=await AppConfirm.ask({title:t('resetSettings'),message:t('resetSettingsConfirm'),confirmLabel:t('resetSettings'),cancelLabel:t('settingsCancel'),tone:'danger'});
+        if(!accepted||token!==settingsImportToken||revision!==settingsEditRevision)return;
+        replaceSettings(decodeSettings({...settingsSnapshot(DEFAULT_STATE),showHolidays:language==='ja'}));
+        showSettingsFileStatus('');AppToast.show({message:t('settingsReset')});
+      }
       syncControlsFromState();
+      $$('input').filter(input=>!['pdfFilename','settingsFileInput'].includes(input.id)).forEach(input=>{
+        for(const type of ['input','change'])input.addEventListener(type,()=>{settingsEditRevision+=1;const pending=settingsFileMessage==='settingsFileReading';cancelSettingsImport();if(pending)showSettingsFileStatus('settingsFileStale');});
+      });
+      $('#saveSettingsButton').addEventListener('click',saveSettingsFile);
+      $('#loadSettingsButton').addEventListener('click',()=>{cancelSettingsImport();$('#settingsFileInput').value='';$('#settingsFileInput').click();});
+      $('#settingsFileInput').addEventListener('change',loadSettingsFile);
+      window.addEventListener('pagehide',cancelSettingsImport);
       $$('input[name="plannerSize"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked)setPreset(input.value);}));
       $$('input[name="orientation"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.orientation=input.value;render();}}));
       $$('input[name="refillType"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked)setRefillType(input.value);}));
@@ -1099,7 +1463,7 @@
       [startMonthInput,endMonthInput].forEach(input=>{input.addEventListener('input',()=>{validateDateRange({normalize:false});render();});input.addEventListener('change',()=>{validateDateRange({normalize:true});render();});input.addEventListener('blur',()=>{validateDateRange({normalize:true});render();});});
       [startHourInput,endHourInput].forEach(input=>{input.addEventListener('input',()=>{validateTimeRange({normalize:false});render();});input.addEventListener('change',()=>{validateTimeRange({normalize:true});render();});input.addEventListener('blur',()=>{validateTimeRange({normalize:true});render();});});
       $('#prevPage').addEventListener('click',()=>{if(state.viewIndex>0){state.viewIndex-=1;render();}});$('#nextPage').addEventListener('click',()=>{if(state.viewIndex<viewItems().length-1){state.viewIndex+=1;render();}});
-      document.addEventListener('keydown',event=>{if($('#helpDialog').open)return;if(event.target instanceof HTMLInputElement)return;if(event.key==='ArrowLeft'&&state.viewIndex>0){state.viewIndex-=1;render();}if(event.key==='ArrowRight'&&state.viewIndex<viewItems().length-1){state.viewIndex+=1;render();}});
+      document.addEventListener('keydown',event=>{if($('#helpDialog').open||$('#appConfirmDialog').open)return;if(event.target instanceof HTMLInputElement)return;if(event.key==='ArrowLeft'&&state.viewIndex>0){state.viewIndex-=1;render();}if(event.key==='ArrowRight'&&state.viewIndex<viewItems().length-1){state.viewIndex+=1;render();}});
       outputFilename.addEventListener('input',()=>{filenameTouched=true;outputFilename.value=outputFilename.value.slice(0,120);});
       outputFilename.addEventListener('blur',()=>{outputFilename.value=safeFilename(outputFilename.value);});
       generatePdfButton.addEventListener('click',createPdf);savePdfButton.addEventListener('click',saveGeneratedPdf);saveSizeTestButton.addEventListener('click',createSizeTestPdf);

@@ -31,6 +31,8 @@ GitHub Pages delivers the initial HTML. After it loads, calendar generation, pre
 - **Print-size test PDF** — Includes a 100 mm reference line and 50 × 50 mm box for checking printer scaling.
 - **Local single-HTML operation** — Japanese / English UI, desktop / smartphone layout, local settings persistence, and no runtime API/CDN requests.
 
+- **Reusable settings files** — Save your setup as local `.settings.json`, then review and restore it later. Stored settings and imported files are validated before use.
+
 ## Quick start
 
 ### Use the web demo
@@ -59,6 +61,14 @@ Open the [GitHub Pages demo](https://ttomohisa.github.io/htmlapps-planner-refill
 10. Create the PDF, then save it locally.
 
 When printing, choose **100% / Actual size** and do not use **Fit to page**.
+
+### Reuse a setup
+
+Under **Appearance**, choose **Save settings (.settings.json)**. The download uses the editable PDF filename stem; it contains configuration, including period/page count, and no PDF or language preference. Correct invalid active inputs first.
+
+Choose **Load settings (JSON)**, select a supported file up to **64 KiB**, review its size, layout, and period/page count, and confirm replacement. Cancel keeps the current setup and PDF. After replacement, create the PDF again. Settings and files stay in your browser.
+
+If saved browser settings cannot be read, the app shows defaults and preserves the original record. Automatic saving stays paused until a confirmed import or reset. If storage is unavailable, settings may work only for this session; save a JSON file to keep them.
 
 ## Publish with GitHub Pages
 

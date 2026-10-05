@@ -261,11 +261,8 @@ try {
   $testFiles = @(Get-ChildItem -Path (Join-Path $Root "tests") -Filter "*.test.mjs" | ForEach-Object { $_.FullName })
   & node --test @testFiles
   if ($LASTEXITCODE -ne 0) { throw "Application regression tests failed." }
-  foreach ($runtimeHtml in @("planner-refill-maker.html", "dist/index.html")) {
-    $env:PLANNER_HTML = $runtimeHtml
-    & node --test tests/pdf-output-consistency.test.mjs
-    if ($LASTEXITCODE -ne 0) { throw "Built application regression tests failed: $runtimeHtml" }
-  }
+  & node scripts/check-planner-runtime.mjs
+  if ($LASTEXITCODE -ne 0) { throw "Built application regression tests failed." }
 } finally {
   if ($null -eq $previousPlannerHtml) { Remove-Item Env:PLANNER_HTML -ErrorAction SilentlyContinue }
   else { $env:PLANNER_HTML = $previousPlannerHtml }

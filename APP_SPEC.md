@@ -239,13 +239,13 @@ This rule avoids cutting off partial weeks at month boundaries.
 
 ## 19. Privacy and data
 
-- No user files are accepted in v1.0.0.
+- User-selected settings JSON files are accepted locally under the bounded settings-file contract below.
 - No setting or generated calendar data is sent outside the browser.
 - No runtime network request, analytics, telemetry, or external font.
 - CSP keeps `connect-src 'none'`.
 - Language preference and planner configuration may be stored locally in browser storage.
 - Saved settings contain configuration only; no generated PDF bytes or calendar files are persisted.
-- A confirmed reset action removes saved planner settings and restores defaults.
+- A confirmed reset replaces the saved planner configuration with defaults. If browser storage is unavailable, defaults still apply in memory and a persistence warning remains visible.
 - Holiday, appearance, ring, and print settings are part of the generated PDF signature, so changing them invalidates stale output.
 
 ## 20. UX and accessibility
@@ -285,7 +285,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - Optional week numbers appear on weekly headings using the selected week-start convention.
 - Appearance controls live in a secondary collapsible `見た目 / Appearance` section and do not interrupt the primary size → layout → content → print flow. Settings continue to persist locally within that section.
 - Settings automatically restore from local browser storage after reload, including nested layout choices.
-- Reset settings asks for confirmation, clears saved planner settings, and restores the language-appropriate default holiday state.
+- Reset settings asks for confirmation, replaces saved planner settings with defaults, and restores the language-appropriate default holiday state.
 - Changing holiday or appearance settings after PDF generation invalidates stale output and requires regeneration.
 - A5 portrait PDF MediaBox remains 148 × 210 mm, and A4 / US Letter imposition remains unscaled.
 - Long-edge / short-edge duplex slot mirroring and odd final blank-back behavior remain correct.
@@ -339,3 +339,18 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - v1.0.0 promotes the validated v0.9.0 release candidate to the first stable release without adding new feature scope.
 - Broad regression covers Monthly / Yearly / Weekly / Daily / Notes, Japanese / English, phone / desktop layout, exact-size PDF, A4 / US Letter imposition, duplex, ring margins, holidays, appearance settings, and standalone/self-extract output.
 - Final release work removes the duplicate settings-card version badge, keeps the header version badge, refreshes README/screenshots, and completes the release regression checklist.
+
+
+## Settings files and safe restore
+
+- The Appearance section offers **Save settings (.settings.json)** and **Load settings (JSON)** in Japanese and English. There is no named-preset manager or remote storage.
+- Save uses the editable PDF filename stem plus `.settings.json`, with the existing filename sanitization. Invalid active drafts block saving; inactive drafts use the last committed valid setting.
+- The file envelope is `{ "app": "planner-refill-maker", "formatVersion": 1, "settings": { ... } }`. Every version-1 setting field is required. The configuration allowlist includes preset/custom size, orientation, refill type, all nested layout choices, date range, hours, note count/spacing, holiday/colors, appearance, ring/side/punch, paper/crop, and duplex options.
+- Files exclude language preference, filename, derived base geometry, navigation position, runtime flags, Blob URLs, and PDF contents. Extra unrecognized fields are ignored and never spread into state.
+- Maximum selected size: **64 KiB**, checked before reading and again against UTF-8 text size. Unsupported app/version, malformed JSON, wrong types/enums, missing fields, invalid layout/type pairs, colors, numeric bounds, date ranges, or hour relationships reject the complete file without changing current settings, local storage, or generated PDF. Values are not clamped during import.
+- Named dimensions always come from the built-in PRESETS table. Custom base dimensions come from validated width/height; landscape swaps only effective dimensions. Stale legacy baseWidth/baseHeight can never override either source.
+- A shared decoder handles legacy local browser settings, permitting missing known fields and nested layout entries to use defaults. Invalid stored settings fall back visibly to defaults. Original unreadable records are preserved and autosave pauses until an explicit reset or confirmed import. Storage read/write failures are shown honestly; file save/load remains usable in memory.
+- After validation, a keyboard-operable native confirmation dialog shows size, physical dimensions, orientation, layout, and period or note-page count. Cancel, Close, Escape, and backdrop dismissal preserve the current setup/PDF. Focus starts on Cancel and returns to the trigger; the mobile sheet and short-view body remain scrollable with safe-area padding.
+- Only confirmation replaces settings, synchronizes controls, clears obsolete field errors, resets preview position, and invalidates the PDF and both pending PDF generation paths, even for identical values. The PDF must be generated again explicitly.
+- New file selections, intervening settings edits/reset, and page exit invalidate pending file reads/confirmations. Inputs reset after selection so the same file can be chosen again. Stale reads cannot overwrite newer state or status.
+- Required automated verification runs the real application event handlers and PDF writer on source, checked-in standalone, readable build, and the byte-verified expanded self-extract payload. Browser raster output, real mobile/keyboard behavior, and physical print accuracy still require browser/device testing; the Node DOM/Canvas adapter cannot establish those results.
