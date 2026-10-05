@@ -250,3 +250,25 @@ if (-not $webrtcReadyText.Contains("options.requireReadyChannelOpen!==false&&(!r
   throw "WebRTC application-ready must wait for the designated DataChannel to open."
 }
 
+
+# Run runtime/event regressions as part of the same required repository check.
+$nodeCommand = Get-Command node -ErrorAction SilentlyContinue
+if (-not $nodeCommand) { throw "Node.js 22 or newer is required for application regression tests." }
+Push-Location $Root
+$previousPlannerHtml = $env:PLANNER_HTML
+try {
+  Remove-Item Env:PLANNER_HTML -ErrorAction SilentlyContinue
+  $testFiles = @(Get-ChildItem -Path (Join-Path $Root "tests") -Filter "*.test.mjs" | ForEach-Object { $_.FullName })
+  & node --test @testFiles
+  if ($LASTEXITCODE -ne 0) { throw "Application regression tests failed." }
+  foreach ($runtimeHtml in @("planner-refill-maker.html", "dist/index.html")) {
+    $env:PLANNER_HTML = $runtimeHtml
+    & node --test tests/pdf-output-consistency.test.mjs
+    if ($LASTEXITCODE -ne 0) { throw "Built application regression tests failed: $runtimeHtml" }
+  }
+} finally {
+  if ($null -eq $previousPlannerHtml) { Remove-Item Env:PLANNER_HTML -ErrorAction SilentlyContinue }
+  else { $env:PLANNER_HTML = $previousPlannerHtml }
+  Pop-Location
+}
+Write-Host "[OK] Application behavior and standalone parity checks passed." -ForegroundColor Green

@@ -51,7 +51,7 @@ Appearance choices must affect both the interactive preview and PDF renderer: Mi
 11. If the refill cannot fit at full size, show an error and do not enable print-sheet PDF creation.
 12. Create and save the PDF.
 13. Optionally save a print-size test PDF containing a 100 mm reference line, a 50 × 50 mm box, and a full-size refill outline when it fits.
-14. If any refill or print setting changes after generation, invalidate the old PDF and require regeneration.
+14. If any refill or print setting changes after generation, invalidate the old PDF and require regeneration. Empty or invalid active inputs also invalidate output, even while the preview retains the last valid settings. Recheck the actual inputs before create/save and before committing an asynchronous result. Any intervening active setting/draft edit invalidates an in-flight generation, including A → B → A changes.
 15. Change language between Japanese and English without reloading.
 
 
@@ -90,7 +90,7 @@ Preset labels always show dimensions so similarly named standards are not ambigu
 - Step: 0.1 mm.
 - Do not clamp while the user is typing.
 - Normalize to the accepted range on `change` / `blur`.
-- Invalid intermediate values must not crash or distort the preview.
+- Invalid intermediate values must not crash or distort the last valid preview. They block PDF creation/saving and the print-size test until repaired or a preset size is selected.
 
 ## 7. Orientation model
 
@@ -166,7 +166,7 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 - User selects 1–100 pages.
 - Ruled spacing is fixed at 7 mm.
 - Grid and Dot grid support 4 mm and 5 mm spacing.
-- PDF pattern spacing is derived from physical millimeters rather than CSS pixels.
+- Note-paper preview and PDF use the same Canvas renderer and spacing derived from physical millimeters: 7 mm ruled, 4/5 mm square grid or dot grid. Spacing remains consistent across orientation, page side, ring margins, and appearance presets.
 - Note-paper page count replaces date-range controls while Notes is selected.
 
 ## 13. Weekly range rule
@@ -260,7 +260,9 @@ This rule avoids cutting off partial weeks at month boundaries.
 - Adjacent-month toggle appears only for Monthly.
 - Help dialog scrolls fully on narrow/short viewports.
 - Japanese and English strings fit at 360 px width.
-- Invalid date/time ranges produce inline guidance.
+- Invalid date/time ranges produce inline guidance. Empty numeric drafts remain invalid on blur; finite numeric values retain the existing range normalization.
+- PDF readiness validates only applicable fields: custom size only for Custom, dates only for dated refills, note count only for Notes, hours only for Daily / Weekly Vertical, and manual ring margin only in Manual mode.
+- Print-size test validity depends on dimensions. It must not download stale results if settings change or dimensions become invalid during generation.
 
 ## 21. Browser target
 
