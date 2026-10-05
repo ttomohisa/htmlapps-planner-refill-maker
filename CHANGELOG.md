@@ -4,7 +4,17 @@ All notable changes to this project are documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- Japanese/English settings JSON save/load actions with editable filename stems, a 64 KiB bound, versioned allowlisted configuration, and a confirmation summary before replacing the setup.
+- Settings-file and restore regressions across source, checked-in standalone, readable release, and expanded self-extract payload.
+
 ### Fixed
+
+- Unvalidated saved settings can no longer crash startup or give named paper sizes mismatched/negative PDF dimensions. Named geometry is rebuilt from presets, Custom geometry is validated, and missing legacy fields retain defaults.
+- Unreadable local settings are preserved with a visible recovery message; unavailable browser storage is reported without falsely claiming persistence. Confirmed reset/import retries saving.
+- Cancelled, superseded, edited, or abandoned settings imports cannot replace current work. Confirmed replacement invalidates in-flight PDF and print-size exports even when the configuration values match.
+
 
 - Incomplete or invalid active settings now invalidate earlier PDFs and block creation/saving while keeping the last valid preview. Hidden date/custom/hour/count fields no longer affect unrelated output modes.
 - Restored manual ring margins now populate the visible input consistently with the saved preview/PDF setting.
