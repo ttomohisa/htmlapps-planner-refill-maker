@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.1] - 2026-10-07
+
+### Fixed
+- Refresh the stale-PDF notice when changing languages again, while retaining the existing PDF invalidation and generation-error behavior.
+- Standardize the header language targets to EN / JA with localized target titles and accessible names.
+- Keep the header and build information aligned with the canonical patch version, preserving Help accessibility and existing app behavior.
+
 ## [Unreleased]
 
 ### Added
