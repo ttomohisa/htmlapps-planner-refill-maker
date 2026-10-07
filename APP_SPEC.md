@@ -4,7 +4,7 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.0.0
+- **Current version:** 1.0.1
 - **Purpose:** Create dated planner refill layouts in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
@@ -354,3 +354,9 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - Only confirmation replaces settings, synchronizes controls, clears obsolete field errors, resets preview position, and invalidates the PDF and both pending PDF generation paths, even for identical values. The PDF must be generated again explicitly.
 - New file selections, intervening settings edits/reset, and page exit invalidate pending file reads/confirmations. Inputs reset after selection so the same file can be chosen again. Stale reads cannot overwrite newer state or status.
 - Required automated verification runs the real application event handlers and PDF writer on source, checked-in standalone, readable build, and the byte-verified expanded self-extract payload. Browser raster output, real mobile/keyboard behavior, and physical print accuracy still require browser/device testing; the Node DOM/Canvas adapter cannot establish those results.
+
+## v1.0.1 header contract
+
+- The language button shows its target as `EN` in Japanese and `JA` in English, with matching localized title and accessible name: `英語に切り替え` / `Switch to Japanese`.
+- Header version is `v` plus the canonical `app.config.json` version; Help controls retain localized titles and accessible names.
+- Language changes preserve settings and filename, and retain the existing requirement to regenerate the localized PDF after a language change. The stale-output notice follows subsequent language changes without replacing later generation errors. Privacy remains `完全ローカル処理` / `Fully local processing`.

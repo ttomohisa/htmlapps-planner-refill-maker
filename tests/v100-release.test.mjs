@@ -6,9 +6,9 @@ const config = JSON.parse(fs.readFileSync(new URL('../app.config.json', import.m
 const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
 const readmeJa = fs.readFileSync(new URL('../README.ja.md', import.meta.url), 'utf8');
 
-assert.equal(config.version, '1.0.0', 'formal release must report v1.0.0');
+assert.match(config.version, /^1\.0\.(?:0|[1-9]\d*)$/, 'stable release must report a canonical v1.0.x version');
 assert.doesNotMatch(source, /<span class="step-badge">v[^<]+<\/span>/, 'settings-card version badge must be removed');
-assert.match(source, /id="versionBadge">v1\.0\.0<\/span>/, 'header version badge must remain and show v1.0.0');
+assert.ok(source.includes(`id="versionBadge">v${config.version}</span>`), 'header version fallback must match canonical metadata');
 assert.match(source, /outputFilename=\$\('#pdfFilename'\)/, 'template filename control should use the required outputFilename behavior marker');
 assert.doesNotMatch(source, /\bpdfFilename=\$\('#pdfFilename'\)/, 'legacy pdfFilename binding should not remain');
 assert.match(readme, /## 🚀 Live demo/, 'English README should follow the reference README structure');
