@@ -4,7 +4,7 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.0.1
+- **Current version:** 1.0.2
 - **Purpose:** Create dated planner refill layouts in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
@@ -360,3 +360,9 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - The language button shows its target as `EN` in Japanese and `JA` in English, with matching localized title and accessible name: `英語に切り替え` / `Switch to Japanese`.
 - Header version is `v` plus the canonical `app.config.json` version; Help controls retain localized titles and accessible names.
 - Language changes preserve settings and filename, and retain the existing requirement to regenerate the localized PDF after a language change. The stale-output notice follows subsequent language changes without replacing later generation errors. Privacy remains `完全ローカル処理` / `Fully local processing`.
+
+## v1.0.2 icon consistency
+
+- The canonical icon background and matching green details use `#16624f`.
+- Background corner radii are exactly 25% of their corresponding width and height; existing bounds, padding, and foreground artwork are preserved.
+- Header, favicon, and self-extract loader inherit the canonical `assets/favicon.svg`.
