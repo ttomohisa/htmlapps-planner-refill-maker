@@ -62,6 +62,8 @@ Open the [GitHub Pages demo](https://ttomohisa.github.io/htmlapps-planner-refill
 
 When printing, choose **100% / Actual size** and do not use **Fit to page**.
 
+Help and confirmation dialogs pause background scrolling while open. Scroll inside the dialog to reach all content, including on short screens.
+
 ### Reuse a setup
 
 Under **Appearance**, choose **Save settings (.settings.json)**. The download uses the editable PDF filename stem; it contains configuration, including period/page count, and no PDF or language preference. Correct invalid active inputs first.

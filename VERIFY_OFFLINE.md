@@ -14,6 +14,18 @@
 For GitHub Pages, one initial request downloads the HTML. Clear the Network panel after the page has loaded, then test the complete app flow.
 
 
+## Modal scrolling
+
+Repeat in Japanese and English on desktop, a 393 px wide phone viewport, and a 393 × 252 px short viewport for both release variants:
+
+1. Open Help, note the document scroll position, and wheel outside the dialog. The background must not move.
+2. Scroll inside Help to its final offline note. Its Close button stays reachable. Check Close, Escape, backdrop dismissal, and repeated opening.
+3. Under Appearance, open Reset settings and repeat the outside-wheel check. Scroll internally until Cancel and the confirmation action are reachable. Use Cancel, Close, Escape, and the backdrop without changing settings.
+4. Check that focus returns to the trigger and ordinary page scrolling resumes after dismissal. Repeat while the page is already scrolled down.
+5. A validated settings-file replacement uses the same confirmation shell; verify its longer summary remains fully reachable and cancellation preserves the current setup and PDF.
+
+The Node modal contracts verify source structure and unchanged runtime scope. They do not simulate native browser scrolling, viewport geometry, or focus handling.
+
 ## Self-extracting variant
 
 Open `dist/index.html` first and confirm that the browser favicon and upper-left application brand icon use the same artwork from `assets/favicon.svg`. Then open `dist/index.self-extract.html` directly, confirm that the loading screen text is readable, the same favicon as `dist/index.html` is visible, and the loading screen disappears. Repeat the same offline checks and verify that the browser console contains no decompression or CSP errors. `scripts/verify-self-extract.ps1` also enforces an ASCII-only loader and byte-for-byte restoration of the readable HTML.
