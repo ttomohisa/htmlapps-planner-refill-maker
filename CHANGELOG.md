@@ -2,6 +2,13 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.0.3] - 2026-10-11
+
+### Fixed
+- Pause document background scrolling while Help or a native confirmation dialog is open, preserving the existing scrollable dialog shells and dismissal behavior.
+- Explain dialog scrolling in Japanese and English Help and usage documentation.
+- Add modal-state and scope-preservation contracts to source and distributed-entry-point regression checks.
+
 ## [1.0.2] - 2026-10-09
 
 ### Fixed

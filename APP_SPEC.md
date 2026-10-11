@@ -4,7 +4,7 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.0.2
+- **Current version:** 1.0.3
 - **Purpose:** Create dated planner refill layouts in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
@@ -366,3 +366,11 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - The canonical icon background and matching green details use `#16624f`.
 - Background corner radii are exactly 25% of their corresponding width and height; existing bounds, padding, and foreground artwork are preserved.
 - Header, favicon, and self-extract loader inherit the canonical `assets/favicon.svg`.
+
+## v1.0.3 modal background scrolling
+
+- While any native modal is open, both document scroll containers (`html` and `body`) use `:has(dialog:modal)` to pause background scrolling. Closing the last modal restores ordinary page scrolling through CSS alone.
+- Preserve the existing Help and confirmation dialog sizes, fixed headers, internal scroll regions, safe-area padding, native dismissal/focus behavior, and the local-processing shield badge.
+- Help explains background locking and internal scrolling in Japanese and English. Settings, calendar/PDF rendering, import/export, and persistence behavior are unchanged.
+- `tests/modal-scroll.test.mjs` guards the modal-state rules, localized Help, and unchanged shell/runtime scope. `PLANNER_HTML` accepts a template, readable release, or gzip self-extract wrapper. The repository check discovers this test, and the canonical runtime runner repeats it on the checked-in standalone, readable build, and byte-verified restored payload.
+- Browser acceptance: in Japanese and English at desktop, 393 px phone width, and 393 × 252 px, wheel input outside Help or the settings confirmation must leave the background position unchanged. Internal scrolling must reach the final Help item and confirmation actions. Close, Cancel, Escape, backdrop dismissal, repeated opening, and normal scrolling after dismissal retain their existing behavior. These native layout/scroll results require browser verification beyond the Node contracts.
