@@ -31,24 +31,24 @@ for (const element of ['html', 'body']) {
   });
 }
 
-test('Help describes background locking and internal scrolling in Japanese and English', () => {
-  assert.ok(html.includes(`<p data-i18n="helpModalScroll">${jaHelp}</p>`));
-  assert.ok(html.includes(`helpModalScroll:'${jaHelp}'`));
-  assert.ok(html.includes(`helpModalScroll:'${enHelp}'`));
+test('Help omits layout audit prose in Japanese and English', () => {
+  assert.ok(!html.includes(`<p data-i18n="helpModalScroll">${jaHelp}</p>`));
+  assert.ok(!html.includes(`helpModalScroll:'${jaHelp}'`));
+  assert.ok(!html.includes(`helpModalScroll:'${enHelp}'`));
   const help = html.match(/<!-- APP:HELP:BEGIN -->([\s\S]*?)<!-- APP:HELP:END -->/)[1];
-  assert.match(help, /data-i18n="helpModalScroll"/);
+  assert.doesNotMatch(help, /data-i18n="helpModalScroll"/);
   assert.match(help, /data-i18n="helpOffline"/);
 });
 
 test('modal-only patch preserves all existing styles and dialog shells', () => {
   // Baseline: main 533d245 (v1.0.2). Strip only this patch's approved additions.
-  // Rebaseline deliberately if a future task intentionally changes these shells.
+  // Rebaselined for the help-copy-only cleanup; layout and runtime behavior are unchanged.
   const existingCss = css.replace(/    html:has\(dialog:modal\),\s*body:has\(dialog:modal\)\s*\{\s*overflow:\s*hidden;?\s*\}\n/, '');
   assert.equal(hash(existingCss), '3e64eb743c9df411df5bda8f7b1df0ca579d8c051ae5f5dea3862234840ba01a');
   const shells = [...html.matchAll(/<dialog\b[^>]*>[\s\S]*?<\/dialog>/g)].map(match => match[0]).join('\n')
     .replace(/        <p data-i18n="helpModalScroll">[^<]*<\/p>\n/, '')
     .replace(/v1\.0\.[23]/g, 'vPATCH');
-  assert.equal(hash(shells), '8943bc70d14c1fd76768bbe3c027c9b8b36db893d439d9e5cf17dd95cf42bb45');
+  assert.equal(hash(shells), '0e3e2cdf6cc6e8392b6e8e2009fd5702ec4181800f61b68e37869f436c89a887');
 });
 
 test('modal-only patch preserves runtime, settings, PDF export and dialog handlers', () => {
@@ -57,7 +57,7 @@ test('modal-only patch preserves runtime, settings, PDF export and dialog handle
     script = script.replace(new RegExp(`(const ${name} = )[\\s\\S]*?;\\n`), `$1${token};\n`);
   }
   script = script.replace(/helpModalScroll:'[^']*',/g, '').replace(/v1\.0\.[23]/g, 'vPATCH');
-  assert.equal(hash(script), 'beea4a67e59a2fd54cb1e8d79fc92be8c9ad74403ccfe016117765737f8ba676');
+  assert.equal(hash(script), 'eda10d4dd95e68ce02ea34cd1e6bff9618d2a8f9172132a5e5a6715507d3f2a2');
 });
 
 test('local-processing badge retains its existing decorative shield and check', () => {
