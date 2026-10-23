@@ -15,6 +15,7 @@ function assertPreviewMatchesPdfRaster(h, label) {
     assert.ok(canvas, `${label}: every page uses a raster canvas`);
     assert.equal(canvas.className, 'spread-preview-canvas');
     assert.equal(canvas.attributes.role, 'img');
+    assert.ok(canvas.attributes['aria-label'].includes(h.get('navMonthLabel').textContent), `${label}: accessible label identifies selected period`);
     const widthMm = Number(holder.querySelector('.sheet').dataset.pageWidth);
     const heightMm = Number(holder.querySelector('.sheet').dataset.pageHeight);
     const pdfCanvas = h.app.renderPageSpecCanvas(specs[index], widthMm, heightMm, 180);
