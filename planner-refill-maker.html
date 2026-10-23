@@ -2049,7 +2049,7 @@
         const labels = rects.map((rect, index) => {
           const spec = face.specs[index] || null;
           if (spec) {
-            const page = renderPageSpecCanvas(spec, dimensions.width, dimensions.height, dpi);
+            const page = renderPageSpecCanvas(spec, dimensions.width, dimensions.height, 180);
             drawPrintPageCanvas(ctx, page, rect.x * pxPerMm, rect.y * pxPerMm, rect.width * pxPerMm, rect.height * pxPerMm, !bound && face.back ? duplexBackRotation(plan) : 0);
             if (!bound && state.printMode !== 'exact') drawCropGuide(ctx, rect.x * pxPerMm, rect.y * pxPerMm, rect.width * pxPerMm, rect.height * pxPerMm, dpi);
           }
