@@ -1636,7 +1636,7 @@
       function appendPreviewPageNumbers(holders,itemIndex){if(!state.showPageNumbers)return holders;const perItem=fixedSpreadLayout()?2:1;holders.forEach((holder,offset)=>{const badge=document.createElement('span');badge.className='physical-page-number';badge.textContent=String(itemIndex*perItem+offset+1);holder.querySelector('.sheet')?.append(badge);});return holders;}
       // Preview and PDF use the same page geometry, fonts, and 180 dpi raster.
       // CSS scales the finished canvas without changing the proportions of text.
-      function createPdfParityPreviewPage(spec) {
+      function createPdfParityPreviewPage(spec, itemLabel) {
         const side = spec.side || 'right';
         const { holder, sheet } = makeSheet(spec.pageLabel || '', '', side);
         sheet.querySelectorAll('.ring-margin-line,.punch-guides').forEach(el => el.remove());
@@ -1644,12 +1644,12 @@
         const canvas = renderPageSpecCanvas(spec, width, height, 180);
         canvas.className = 'spread-preview-canvas';
         canvas.setAttribute('role', 'img');
-        canvas.setAttribute('aria-label', [t('previewTitle'), spec.pageLabel].filter(Boolean).join(' · '));
+        canvas.setAttribute('aria-label', [t('previewTitle'), itemLabel, spec.pageLabel].filter(Boolean).join(' · '));
         sheet.append(canvas);
         return holder;
       }
       function pageHoldersForItemRaw(item, itemIndex = state.viewIndex) {
-        return pageSpecsForItem(item, itemIndex).map(createPdfParityPreviewPage);
+        return pageSpecsForItem(item, itemIndex).map(spec => createPdfParityPreviewPage(spec, navigationLabel(item)));
       }
       function pageHoldersForItem(item,itemIndex=state.viewIndex){return appendPreviewPageNumbers(pageHoldersForItemRaw(item,itemIndex),itemIndex);}
       function settingsSignature(){return JSON.stringify({...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
