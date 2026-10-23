@@ -45,7 +45,7 @@ export function loadPlanner(file = process.env.PLANNER_HTML || 'src/index.templa
       if (this.ctx) return this.ctx;
       const calls = [];
       this.ctx = new Proxy({ calls, measureText: text => ({ width: String(text).length * 6 }) }, {
-        get(target, key) { return key in target ? target[key] : (...args) => calls.push([key, ...args]); },
+        get(target, key) { return key in target ? target[key] : (...args) => { const call = [key, ...args]; if (key === 'fillText') call.font = target.font; calls.push(call); }; },
       });
       return this.ctx;
     }
