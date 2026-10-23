@@ -18,6 +18,9 @@ All notable changes to this project are documented in this file.
 
 ### Fixed
 
+- Match every dated and undated refill preview and print-sheet thumbnail to PDF-resolution artwork, preventing oversized preview dates and holiday names.
+- Fit yearly mini-calendar headings, weekdays, and date numbers within their allotted rows even at maximum text size on small landscape refills.
+- Give the preview stage a definite height across desktop, tablet, and phone widths to prevent repeated resize/reflow changes.
 - Center the Monthly spread mini calendars within the information-rail background in both preview and PDF.
 - Prepare physical duplex faces before exact-size output and imposition, adding a leading blank for left-first pages and a trailing blank when needed so spread pages face after binding.
 - Rotate back artwork for horizontal-axis printer flips so cut refills stay upright when turned on their left/right ring edge, in exact-size and imposed output.
