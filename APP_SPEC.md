@@ -114,6 +114,7 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 - An information rail and the first three weekday columns appear on the left; the final four weekday columns appear on the right.
 - Both pages keep the same six week rows.
 - Left and right pages use mirrored ring-side margins.
+- The previous/next mini calendars stay centered inside the information rail, with equal side padding in both the shared Canvas preview and PDF output.
 
 ## 9. Yearly layouts
 
@@ -270,6 +271,8 @@ This rule avoids cutting off partial weeks. Migrated version-1 month ranges expa
 - Hour controls appear for Weekly Vertical and Daily.
 - Adjacent-month toggle appears only for Monthly.
 - Help dialog scrolls fully on narrow/short viewports.
+- Build information is a collapsible section at the bottom of Help on desktop; it and the page footer are hidden at the smartphone breakpoint (600 px and below).
+- Header typography, icon size, version styling, and language/Help actions follow Browser Kitty's Pass-the-Phone Vote header, while retaining the planner workspace width. The subtitle describes planner-sized printable refills; the separate local-processing shield badge remains visible. The hero heading is 26 px maximum on desktop and 20 px on phones.
 - Japanese and English strings fit at 360 px width.
 - Invalid date/time ranges produce inline guidance. Empty numeric drafts remain invalid on blur; finite numeric values retain the existing range normalization.
 - PDF readiness validates only applicable fields: custom size only for Custom, month/day dates only for the active dated type, weekday selection only for dated Daily, undated count only for undated Monthly/Weekly/Daily, note count only for Notes, hours only for Daily / Weekly Vertical, paper-edge margin only for imposed output, and manual ring margin only in Manual mode.

@@ -71,6 +71,8 @@ The default paper-edge margin is **0 mm**, preserving the existing maximum-fit l
 
 Help and confirmation dialogs pause background scrolling while open. Scroll inside the dialog to reach all content, including on short screens.
 
+On desktop, **Build information** is available at the bottom of **How to use & notes**. Build information and the page footer are hidden on phones.
+
 ### Reuse a setup
 
 Under **Appearance**, choose **Save settings (.settings.json)**. The download uses the editable PDF filename stem; it contains configuration, including period/page count, and no PDF or language preference. Correct invalid active inputs first.

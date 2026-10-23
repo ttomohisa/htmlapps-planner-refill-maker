@@ -109,6 +109,36 @@ test('note preview uses the PDF renderer at physically correct 4/5/7 mm spacing'
   }
 });
 
+test('monthly spread mini calendars stay centered inside their shaded rail in preview and PDF', () => {
+  const presets = ['a5', 'bible', 'mini6', 'davinci-pocket', 'micro5', 'hbwa5'];
+  for (const language of ['ja', 'en']) {
+    const h = loadPlanner(undefined, { language });
+    for (const preset of presets) {
+      h.app.setPreset(preset);
+      for (const style of ['minimal', 'classic', 'compact']) for (const orientation of ['portrait', 'landscape']) for (const ringMarginMode of ['auto', 'manual']) for (const dpi of [120, 180]) {
+        Object.assign(h.app.state, { stylePreset: style, orientation, ringMarginMode, ringMarginManual: 30 });
+        const { baseWidth, baseHeight } = h.app.state;
+        const [width, height] = orientation === 'portrait' ? [baseWidth, baseHeight] : [baseHeight, baseWidth];
+        const canvas = h.app.renderPageSpecCanvas({ kind: 'monthly-spread', year: 2027, month: 1, side: 'left' }, width, height, dpi);
+        const calls = canvas.getContext('2d').calls;
+        const [, railX, railY, railWidth, railHeight] = calls.find(call => call[0] === 'fillRect' && call[1] > 0 && call[2] > 0);
+        const label = `${language}/${preset}/${style}/${orientation}/${ringMarginMode}/${dpi}`;
+        for (const title of language === 'ja' ? ['12月', '2月'] : ['Dec', 'Feb']) {
+          const titleIndex = calls.findIndex(call => call[0] === 'fillText' && call[1] === title);
+          assert.ok(titleIndex >= 0, `${label}: ${title} mini calendar is drawn`);
+          const lines = calls.slice(titleIndex).filter(call => ['moveTo', 'lineTo'].includes(call[0])).slice(0, 30);
+          assert.equal(lines.length, 30, `${label}: complete six-row, seven-column mini grid`);
+          const xs = lines.map(call => call[1]), ys = lines.map(call => call[2]);
+          const left = Math.min(...xs), right = Math.max(...xs), top = Math.min(...ys), bottom = Math.max(...ys);
+          assert.ok(left > railX && right < railX + railWidth, `${label}: ${title} grid stays inside the rail`);
+          assert.ok(Math.abs((left - railX) - (railX + railWidth - right)) < 1e-8, `${label}: ${title} has equal left/right padding`);
+          assert.ok(top > railY && bottom < railY + railHeight, `${label}: ${title} grid stays vertically inside the rail`);
+        }
+      }
+    }
+  }
+});
+
 test('size test cannot download after the dimension draft becomes invalid mid-generation', async () => {
   const h = loadPlanner(); await h.radio('plannerSize', 'custom');
   const pending = h.app.createSizeTestPdf(); await h.input('customWidth', '');
