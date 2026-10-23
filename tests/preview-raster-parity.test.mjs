@@ -72,7 +72,8 @@ test('yearly month names, weekdays and numbers fit their rows at maximum text si
       assert.ok(index >= 0, `${label}: January month title exists`);
       const titleCall = calls[index], weekdayCall = calls[index + 1], dayCall = calls[index + 8];
       const pxWidth = canvas.width, pxHeight = canvas.height;
-      const margin = .055, innerHeight = pxHeight * (1 - 2 * margin);
+      const margin = h.app.state.stylePreset === 'compact' ? .04 : h.app.state.stylePreset === 'minimal' ? .055 : .052;
+      const innerHeight = pxHeight * (1 - 2 * margin);
       const titleLine = pxHeight * margin + innerHeight * .078;
       const top = titleLine + innerHeight * .035, bottom = pxHeight * margin + innerHeight;
       const rows = months.length === 6 ? 3 : 4;
