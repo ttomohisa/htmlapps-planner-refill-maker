@@ -15,7 +15,7 @@ assert.match(source, /miniMonth\([^\n]*previous|previous[^\n]*miniMonth/i, 'left
 assert.match(source, /miniMonth\([^\n]*next|next[^\n]*miniMonth/i, 'left info rail should include next month mini calendar');
 
 const previewBlock = source.slice(source.indexOf('function pageHoldersForItemRaw'), source.indexOf('function pageHoldersForItem('));
-assert.match(previewBlock, /pageSpecsForItem\(item, itemIndex\)\.map\(createPdfParityPreviewPage\)/, 'monthly spread preview should use the same page specs and Canvas renderer as PDF');
+assert.match(previewBlock, /pageSpecsForItem\(item, itemIndex\)\.map\(spec => createPdfParityPreviewPage\(spec, navigationLabel\(item\)\)\)/, 'monthly spread preview should use the same page specs and Canvas renderer as PDF');
 assert.doesNotMatch(previewBlock, /createCalendarPage\(item\.year,item\.month,\[0,1,2,3\].*createCalendarPage\(item\.year,item\.month,\[4,5,6\]/s, 'old 4+3 unequal spread should be removed');
 
 const specBlock = source.slice(source.indexOf('function pageSpecsForItem'), source.indexOf('function renderPageSpecCanvas'));
