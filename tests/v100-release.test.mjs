@@ -6,7 +6,7 @@ const config = JSON.parse(fs.readFileSync(new URL('../app.config.json', import.m
 const readme = fs.readFileSync(new URL('../README.md', import.meta.url), 'utf8');
 const readmeJa = fs.readFileSync(new URL('../README.ja.md', import.meta.url), 'utf8');
 
-assert.match(config.version, /^1\.0\.(?:0|[1-9]\d*)$/, 'stable release must report a canonical v1.0.x version');
+assert.match(config.version, /^1\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)$/, 'stable release must report a canonical v1.x.y version');
 assert.doesNotMatch(source, /<span class="step-badge">v[^<]+<\/span>/, 'settings-card version badge must be removed');
 assert.ok(source.includes(`id="versionBadge">v${config.version}</span>`), 'header version fallback must match canonical metadata');
 assert.match(source, /outputFilename=\$\('#pdfFilename'\)/, 'template filename control should use the required outputFilename behavior marker');
@@ -22,4 +22,4 @@ assert.match(readmeJa, /## すぐに使う/, 'Japanese README should include a q
 assert.match(readmeJa, /## プライバシーと通信防止/, 'Japanese README should explain local processing and runtime network protection');
 assert.match(readmeJa, /## 制限事項/, 'Japanese README should include limitations');
 
-console.log('v1.0.0 release contract: ok');
+console.log('stable v1 release contract: ok');

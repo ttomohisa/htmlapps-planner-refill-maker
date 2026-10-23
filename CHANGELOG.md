@@ -6,6 +6,33 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.1.0] - 2026-10-23
+
+### Added
+
+- Day-level weekly and daily ranges, local-date period shortcuts, separate remembered ranges, and daily weekday selection.
+- Undated monthly, weekly, and daily refills with 1–100 units and blank date fields.
+- Visual layout thumbnails; Settings, Preview, and PDF page tabs on phones; direct navigation, individual spread-side inspection, and enlarged preview.
+- Refill, print-sheet, and bound-page preview modes with content and blank-face labels, plus current-page/spread trial PDFs and cancellable generation.
+- Configurable 0–20 mm paper-edge margins and paired duplex alignment references in print-size tests.
+
+### Fixed
+
+- Center the Monthly spread mini calendars within the information-rail background in both preview and PDF.
+- Prepare physical duplex faces before exact-size output and imposition, adding a leading blank for left-first pages and a trailing blank when needed so spread pages face after binding.
+- Rotate back artwork for horizontal-axis printer flips so cut refills stay upright when turned on their left/right ring edge, in exact-size and imposed output.
+- Use the same print plan for sheet counts, output, and previews while keeping content-page numbering independent of blank padding.
+- Check holiday coverage against actual rendered dates, including week and adjacent-month spillover; suppress dates and holidays in undated output.
+- Reject cancelled or stale PDF work before rendering further pages and before publishing a downloadable result, retaining invalid-draft and A → B → A edit protection.
+
+### Changed
+
+- Align header styling with Pass-the-Phone Vote, use a planner-specific subtitle, and reduce the hero heading while retaining the local-processing badge.
+- Move Build information to the bottom of Help and hide it and the page footer on phones.
+- Save settings as version 2 while strictly validating and migrating version-1 files and legacy browser settings, preserving their original weekly/daily date coverage.
+- Preserve original refill scale when paper margins reduce the number of slots; show paper-edge clipping guidance for the compatible 0 mm default.
+- Replace old whole-application modal snapshot hashes with focused modal contracts, extend distributed-entry-point regressions, and refresh bilingual usage guidance and screenshots.
+
 ## [1.0.3] - 2026-10-11
 
 ### Fixed

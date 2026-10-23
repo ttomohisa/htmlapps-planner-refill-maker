@@ -4,25 +4,28 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.0.3
-- **Purpose:** Create dated planner refill layouts in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
+- **Current version:** 1.1.0
+- **Purpose:** Create dated, undated, and note-paper planner refills in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
 
-## 2. v1.0.0 product scope
+## 2. v1.1.0 product scope
 
-The product is not a free-form page designer. It is a focused refill generator that should eventually let a user select a planner size, choose a dated or note layout, preview it, and export a correctly sized printable PDF without manually calculating ring margins, imposition, duplex order, or crop marks.
+The product is a focused refill generator. Users select a planner size, choose a dated, undated, or note layout, preview it, and export a correctly sized printable PDF without manually calculating ring margins, imposition, duplex order, or crop marks.
 
-v1.0.0 scope:
+Current scope:
 
 - Preset and custom planner sizes.
 - Year, monthly, weekly, daily, ruled, grid, and dot refills.
-- Arbitrary date ranges and Monday/Sunday week starts.
+- Month-level monthly/yearly ranges, day-level weekly/daily ranges, daily weekday filters, and Monday/Sunday week starts.
+- Undated monthly/weekly/daily refills, with 1–100 units per request.
 - Japanese holidays where verified static data is bundled.
 - Ring-side margin and left/right page mirroring.
 - Actual-size PDF export.
 - A4 and US Letter print imposition.
 - Crop guides, duplex layout, and a print-size test page.
+- Paper-edge margins, correctly facing duplex spreads, and trial output of the current page/spread.
+- Thumbnail layout choices, mobile page tabs, refill/sheet/bound previews, and accessible enlarged preview.
 - Japanese and English UI.
 - Fully local, single-HTML distribution with no runtime network requests.
 
@@ -36,21 +39,21 @@ Japanese holidays are bundled only when verified against the Cabinet Office publ
 
 Appearance choices must affect both the interactive preview and PDF renderer: Minimal / Classic / Tight Margins density, monochrome / Browser Kitty accent output, text size, ruling weight, physical page numbers, and weekly week numbers. Settings are stored only in local browser storage and can be reset with confirmation.
 
-## 4. Core v1.0.0 flow
+## 4. Core flow
 
 1. Open the app locally or on a static host.
 2. Select A5, Bible, Mini 6, Davinci Pocket, Micro5, HB×WA5, or Custom.
 3. Select portrait or landscape.
 4. Choose Monthly, Yearly, Weekly, Daily, or Notes and its layout.
-5. For dated refills, set the date range and any week/hour options. For Notes, set page count and pattern spacing.
+5. For dated refills, set the month or day range and any weekday/week/hour options. For undated Monthly/Weekly/Daily, set 1–100 units. For Notes, set page count and pattern spacing.
 6. Enable verified Japanese holidays when needed and adjust optional appearance settings.
 7. Configure ring-side margin, first-page side, and optional punch guides.
 8. Choose PDF output: Exact refill size, A4, or US Letter.
-9. Choose Single-sided, Long-edge flip, or Short-edge flip. For A4 / Letter, inspect front/back sheet positions, automatically selected paper orientation, rows/columns, sheets required, and optional crop guides.
-10. If the logical page count is odd in duplex mode, add one blank final back side and explain it in the UI.
+9. Choose Single-sided, Long-edge flip, or Short-edge flip. For A4 / Letter, set paper-edge margin and inspect actual front/back content, automatically selected paper orientation, rows/columns, sheets required, and optional crop guides.
+10. In duplex mode, prepend a blank front when the first content page is a left page, then append a blank back if needed. Explain blank faces separately from content-page counts.
 11. If the refill cannot fit at full size, show an error and do not enable print-sheet PDF creation.
-12. Create and save the PDF.
-13. Optionally save a print-size test PDF containing a 100 mm reference line, a 50 × 50 mm box, and a full-size refill outline when it fits.
+12. Inspect the refill, print-sheet, or duplex bound view; use direct navigation or enlarged preview. Create the full PDF or a distinctly named current-page/spread trial. Generation can be cancelled.
+13. Optionally save a print-size test PDF containing a 100 mm reference line, a 50 × 50 mm box, a full-size refill outline when it fits, and paired alignment references for duplex.
 14. If any refill or print setting changes after generation, invalidate the old PDF and require regeneration. Empty or invalid active inputs also invalidate output, even while the preview retains the last valid settings. Recheck the actual inputs before create/save and before committing an asynchronous result. Any intervening active setting/draft edit invalidates an in-flight generation, including A → B → A changes.
 15. Change language between Japanese and English without reloading.
 
@@ -64,7 +67,7 @@ Appearance choices must affect both the interactive preview and PDF renderer: Mi
 - Bundled Japanese holiday coverage: **2026 and 2027 only**.
 - Source: Cabinet Office, Government of Japan, “National Holidays” / 「国民の祝日について」.
 - Runtime network requests are not used to retrieve holiday data.
-- If the selected period includes an uncovered year, the UI says that data is unavailable and leaves those dates unmarked.
+- Coverage is checked against dates actually rendered, including full-week spillover, visible adjacent-month cells, and mini calendars. If any rendered date is outside coverage, the UI says that data is unavailable and leaves those dates unmarked. Undated output shows neither holiday data nor a coverage warning.
 - Holiday emphasis must not depend on color alone; weight/background treatment is also used.
 - Minimal / Classic / Tight Margins are bounded presets, not a free-form designer.
 - Accent output may use Browser Kitty `#16624F`; monochrome remains the default.
@@ -108,9 +111,10 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 ### Monthly · spread
 
 - One month uses two facing physical pages.
-- First four weekday columns on the left, final three on the right.
+- An information rail and the first three weekday columns appear on the left; the final four weekday columns appear on the right.
 - Both pages keep the same six week rows.
 - Left and right pages use mirrored ring-side margins.
+- The previous/next mini calendars stay centered inside the information rail, with equal side padding in both the shared Canvas preview and PDF output.
 
 ## 9. Yearly layouts
 
@@ -154,7 +158,7 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 
 ## 11. Daily layout
 
-- One physical page per calendar day in the selected month range.
+- One physical page per included calendar day in the selected day range. All weekdays, weekdays only, or a custom nonempty weekday selection is supported.
 - Header shows the date and weekday.
 - Main area contains a time schedule plus TODO and Notes sections.
 - Start/end hour controls are shared with Weekly Vertical and appear for Daily.
@@ -171,24 +175,26 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 
 ## 13. Weekly range rule
 
-Weekly pages are generated from the week containing the first day of the selected start month through the week containing the final day of the selected end month.
+Weekly pages are generated from the week containing the selected start date through the week containing the selected end date. Boundaries use the selected Monday/Sunday week start.
 
 Examples:
 
-- A one-month range can produce four, five, or six weekly pages depending on calendar alignment and selected week start.
+- A single selected day produces its complete week; a range crossing a week boundary produces both weeks.
 - Weeks may contain dates from adjacent months.
 - Changing Monday/Sunday start recalculates the generated weekly boundaries.
 
-This rule avoids cutting off partial weeks at month boundaries.
+This rule avoids cutting off partial weeks. Migrated version-1 month ranges expand from the first day of the start month through the last day of the end month, preserving their previous weekly output.
 
 ## 14. Date model
 
-- Supported input: January 1900 through December 2100.
+- Supported month input: January 1900 through December 2100. Day inputs: 1900-01-01 through 2100-12-31.
 - Maximum selected month range: 60 months.
-- End month must be equal to or later than start month.
+- End must be equal to or later than start. Weekly and daily keep separate day ranges; Monthly/Yearly retain month controls. Shortcuts use the user's local current date, then calculations use UTC date-only values.
 - Date-only calendar calculations use UTC constructors/getters to avoid timezone/DST shifts.
 - Leap years and cross-year ranges must render correctly.
 - The preview index is reset/clamped safely after range or refill-type changes.
+- An empty daily weekday selection or a range with no included days blocks output with visible guidance.
+- Undated Monthly/Weekly/Daily uses 1–100 units, preserving headings, time labels, ruling, and blank date fields. Spread units produce two content pages. No placeholder calendar dates, holiday names/colors, mini calendars, or week numbers may leak into preview/PDF/title/filename. Yearly and Notes ignore inactive date-mode fields.
 
 
 ## 15. Ring-side margin model
@@ -208,22 +214,26 @@ This rule avoids cutting off partial weeks at month boundaries.
 - A4 dimensions: 210 × 297 mm; US Letter: 215.9 × 279.4 mm.
 - For A4 / Letter, portrait and landscape paper orientations are evaluated automatically.
 - The orientation with the highest number of unscaled refill pages per sheet is selected.
+- A paper-edge margin of 0–20 mm reduces the usable paper rectangle before fit and placement. UI presets are 0, 3, 5 mm and Custom; custom input uses 0.5 mm steps. The default is 0 mm for compatibility, with a visible paper-edge clipping note. Exact-size output ignores this inactive margin.
 - Refill pages are placed row-major in their original sequence. Empty final slots remain blank.
 - The app never reduces refill dimensions to force a fit. If neither paper orientation can contain one refill page, print-sheet output is blocked with an inline message.
 - Optional crop guides draw the exact outer rectangle of each refill plus short corner extensions where available.
 - The print-layout preview shows paper orientation, columns × rows, pages per sheet, and resulting sheet count.
-- Print-size test PDF uses A4 by default and US Letter when Letter output is selected. It contains a 100 mm line and 50 × 50 mm box; when the refill fits, a second page shows its full-size outer rectangle.
+- Print-size test PDF uses A4 by default and US Letter when Letter output is selected. It contains a 100 mm line and 50 × 50 mm box plus a full-size refill outline when it fits. Duplex tests provide front/back alignment references and matching flip-edge instructions.
 - All print PDFs include guidance to print at 100% / Actual size and avoid Fit to page.
-- Duplex output mirrors back-side slots according to long-edge / short-edge flip and adds a blank final back side when needed.
+- Crop guides stay within the paper bounds. Nonzero margins can reduce slot counts without shrinking refills: A5 on A4 has two slots at 0 mm and one at 5 mm.
+- Duplex output mirrors back-side slots according to long-edge / short-edge flip and consumes the same padded print sequence as exact output and previews.
 
 ## 17. Duplex printing
 
 - Modes: Single-sided, Long-edge flip, Short-edge flip.
-- Exact-size PDF keeps logical front/back page order. If the logical page count is odd, one blank PDF page is appended so the final back remains blank.
-- A4 / US Letter imposition pairs logical pages as front/back refill faces: 1/2, 3/4, and so on.
+- Logical content pages, padded physical faces, and imposed sheets are separate concepts. Logical page numbers never count padding blanks.
+- Duplex prepends a blank front when the first logical page is left-sided, then appends a blank back when the resulting face count is odd. For two spreads `[L1,R1,L2,R2]`, the prepared sequence is `[blank,L1,R1,L2,R2,blank]`; the first spread's left and right pages face after binding.
+- Exact-size PDF uses this prepared sequence. A4 / US Letter pairs consecutive prepared faces into refill leaves and batches leaves into available sheet slots. Single-sided output has no duplex padding.
 - Back-side slot positions are mirrored according to paper orientation and selected flip edge.
+- When the printer flips about a horizontal paper axis (portrait short-edge / landscape long-edge), rotate back artwork 180° so cut refills remain upright when turned on their left/right ring edge. Apply this to exact back faces and imposed back slots, using actual paper dimensions; sheet preview shows the physical rotation and bound preview shows readable content.
 - Long-edge and short-edge settings must be matched in the printer dialog; the app explains this rather than attempting printer control.
-- Front/back mini previews show the resulting slot geometry.
+- Front/back previews label actual content and blank faces; bound preview shows facing pages and is disabled in single-sided mode.
 - Duplex mode participates in the PDF freshness signature.
 
 ## 18. Preview and navigation
@@ -233,9 +243,11 @@ This rule avoids cutting off partial weeks at month boundaries.
 - Current unit, position, physical dimensions, selected layout, and generated page count are visible.
 - Navigation unit changes by refill type: month, year, or week.
 - Previous/next controls disable at range boundaries.
+- Direct unit navigation, individual spread-side inspection, and an enlarged native dialog are available. The enlarged view supports scrolling, Escape/backdrop/close dismissal, and focus restoration.
+- Preview modes are Refill, Print sheets, and Bound. Display indexes and modes are presentation state, excluded from saved settings and the PDF freshness signature; changing only the view does not invalidate a PDF.
 - Left/Right arrow navigation is available when focus is not inside an input and the help dialog is closed.
 - Desktop: settings and preview are side by side and preview remains sticky.
-- Smartphone: preview appears above settings and must not create page-level horizontal scrolling.
+- Smartphone: the adapted canonical bottom bar switches between Settings, Preview, and PDF output at 600 px and below; only the active page is shown. Preserve entered values and make errors reachable across tabs. Bottom safe-area spacing prevents controls from being covered. No page-level horizontal scrolling is allowed.
 
 ## 19. Privacy and data
 
@@ -256,12 +268,14 @@ This rule avoids cutting off partial weeks at month boundaries.
 - Radio semantics for size/orientation/refill/layout/week-start choices.
 - Roughly 44 px touch targets for primary controls.
 - Only layout choices relevant to the selected refill type are shown.
-- Weekly-hour controls appear only for Weekly Vertical.
+- Hour controls appear for Weekly Vertical and Daily.
 - Adjacent-month toggle appears only for Monthly.
 - Help dialog scrolls fully on narrow/short viewports.
+- Build information is a collapsible section at the bottom of Help on desktop; it and the page footer are hidden at the smartphone breakpoint (600 px and below).
+- Header typography, icon size, version styling, and language/Help actions follow Browser Kitty's Pass-the-Phone Vote header, while retaining the planner workspace width. The subtitle describes planner-sized printable refills; the separate local-processing shield badge remains visible. The hero heading is 26 px maximum on desktop and 20 px on phones.
 - Japanese and English strings fit at 360 px width.
 - Invalid date/time ranges produce inline guidance. Empty numeric drafts remain invalid on blur; finite numeric values retain the existing range normalization.
-- PDF readiness validates only applicable fields: custom size only for Custom, dates only for dated refills, note count only for Notes, hours only for Daily / Weekly Vertical, and manual ring margin only in Manual mode.
+- PDF readiness validates only applicable fields: custom size only for Custom, month/day dates only for the active dated type, weekday selection only for dated Daily, undated count only for undated Monthly/Weekly/Daily, note count only for Notes, hours only for Daily / Weekly Vertical, paper-edge margin only for imposed output, and manual ring margin only in Manual mode.
 - Print-size test validity depends on dimensions. It must not download stale results if settings change or dimensions become invalid during generation.
 
 ## 21. Browser target
@@ -307,6 +321,7 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - **v0.8.7:** Preview/PDF parity for Monthly Spread and preview-only page-side labels. **Implemented.**
 - **v0.9.0:** Release candidate and broad regression testing. **Implemented.**
 - **v1.0.0:** Initial stable release, README/screenshots/final release checks. **Implemented.**
+- **v1.1.0:** Physical print planning, paper-edge margins, day ranges, undated refills, visual/mobile workflow, trial output, and cancellable generation.
 
 ## 24. Non-goals for v1.0.0
 
@@ -345,7 +360,8 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 
 - The Appearance section offers **Save settings (.settings.json)** and **Load settings (JSON)** in Japanese and English. There is no named-preset manager or remote storage.
 - Save uses the editable PDF filename stem plus `.settings.json`, with the existing filename sanitization. Invalid active drafts block saving; inactive drafts use the last committed valid setting.
-- The file envelope is `{ "app": "planner-refill-maker", "formatVersion": 1, "settings": { ... } }`. Every version-1 setting field is required. The configuration allowlist includes preset/custom size, orientation, refill type, all nested layout choices, date range, hours, note count/spacing, holiday/colors, appearance, ring/side/punch, paper/crop, and duplex options.
+- New files use `{ "app": "planner-refill-maker", "formatVersion": 2, "settings": { ... } }`. Every version-2 field is required. The allowlist adds paper-edge margin, date mode, undated count, separate weekly/daily start/end dates, and daily weekday selection to the original settings.
+- Version-1 files remain supported and must contain every original version-1 field. Validate them strictly before migration: margin defaults to 0, date mode to dated, weekday selection to all days, and weekly/daily ranges expand the original start/end months to their first/last days. Unsupported versions and malformed legacy inputs remain errors; migration must not silently replace old periods with today's dates.
 - Files exclude language preference, filename, derived base geometry, navigation position, runtime flags, Blob URLs, and PDF contents. Extra unrecognized fields are ignored and never spread into state.
 - Maximum selected size: **64 KiB**, checked before reading and again against UTF-8 text size. Unsupported app/version, malformed JSON, wrong types/enums, missing fields, invalid layout/type pairs, colors, numeric bounds, date ranges, or hour relationships reject the complete file without changing current settings, local storage, or generated PDF. Values are not clamped during import.
 - Named dimensions always come from the built-in PRESETS table. Custom base dimensions come from validated width/height; landscape swaps only effective dimensions. Stale legacy baseWidth/baseHeight can never override either source.
@@ -372,5 +388,18 @@ Current stable desktop and mobile Chromium, Firefox, and Safari where the templa
 - While any native modal is open, both document scroll containers (`html` and `body`) use `:has(dialog:modal)` to pause background scrolling. Closing the last modal restores ordinary page scrolling through CSS alone.
 - Preserve the existing Help and confirmation dialog sizes, fixed headers, internal scroll regions, safe-area padding, native dismissal/focus behavior, and the local-processing shield badge.
 - Help explains background locking and internal scrolling in Japanese and English. Settings, calendar/PDF rendering, import/export, and persistence behavior are unchanged.
-- `tests/modal-scroll.test.mjs` guards the modal-state rules, localized Help, and unchanged shell/runtime scope. `PLANNER_HTML` accepts a template, readable release, or gzip self-extract wrapper. The repository check discovers this test, and the canonical runtime runner repeats it on the checked-in standalone, readable build, and byte-verified restored payload.
+- `tests/modal-scroll.test.mjs` guards modal-state rules, dialog structure, and dismissal contracts without freezing unrelated application code. `PLANNER_HTML` accepts a template, readable release, or gzip self-extract wrapper. The repository check discovers this test, and the canonical runtime runner repeats it on the checked-in standalone, readable build, and byte-verified restored payload.
+
+## v1.1.0 acceptance criteria
+
+- Canonical metadata and header fallback report 1.1.0. Earlier supported layouts, sizes, settings files, language switching, and local-only distribution remain available.
+- Left-first spreads and single pages have correct physical front/back order in exact and imposed duplex output. Right-first pages retain their starting side; padding is explained and never changes logical page numbers.
+- Full export, current-page/spread trial, count estimates, print-sheet preview, and bound preview consume the same physical planning helpers. Trial output is clearly named and identified without mutating the selected date range.
+- Margin changes affect fit and placement at original physical scale, with field validation and migration coverage.
+- Separate day ranges, leap days, full-week spillover, weekday filtering, inactive fields, and the 60-month bound have behavior tests. Legacy ranges produce the same dates after migration.
+- Every undated monthly/weekly/daily renderer is tested for blank date fields and absence of synthetic date/holiday text, while retaining intended weekday/time/ruling content.
+- Generation uses an explicit revision/cancellation guard before further pages and before publishing a result. Cancelled, stale, invalid, or A → B → A work cannot become downloadable as a fresh PDF.
+- Desktop and 360–393 px phone workflows, Japanese/English, keyboard navigation, enlarged/Help/confirmation dialogs, edited filenames, and no runtime requests are checked in an actual browser.
+- Canonical PowerShell syntax/build/repository checks pass. Root standalone and both distribution variants share the tested application; self-extract restores readable HTML byte-for-byte.
+- Physical printer scaling/registration and untested browser engines are reported as limits, never implied by the Node Canvas adapter or Chromium QA.
 - Browser acceptance: in Japanese and English at desktop, 393 px phone width, and 393 × 252 px, wheel input outside Help or the settings confirmation must leave the background position unchanged. Internal scrolling must reach the final Help item and confirmation actions. Close, Cancel, Escape, backdrop dismissal, repeated opening, and normal scrolling after dismissal retain their existing behavior. These native layout/scroll results require browser verification beyond the Node contracts.
