@@ -19,7 +19,12 @@ try {
   fs.writeFileSync(unpacked, expanded);
   for (const html of ['planner-refill-maker.html', 'dist/index.html', unpacked]) {
     console.log(`Planner runtime checks: ${html === unpacked ? 'self-extract payload' : html}`);
-    const result = spawnSync(process.execPath, ['--test', 'tests/pdf-output-consistency.test.mjs', 'tests/settings-files.test.mjs', 'tests/header-language.test.mjs', 'tests/modal-scroll.test.mjs'], {
+    const result = spawnSync(process.execPath, ['--test',
+      'tests/pdf-output-consistency.test.mjs', 'tests/print-planning.test.mjs',
+      'tests/date-selection.test.mjs', 'tests/undated-output.test.mjs',
+      'tests/preview-workflow.test.mjs', 'tests/settings-files.test.mjs',
+      'tests/header-language.test.mjs', 'tests/modal-scroll.test.mjs',
+    ], {
       cwd: root, env: { ...process.env, PLANNER_HTML: html }, stdio: 'inherit',
     });
     if (result.error) throw result.error;

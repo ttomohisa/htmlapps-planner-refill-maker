@@ -52,7 +52,7 @@ test('valid partial legacy settings get defaults and validated Custom geometry',
 test('save exports only versioned allowlisted settings with the editable filename stem', async () => {
   const h=loadPlanner(); await h.input('pdfFilename','My/weekly:setup.pdf');
   const data=await save(h);
-  assert.equal(data.app,'planner-refill-maker'); assert.equal(data.formatVersion,1);
+  assert.equal(data.app,'planner-refill-maker'); assert.equal(data.formatVersion,2); assert.equal(data.settings.printMarginMm,0);
   assert.equal(h.downloads.at(-1).filename,'My-weekly-setup.settings.json');
   assert.equal(data.settings.layoutByType.weekly,'weekly-block');
   for(const key of ['language','baseWidth','baseHeight','viewIndex','blob','url','pdfBusy']) assert.equal(key in data.settings,false,key);
@@ -89,7 +89,7 @@ test('cancel, Escape and backdrop preserve setup and existing generated PDF',asy
 });
 test('invalid settings documents are rejected without partial state/PDF/storage changes',async()=>{
   const valid=await saved();
-  const mutations=[x=>{x.app='other';},x=>{x.formatVersion=2;},x=>{x.settings=[];},x=>{x.settings.sizeKey='other';},x=>{x.settings.customWidth='95';},x=>{x.settings.customHeight=401;},x=>{x.settings.notesCount=1.5;},x=>{x.settings.showHolidays='false';},x=>{x.settings.startMonth='2026-13';},x=>{x.settings.startMonth='2026-12';x.settings.endMonth='2026-01';},x=>{x.settings.startMonth='2020-01';x.settings.endMonth='2026-01';},x=>{x.settings.startHour=23;x.settings.endHour=22;},x=>{x.settings.layoutByType.monthly='weekly-block';},x=>{x.settings.saturdayColor='<svg>';},x=>{x.settings.noteSpacing=7;},x=>{x.settings.ringMarginManual=31;}];
+  const mutations=[x=>{x.app='other';},x=>{x.formatVersion=3;},x=>{x.settings=[];},x=>{x.settings.sizeKey='other';},x=>{x.settings.customWidth='95';},x=>{x.settings.customHeight=401;},x=>{x.settings.notesCount=1.5;},x=>{x.settings.showHolidays='false';},x=>{x.settings.startMonth='2026-13';},x=>{x.settings.startMonth='2026-12';x.settings.endMonth='2026-01';},x=>{x.settings.startMonth='2020-01';x.settings.endMonth='2026-01';},x=>{x.settings.startHour=23;x.settings.endHour=22;},x=>{x.settings.layoutByType.monthly='weekly-block';},x=>{x.settings.saturdayColor='<svg>';},x=>{x.settings.noteSpacing=7;},x=>{x.settings.ringMarginManual=31;}];
   const h=loadPlanner();await h.radio('refillType','notes');await h.run(()=>h.app.createPdf());const before=plain(h.app.state),pdf=h.app.generatedPdf.blob,storage=h.storage.get(KEY);
   for(const mutate of mutations){const x=plain(valid);mutate(x);await load(h,x);assert.deepEqual(plain(h.app.state),before);assert.equal(h.app.generatedPdf.blob,pdf);assert.equal(h.storage.get(KEY),storage);assert.notEqual(h.get('appConfirmDialog').open,true);assert.ok(h.get('settingsFileStatus').textContent);}
   for(const raw of ['','{','null','[]'])await load(h,file(raw));
@@ -186,4 +186,46 @@ test('explicit replacement retries persistence after an initial storage-read fai
   const failures={get:true};const h=loadPlanner(undefined,{storageFailures:failures});failures.get=false;
   const reset=h.get('resetSettingsButton').click();await confirm(h);await reset;await h.radio('plannerSize','bible');
   assert.equal(JSON.parse(h.storage.get(KEY)).sizeKey,'bible');assert.match(h.get('settingsStorageStatus').textContent,/saved in this browser/);
+});
+
+
+test('v1 settings keep every original required field and migrate new fields to defaults',async()=>{
+  const data=await saved(); data.formatVersion=1; for(const key of ['printMarginMm','dateMode','undatedCount','weeklyStartDate','weeklyEndDate','dailyStartDate','dailyEndDate','dailyWeekdays'])delete data.settings[key];
+  const h=loadPlanner(); const pending=load(h,data); await confirm(h); await pending;
+  assert.equal(h.app.state.printMarginMm,0);
+  for(const key of Object.keys(data.settings)){
+    const incomplete=plain(data); delete incomplete.settings[key]; await load(h,incomplete);
+    assert.notEqual(h.get('appConfirmDialog').open,true,key);
+  }
+});
+test('v2 requires and validates printer margin while legacy storage supplies its default',async()=>{
+  const h=loadPlanner(undefined,{savedSettings:{printMode:'a4'}}); assert.equal(h.app.state.printMarginMm,0);
+  const data=await saved();
+  for(const value of [undefined,null,'5',-1,21]){
+    const invalid=plain(data); if(value===undefined)delete invalid.settings.printMarginMm;else invalid.settings.printMarginMm=value;
+    await load(h,invalid); assert.notEqual(h.get('appConfirmDialog').open,true,String(value));
+  }
+  data.settings.printMarginMm=5; const pending=load(h,data); await confirm(h); await pending;
+  assert.equal(h.app.state.printMarginMm,5); assert.equal(h.get('printMarginMm').value,'5');
+});
+
+test('v1 and month-only browser records preserve original full weekly and leap-month daily output',async()=>{
+ const data=await saved();data.formatVersion=1;data.settings.startMonth='2024-02';data.settings.endMonth='2024-02';data.settings.refillType='daily';
+ // Incoming v2 properties in a v1 envelope cannot override migration.
+ data.settings.dailyStartDate='2099-01-01';data.settings.dailyEndDate='2099-01-01';data.settings.dateMode='undated';
+ const h=loadPlanner();const pending=load(h,data);await confirm(h);await pending;
+ assert.equal(h.app.state.dailyStartDate,'2024-02-01');assert.equal(h.app.state.dailyEndDate,'2024-02-29');assert.equal(h.app.state.dateMode,'dated');assert.equal(h.app.allPageSpecs().length,29);
+ await h.radio('refillType','weekly');assert.equal(h.app.allPageSpecs().length,5);assert.equal(h.app.allPageSpecs()[0].week.start.toISOString().slice(0,10),'2024-01-29');
+ const legacy=loadPlanner(undefined,{savedSettings:{refillType:'daily',startMonth:'2024-02',endMonth:'2024-02'}});assert.equal(legacy.app.allPageSpecs().length,29);
+});
+test('v2 rejects missing malformed duplicate and empty date fields and weekdays atomically',async()=>{
+ const data=await saved(),h=loadPlanner(),before=plain(h.app.state);
+ for(const [key,value] of [['dateMode',undefined],['undatedCount',101],['weeklyStartDate','2023-02-29'],['weeklyEndDate','1899-12-31'],['dailyEndDate','2101-01-01'],['dailyWeekdays',[]],['dailyWeekdays',[1,1]],['dailyWeekdays',[7]],['dailyWeekdays',['1']]]){
+ const invalid=plain(data);if(value===undefined)delete invalid.settings[key];else invalid.settings[key]=value;await load(h,invalid);assert.deepEqual(plain(h.app.state),before);assert.notEqual(h.get('appConfirmDialog').open,true,key);
+ }
+});
+test('date shortcuts and weekday presets cancel a pending settings import',async()=>{
+ for(const [type,id] of [['monthly','shortcutThisMonth'],['daily','dailyWorkdays']]){
+ const h=loadPlanner();await h.radio('refillType',type);const data=await saved();data.settings.sizeKey='bible';const pending=load(h,data);await h.drain();assert.equal(h.get('appConfirmDialog').open,true);await h.get(id).click();assert.equal(h.get('appConfirmDialog').open,false);await pending;assert.equal(h.app.state.sizeKey,'a5');
+ }
 });

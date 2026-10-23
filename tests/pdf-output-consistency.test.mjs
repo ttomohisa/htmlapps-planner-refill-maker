@@ -77,9 +77,9 @@ test('invalid draft arriving during PDF generation cannot publish stale output',
 
 test('calendar, duplex and unscaled imposition calculations stay intact', async () => {
   const h = loadPlanner();
-  await h.radio('refillType', 'daily'); await h.input('startMonth', '2024-02'); await h.input('endMonth', '2024-02');
+  await h.radio('refillType', 'daily'); await h.input('dailyStartDate', '2024-02-01'); await h.input('dailyEndDate', '2024-02-29');
   assert.equal(h.app.allPageSpecs().length, 29);
-  await h.radio('refillType', 'weekly'); await h.input('startMonth', '2026-02'); await h.input('endMonth', '2026-02');
+  await h.radio('refillType', 'weekly'); await h.input('weeklyStartDate', '2026-02-01'); await h.input('weeklyEndDate', '2026-02-28');
   assert.equal(h.app.allPageSpecs().length, 5);
   await h.radio('weekStart', 'sunday'); assert.equal(h.app.allPageSpecs().length, 4);
   await h.radio('refillType', 'notes'); await h.input('notesCount', '3'); await h.radio('duplexMode', 'long');
@@ -148,9 +148,9 @@ test('changing settings A to B to A cannot publish a mixed-page PDF', async () =
   h.raster.paused = true;
   const pending = h.app.createPdf();
   assert.equal(h.raster.pending.length, 1);
-  await h.radio('noteSpacing', '5'); h.raster.pending.shift()(); await h.drain();
-  assert.equal(h.raster.pending.length, 1, 'second page is now waiting');
-  await h.radio('noteSpacing', '4'); h.raster.pending.shift()(); await h.drain();
+  await h.radio('noteSpacing', '5'); await h.radio('noteSpacing', '4');
+  h.raster.pending.shift()(); await h.drain();
+  assert.equal(h.raster.pending.length, 0, 'obsolete generation stops before a second page');
   h.raster.paused = false; h.raster.pending.splice(0).forEach(complete => complete());
   await h.run(() => pending);
   assert.equal(h.app.generatedPdf.blob, null, 'matching final values cannot restore an obsolete generation');

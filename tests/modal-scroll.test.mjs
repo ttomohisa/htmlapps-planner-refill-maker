@@ -1,5 +1,4 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import test from 'node:test';
 import { gunzipSync } from 'node:zlib';
@@ -13,7 +12,6 @@ if (payload) html = gunzipSync(Buffer.from(payload[1].replace(/\s/g, ''), 'base6
 html = html.replace(/\r\n/g, '\n');
 const css = html.match(/<style>([\s\S]*?)<\/style>/)[1];
 const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)];
-const hash = value => createHash('sha256').update(value).digest('hex');
 const jaHelp = 'ダイアログを開いている間は背景のスクロールが止まります。内容はダイアログ内でスクロールできます。';
 const enHelp = 'Background scrolling is paused while a dialog is open. Scroll inside the dialog to read its contents.';
 
@@ -40,24 +38,28 @@ test('Help omits layout audit prose in Japanese and English', () => {
   assert.match(help, /data-i18n="helpOffline"/);
 });
 
-test('modal-only patch preserves all existing styles and dialog shells', () => {
-  // Baseline: main 533d245 (v1.0.2). Strip only this patch's approved additions.
-  // Rebaselined for the help-copy-only cleanup; layout and runtime behavior are unchanged.
-  const existingCss = css.replace(/    html:has\(dialog:modal\),\s*body:has\(dialog:modal\)\s*\{\s*overflow:\s*hidden;?\s*\}\n/, '');
-  assert.equal(hash(existingCss), '3e64eb743c9df411df5bda8f7b1df0ca579d8c051ae5f5dea3862234840ba01a');
-  const shells = [...html.matchAll(/<dialog\b[^>]*>[\s\S]*?<\/dialog>/g)].map(match => match[0]).join('\n')
-    .replace(/        <p data-i18n="helpModalScroll">[^<]*<\/p>\n/, '')
-    .replace(/v1\.0\.[23]/g, 'vPATCH');
-  assert.equal(hash(shells), '0e3e2cdf6cc6e8392b6e8e2009fd5702ec4181800f61b68e37869f436c89a887');
-});
-
-test('modal-only patch preserves runtime, settings, PDF export and dialog handlers', () => {
-  let script = html.match(/<script>\s*([\s\S]*?)<\/script>/)[1];
-  for (const [name, token] of [['APP_CONFIG', '__APP_CONFIG_JSON__'], ['BUILD_MANIFEST', '__BUILD_MANIFEST_JSON__'], ['assetBundle', '__EMBEDDED_ASSET_BUNDLE_JSON__']]) {
-    script = script.replace(new RegExp(`(const ${name} = )[\\s\\S]*?;\\n`), `$1${token};\n`);
+test('Help and confirmation keep labelled native dialogs with reachable controls', () => {
+  // Assert the reusable modal contract, not a hash of unrelated application code.
+  // Native scrolling, focus restoration and dismissal are also checked in browser QA.
+  for (const [id, title, bodyClass, controls] of [
+    ['helpDialog', 'helpTitle', 'dialog-body', ['closeHelpButton']],
+    ['appConfirmDialog', 'appConfirmTitle', 'app-confirm-body', ['appConfirmClose', 'appConfirmCancel', 'appConfirmOk']],
+  ]) {
+    const dialog = [...html.matchAll(/<dialog\b[^>]*>[\s\S]*?<\/dialog>/g)]
+      .map(match => match[0]).find(value => value.includes(`id="${id}"`));
+    assert.ok(dialog, `${id} remains a native dialog`);
+    assert.match(dialog, new RegExp(`aria-labelledby="${title}"`));
+    assert.match(dialog, new RegExp(`class="[^"]*\\b${bodyClass}\\b`));
+    for (const control of controls) assert.ok(dialog.includes(`id="${control}"`), `${id} retains ${control}`);
   }
-  script = script.replace(/helpModalScroll:'[^']*',/g, '').replace(/v1\.0\.[23]/g, 'vPATCH');
-  assert.equal(hash(script), 'eda10d4dd95e68ce02ea34cd1e6bff9618d2a8f9172132a5e5a6715507d3f2a2');
+  for (const selector of ['.dialog-body', '.app-confirm-body']) {
+    const declarations = rules.filter(([, selectors]) => selectors.split(',').some(value => value.trim() === selector))
+      .map(([, , value]) => value).join(';');
+    assert.match(declarations, /overflow\s*:\s*auto\b/, `${selector} has internal scrolling`);
+    assert.match(declarations, /safe-area-inset-bottom/, `${selector} protects bottom controls`);
+  }
+  assert.match(css, /\.dialog-shell\s*\{[^}]*max-height\s*:[^}]*100dvh/);
+  assert.match(css, /\.app-confirm-dialog\s*\{[^}]*max-height\s*:[^}]*100dvh/);
 });
 
 test('local-processing badge retains its existing decorative shield and check', () => {
