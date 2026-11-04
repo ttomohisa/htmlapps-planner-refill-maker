@@ -13,6 +13,7 @@ All notable changes to this project are documented in this file.
 - Set physical spacing for ruled, grid, and dot patterns.
 - Add one-page and facing monthly lists with named writing columns.
 - Add local days off and events with one-time, weekly, or yearly recurrence. Settings files now use version 3 and still accept versions 1 and 2.
+- Group settings into collapsible sections and give layout cards consistent sizing with previews that match the printed page structure.
 
 ## [1.1.0] - 2026-10-23
 
