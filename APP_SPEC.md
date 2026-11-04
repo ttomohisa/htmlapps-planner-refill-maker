@@ -4,12 +4,12 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.1.0
+- **Current version:** 1.2.0
 - **Purpose:** Create dated, undated, and note-paper planner refills in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
 
-## 2. v1.1.0 product scope
+## 2. v1.2.0 product scope
 
 The product is a focused refill generator. Users select a planner size, choose a dated, undated, or note layout, preview it, and export a correctly sized printable PDF without manually calculating ring margins, imposition, duplex order, or crop marks.
 
@@ -28,6 +28,16 @@ Current scope:
 - Thumbnail layout choices, mobile page tabs, refill/sheet/bound previews, and accessible enlarged preview.
 - Japanese and English UI.
 - Fully local, single-HTML distribution with no runtime network requests.
+
+### v1.2.0 page customization
+
+- Daily time grid, checklist, and notes can be enabled independently with at least one visible. Active sections fill the available space. Users can change section labels, sidebar width, checklist rows, and notes ruling.
+- Weekly block extras can be notes, checklist, or blank. Weekly + notes supports configurable ruling. Vertical weeks add a facing spread, equal or weekday-priority columns, 60/30-minute or untimed divisions, and an optional footer.
+- The optional ruling override is shared by notes paper and matching sections. Each pattern accepts 3–12 mm in 0.5 mm steps. Existing settings retain their prior spacing when no override is specified.
+- Monthly lists support one or two pages, 1–4 named writing columns, and aligned date rows on spreads. An undated month list uses generic day numbers 1–31.
+- Personal dates support one-time dates, weekly weekdays, and annual month/day values, with up to 100 enabled or disabled entries. February 29 repeats only in leap years. Date annotations distinguish days off and events, retain official holiday labels where possible, and indicate additional entries when space is limited. Yearly pages show marks. Undated pages omit personal dates.
+- Settings JSON v3 includes a validated customization record. Versions 1 and 2 remain accepted with legacy defaults. Personal dates are included in settings backups and processed locally.
+- These layouts use the shared preview/PDF drawing path and the existing actual-size and duplex planners.
 
 ## 3. v1.0.0 release goal
 
@@ -144,7 +154,7 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 
 - Two facing pages per week.
 - Left page contains seven day rows.
-- Right page is a lined notes page.
+- Right page is a notes page with configurable ruling.
 - Page count is two pages per generated week.
 
 ### Weekly vertical
@@ -168,9 +178,7 @@ Stored preset/custom dimensions remain portrait-base dimensions. Landscape swaps
 
 - Ruled, Grid, and Dot-grid layouts.
 - User selects 1–100 pages.
-- Ruled spacing is fixed at 7 mm.
-- Grid and Dot grid support 4 mm and 5 mm spacing.
-- Note-paper preview and PDF use the same Canvas renderer and spacing derived from physical millimeters: 7 mm ruled, 4/5 mm square grid or dot grid. Spacing remains consistent across orientation, page side, ring margins, and appearance presets.
+- Default ruling uses 7 mm for ruled paper and the legacy 4/5 mm choice for grid and dot. Each pattern supports a 3–12 mm override in 0.5 mm steps. Preview and PDF share millimeter-based spacing across page sides, sizes, orientations, and styles.
 - Note-paper page count replaces date-range controls while Notes is selected.
 
 ## 13. Weekly range rule

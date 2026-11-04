@@ -155,6 +155,17 @@
     .advanced-actions { display:grid;grid-template-columns:1fr;gap:8px; }
     .local-save-note { color:var(--muted);font-size:9px;line-height:1.45; }
 
+    .refill-fields { display:grid;gap:8px;min-width:0; }
+    .advanced-settings > .refill-fields { padding:12px;border-top:1px solid var(--line); }
+    .refill-fields label { display:grid;gap:4px;font-size:12px;min-width:0; }
+    .refill-fields input:not([type=checkbox]),.refill-fields select { width:100%;min-width:0;min-height:44px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text); }
+    .refill-fields .refill-check { display:flex;align-items:center;gap:8px;min-height:44px; }
+    .refill-check input { accent-color:var(--accent); }
+    .refill-fields [hidden] { display:none!important; }
+    .personal-list { margin:0;padding:0;list-style:none; }
+    .personal-list li { display:grid;gap:6px;padding:8px 0;border-bottom:1px solid var(--line);overflow-wrap:anywhere; }
+    .personal-actions { display:flex;gap:6px;flex-wrap:wrap; }
+    .personal-actions button { width:auto;min-height:44px; }
     .ring-options { display:grid;gap:10px; }
     .ring-row { display:grid;grid-template-columns:minmax(0,1fr) minmax(112px,.72fr);gap:10px;align-items:end; }
     .ring-field { display:grid;gap:5px; }
@@ -723,7 +734,7 @@
       <div class="brand">
         <img class="brand-icon" id="appBrandIcon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iIzE2NjI0ZiI+PHJlY3QgeD0iMS42IiB5PSIxLjYiIHdpZHRoPSI2MC44IiBoZWlnaHQ9IjYwLjgiIHJ4PSIxNS4yIi8+PGcgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii43NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTQzLjQgMTMuNWw3LjIgMWEzIDMgMCAwIDEgMi42IDMuNGwtNC43IDM1LjhhMyAzIDAgMCAxLTMuNCAyLjZMMjYuNyA1My43aDEzLjFhNS42IDUuNiAwIDAgMCA1LjYtNS42VjEzLjh6Ii8+PHBhdGggZD0iTTE2IDkuNGgyNS43YTMgMyAwIDAgMSAzIDN2MzYuOGE1IDUgMCAwIDEtNSA1SDE2YTIuOSAyLjkgMCAwIDEtMi45LTIuOXYtMzlBMi45IDIuOSAwIDAgMSAxNiA5LjR6Ii8+PC9nPjxjaXJjbGUgaWQ9ImgiIGN4PSIxNi4xIiBjeT0iMTUiIHI9IjEuMzUiLz48dXNlIGhyZWY9IiNoIiB5PSI2LjciLz48dXNlIGhyZWY9IiNoIiB5PSIxMy40Ii8+PHVzZSBocmVmPSIjaCIgeT0iMjAuNiIvPjx1c2UgaHJlZj0iI2giIHk9IjI3LjciLz48dXNlIGhyZWY9IiNoIiB5PSIzNCIvPjx1c2UgaHJlZj0iI2giIHg9IjMzLjEiIHk9IjUuMSIvPjx1c2UgaHJlZj0iI2giIHg9IjMyLjEiIHk9IjExLjkiLz48dXNlIGhyZWY9IiNoIiB4PSIzMSIgeT0iMTguNyIvPjx1c2UgaHJlZj0iI2giIHg9IjMwLjIiIHk9IjI2Ii8+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii42NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjAuNCIgeT0iMTMuMiIgd2lkdGg9IjIxLjEiIGhlaWdodD0iMTQuMyIgcng9Ii4yIi8+PHBhdGggZD0iTTI1LjYgMTMuNHYxMy44bTUuMi0xMy44djEzLjhNMzYgMTMuNHYxMy44TTIwLjcgMTYuOGgyMC41TTIwLjcgMjAuN2gyMC41TTIwLjcgMjQuN2gyMC41Ii8+PHJlY3QgaWQ9ImIiIHg9IjIwLjQiIHk9IjI5LjMiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiIHJ4PSIuMiIvPjx1c2UgaHJlZj0iI2IiIHk9IjQuMSIvPjx1c2UgaHJlZj0iI2IiIHk9IjguMiIvPjxyZWN0IHg9IjIwIiB5PSI0Mi4xIiB3aWR0aD0iMjEuNCIgaGVpZ2h0PSI4LjQiIHJ4PSIxIi8+PC9nPjxwYXRoIGQ9Ik0yNS42IDMwLjhoMTUuNk0yNS42IDM0LjloMTUuNk0yNS42IDM5aDE1LjZNMjIuMiA0NS4yaDE3LjVNMjIuMiA0Ny45aDE3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2NjI0ZiIgc3Ryb2tlLXdpZHRoPSIuOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==" alt="">
         <div class="brand-copy">
-          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.1.0</span></p>
+          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.2.0</span></p>
           <p class="brand-meta" data-i18n="brandMeta">手帳サイズに合わせたリフィルPDF</p>
         </div>
       </div>
@@ -745,7 +756,7 @@
       <div class="local-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5c0 4.6 2.8 8 7 10 4.2-2 7-5.4 7-10V6z"/><path d="m9 12 2 2 4-5"/></svg><span data-i18n="localBadge">完全ローカル処理</span></div>
     </section>
 
-    <!-- APP:BEGIN Planner Refill Maker v1.1.0 -->
+    <!-- APP:BEGIN Planner Refill Maker v1.2.0 -->
     <section class="workspace" aria-label="Planner refill workspace">
       <section class="settings-panel app-mobile-page is-mobile-active" id="settingsPage" aria-labelledby="settingsTitle">
         <div class="panel-heading">
@@ -794,11 +805,23 @@
           <div class="layout-options" id="layoutOptions" role="radiogroup" aria-labelledby="layoutGroupLabel">
             <div class="segment layout-option" data-refill="monthly"><input type="radio" name="layout" id="layoutMonthlySingle" value="monthly-single" checked><label for="layoutMonthlySingle"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M10 22h32M10 31h32M10 40h32M10 49h32M18 17v38M27 17v38M36 17v38"/></svg><span data-i18n="layoutMonthlySingle">月間 1ページ</span><span class="layout-description" data-i18n="layoutMonthlySingleDescription"></span></label></div>
             <div class="segment layout-option" data-refill="monthly"><input type="radio" name="layout" id="layoutMonthlySpread" value="monthly-spread"><label for="layoutMonthlySpread"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="2" y="8" width="22" height="48" rx="2" fill="white"/><rect x="28" y="8" width="22" height="48" rx="2" fill="white"/><path d="M10 22h32M10 31h32M10 40h32M10 49h32M18 17v38M27 17v38M36 17v38"/></svg><span data-i18n="layoutMonthlySpread">月間 見開き</span><span class="layout-description" data-i18n="layoutMonthlySpreadDescription"></span></label></div>
+            <div class="segment layout-option" data-refill="monthly" hidden>
+              <input type="radio" name="layout" id="layoutMonthlyList" value="monthly-list">
+              <label for="layoutMonthlyList"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" aria-hidden="true"><rect x="7" y="4" width="38" height="56" rx="2"/><path d="M15 16h22m-22 7h22m-22 7h22m-22 7h22m-22 7h22M22 16v30"/></svg><span data-i18n="layoutMonthlyList">月間 縦一覧</span></label>
+            </div>
+            <div class="segment layout-option" data-refill="monthly" hidden>
+              <input type="radio" name="layout" id="layoutMonthlyListSpread" value="monthly-list-spread">
+              <label for="layoutMonthlyListSpread"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" aria-hidden="true"><rect x="7" y="4" width="38" height="56" rx="2"/><path d="M12 16h28m-28 7h28m-28 7h28m-28 7h28m-28 7h28M26 10v44"/></svg><span data-i18n="layoutMonthlyListSpread">月間 縦一覧 見開き</span></label>
+            </div>
             <div class="segment layout-option" data-refill="yearly" hidden><input type="radio" name="layout" id="layoutYearSingle" value="year-single"><label for="layoutYearSingle"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><rect x="12" y="19" width="8" height="8"/><rect x="25" y="19" width="8" height="8"/><rect x="12" y="31" width="8" height="8"/><rect x="25" y="31" width="8" height="8"/><rect x="12" y="43" width="8" height="8"/><rect x="25" y="43" width="8" height="8"/></svg><span data-i18n="layoutYearSingle">年間 1ページ</span><span class="layout-description" data-i18n="layoutYearSingleDescription"></span></label></div>
             <div class="segment layout-option" data-refill="yearly" hidden><input type="radio" name="layout" id="layoutYearSpread" value="year-spread"><label for="layoutYearSpread"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="2" y="8" width="22" height="48" rx="2" fill="white"/><rect x="28" y="8" width="22" height="48" rx="2" fill="white"/><rect x="12" y="19" width="8" height="8"/><rect x="25" y="19" width="8" height="8"/><rect x="12" y="31" width="8" height="8"/><rect x="25" y="31" width="8" height="8"/><rect x="12" y="43" width="8" height="8"/><rect x="25" y="43" width="8" height="8"/></svg><span data-i18n="layoutYearSpread">年間 見開き</span><span class="layout-description" data-i18n="layoutYearSpreadDescription"></span></label></div>
             <div class="segment layout-option" data-refill="weekly" hidden><input type="radio" name="layout" id="layoutWeeklyBlock" value="weekly-block"><label for="layoutWeeklyBlock"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M12 27h28M12 42h28M26 16v39"/></svg><span data-i18n="layoutWeeklyBlock">週間ブロック</span><span class="layout-description" data-i18n="layoutWeeklyBlockDescription"></span></label></div>
             <div class="segment layout-option" data-refill="weekly" hidden><input type="radio" name="layout" id="layoutWeeklyNotes" value="weekly-notes"><label for="layoutWeeklyNotes"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="2" y="8" width="22" height="48" rx="2" fill="white"/><rect x="28" y="8" width="22" height="48" rx="2" fill="white"/><path d="M12 22h28M12 30h28M12 38h28M12 46h28M12 54h28"/></svg><span data-i18n="layoutWeeklyNotes">週間 + メモ</span><span class="layout-description" data-i18n="layoutWeeklyNotesDescription"></span></label></div>
             <div class="segment layout-option" data-refill="weekly" hidden><input type="radio" name="layout" id="layoutWeeklyVertical" value="weekly-vertical"><label for="layoutWeeklyVertical"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M17 18v37M23 18v37M29 18v37M35 18v37M12 29h28M12 40h28M12 51h28"/></svg><span data-i18n="layoutWeeklyVertical">週間バーチカル</span><span class="layout-description" data-i18n="layoutWeeklyVerticalDescription"></span></label></div>
+            <div class="segment layout-option" data-refill="weekly" hidden>
+              <input type="radio" name="layout" id="layoutWeeklyVerticalSpread" value="weekly-vertical-spread">
+              <label for="layoutWeeklyVerticalSpread"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" aria-hidden="true"><rect x="7" y="4" width="38" height="56" rx="2"/><path d="M12 18h28m-28 9h28m-28 9h28M16 12v40m5-40v40m5-40v40m5-40v40m5-40v40"/></svg><span data-i18n="layoutWeeklyVerticalSpread">週間バーチカル 見開き</span></label>
+            </div>
             <div class="segment layout-option" data-refill="daily" hidden><input type="radio" name="layout" id="layoutDaily" value="daily"><label for="layoutDaily"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M28 18v37M12 25h12M12 34h12M12 43h12M32 23h7M32 37h7M32 48h7"/></svg><span data-i18n="layoutDaily">1日 1ページ</span><span class="layout-description" data-i18n="layoutDailyDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesLined" value="notes-lined"><label for="layoutNotesLined"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M12 22h28M12 30h28M12 38h28M12 46h28M12 54h28"/></svg><span data-i18n="layoutNotesLined">横罫</span><span class="layout-description" data-i18n="layoutNotesLinedDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesGrid" value="notes-grid"><label for="layoutNotesGrid"><svg class="layout-thumbnail" viewBox="0 0 52 64" fill="none" stroke="currentColor" stroke-width=".8" aria-hidden="true"><rect x="7" y="3" width="38" height="58" rx="2" fill="white"/><path d="M12 12h28"/><path d="M12 23h28M12 33h28M12 43h28M12 53h28M18 17v38M28 17v38M38 17v38"/></svg><span data-i18n="layoutNotesGrid">方眼</span><span class="layout-description" data-i18n="layoutNotesGridDescription"></span></label></div>
@@ -897,8 +920,67 @@
             <div class="numeric-field"><label for="notesCount" data-i18n="notesCountLabel">枚数</label><div class="numeric-control"><input id="notesCount" type="number" min="1" max="100" step="1" value="10" inputmode="numeric"><span class="numeric-unit" data-i18n="sheetUnit">枚</span></div><span class="field-range">1–100</span><span class="field-error" id="notesCountError" role="status"></span></div>
             <div class="notes-count-group" id="noteSpacingGroup" hidden><div class="setting-label-row"><span class="field-label" id="noteSpacingLabel" data-i18n="noteSpacingLabel">間隔</span></div><div class="segmented" role="radiogroup" aria-labelledby="noteSpacingLabel"><div class="segment"><input type="radio" name="noteSpacing" id="noteSpacing4" value="4"><label for="noteSpacing4">4 mm</label></div><div class="segment"><input type="radio" name="noteSpacing" id="noteSpacing5" value="5" checked><label for="noteSpacing5">5 mm</label></div></div></div>
           </div>
-          <div class="ring-note" data-i18n="notesCountHelp">横罫は7 mm間隔。方眼・ドットは4 mm / 5 mmから選べます。</div>
+          <div class="ring-note" data-i18n="notesCountHelp">罫線間隔は「紙面の詳しい設定」で調整できます。</div>
         </div>
+
+        <details class="advanced-settings" id="refillDetails" hidden><summary data-i18n="refillDetails">紙面の詳しい設定</summary><div class="refill-fields">
+          <div id="dailySections" class="refill-fields">
+          <label class="refill-check" id="dailyTimeRow"><input id="dailyTime" type="checkbox"><span data-i18n="dailyTimeSection">時間軸を表示</span></label>
+          <label id="dailyTimeLabelRow"><span data-i18n="dailyTimeHeading">時間軸の見出し</span><input id="dailyTimeLabel" type="text" maxlength="28"></label>
+          <label class="refill-check" id="dailyTodoRow"><input id="dailyTodo" type="checkbox"><span data-i18n="dailyTodoSection">ToDo欄を表示</span></label>
+          <label id="dailyTodoLabelRow"><span data-i18n="dailyTodoHeading">ToDoの見出し</span><input id="dailyTodoLabel" type="text" maxlength="28"></label>
+          <label id="dailyTodoRowsRow"><span data-i18n="todoRows">ToDoの行数</span><input id="dailyTodoRows" type="number" min="1" max="16" step="1" inputmode="decimal"></label>
+          <label class="refill-check" id="dailyMemoRow"><input id="dailyMemo" type="checkbox"><span data-i18n="dailyMemoSection">メモ欄を表示</span></label>
+          <label id="dailyMemoLabelRow"><span data-i18n="dailyMemoHeading">メモの見出し</span><input id="dailyMemoLabel" type="text" maxlength="28"></label>
+          <label id="dailyPatternRow"><span data-i18n="pattern">メモ欄の罫線</span><select id="dailyPattern"><option value="original" data-i18n="patternOriginal">従来の罫線</option><option value="lined" data-i18n="patternLined">横罫</option><option value="grid" data-i18n="patternGrid">方眼</option><option value="dot" data-i18n="patternDot">ドット</option><option value="blank" data-i18n="patternBlank">無地</option></select></label>
+          <label id="dailyBalanceRow"><span data-i18n="columnBalance">時間軸と補助欄の幅</span><select id="dailyBalance"><option value="time" data-i18n="timeWide">時間軸を広く</option><option value="equal" data-i18n="equalWidth">均等</option><option value="side" data-i18n="sideWide">補助欄を広く</option></select></label>
+          <p class="field-error" id="dailySectionError" role="status"></p>
+          <p class="field-error" id="dailyRowsError" role="status"></p></div>
+          <div id="verticalSections" class="refill-fields">
+          <label id="verticalWidthRow"><span data-i18n="dayWidths">曜日の幅</span><select id="verticalWidth"><option value="equal" data-i18n="daysEqual">7日均等</option><option value="weekday" data-i18n="daysWork">平日を広く・土日を小さく</option></select></label>
+          <label id="verticalStepRow"><span data-i18n="timeSteps">時間目盛り</span><select id="verticalStep"><option value="60" data-i18n="hourStep">60分</option><option value="30" data-i18n="halfStep">30分</option><option value="none" data-i18n="noTime">時刻表示なし</option></select></label>
+          <label id="verticalExtraRow"><span data-i18n="verticalBox">下部の補助欄</span><select id="verticalExtra"><option value="none" data-i18n="boxNone">なし</option><option value="memo" data-i18n="blockMemo">メモ</option><option value="todo" data-i18n="blockTodo">ToDo</option></select></label>
+          <label id="verticalPatternRow"><span data-i18n="pattern">メモ欄の罫線</span><select id="verticalPattern"><option value="lined" data-i18n="patternLined">横罫</option><option value="grid" data-i18n="patternGrid">方眼</option><option value="dot" data-i18n="patternDot">ドット</option><option value="blank" data-i18n="patternBlank">無地</option></select></label></div>
+          <div id="listSections" class="refill-fields">
+          <label id="listCountRow"><span data-i18n="monthlyColumns">記入列の数</span><select id="listCount"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></label>
+          <label id="listColumn1Row"><span data-i18n="column1">1列目の名前</span><input id="listColumn1" type="text" maxlength="24"></label>
+          <label id="listColumn2Row"><span data-i18n="column2">2列目の名前</span><input id="listColumn2" type="text" maxlength="24"></label>
+          <label id="listColumn3Row"><span data-i18n="column3">3列目の名前</span><input id="listColumn3" type="text" maxlength="24"></label>
+          <label id="listColumn4Row"><span data-i18n="column4">4列目の名前</span><input id="listColumn4" type="text" maxlength="24"></label></div>
+          <label id="weeklyBlockExtraRow"><span data-i18n="weeklyBox">週間ブロックの補助欄</span><select id="weeklyBlockExtra"><option value="memo" data-i18n="blockMemo">メモ</option><option value="todo" data-i18n="blockTodo">ToDo</option><option value="blank" data-i18n="blockBlank">空白</option></select></label>
+          <label id="weeklyNotesPatternRow"><span data-i18n="pattern">メモ欄の罫線</span><select id="weeklyNotesPattern"><option value="original" data-i18n="patternOriginal">従来の罫線</option><option value="lined" data-i18n="patternLined">横罫</option><option value="grid" data-i18n="patternGrid">方眼</option><option value="dot" data-i18n="patternDot">ドット</option><option value="blank" data-i18n="patternBlank">無地</option></select></label>
+          <div id="refillSpacing" class="refill-fields"><strong data-i18n="spacingTitle">罫線間隔</strong>
+          <div id="spacingLinedGroup" class="refill-fields"><strong data-i18n="patternLined">横罫</strong>
+          <label id="spacingLinedPresetRow"><span data-i18n="spacingPreset">間隔のプリセット</span><select id="spacingLinedPreset"><option value="default" data-i18n="spacingDefault">既定値</option><option value="4">4 mm</option><option value="5">5 mm</option><option value="6">6 mm</option><option value="7">7 mm</option><option value="custom" data-i18n="spacingCustom">数値指定</option></select></label>
+          <label id="spacingLinedRow"><span data-i18n="spacingMm">間隔 (mm)</span><input id="spacingLined" type="number" min="3" max="12" step="0.5" inputmode="decimal"></label>
+          <p class="field-error" id="spacingLinedError" role="status"></p></div>
+          <div id="spacingGridGroup" class="refill-fields"><strong data-i18n="patternGrid">方眼</strong>
+          <label id="spacingGridPresetRow"><span data-i18n="spacingPreset">間隔のプリセット</span><select id="spacingGridPreset"><option value="default" data-i18n="spacingDefault">既定値</option><option value="4">4 mm</option><option value="5">5 mm</option><option value="6">6 mm</option><option value="7">7 mm</option><option value="custom" data-i18n="spacingCustom">数値指定</option></select></label>
+          <label id="spacingGridRow"><span data-i18n="spacingMm">間隔 (mm)</span><input id="spacingGrid" type="number" min="3" max="12" step="0.5" inputmode="decimal"></label>
+          <p class="field-error" id="spacingGridError" role="status"></p></div>
+          <div id="spacingDotGroup" class="refill-fields"><strong data-i18n="patternDot">ドット</strong>
+          <label id="spacingDotPresetRow"><span data-i18n="spacingPreset">間隔のプリセット</span><select id="spacingDotPreset"><option value="default" data-i18n="spacingDefault">既定値</option><option value="4">4 mm</option><option value="5">5 mm</option><option value="6">6 mm</option><option value="7">7 mm</option><option value="custom" data-i18n="spacingCustom">数値指定</option></select></label>
+          <label id="spacingDotRow"><span data-i18n="spacingMm">間隔 (mm)</span><input id="spacingDot" type="number" min="3" max="12" step="0.5" inputmode="decimal"></label>
+          <p class="field-error" id="spacingDotError" role="status"></p></div></div>
+          <p class="ring-note" id="densePaper" data-i18n="densePaper" hidden></p></div>
+          </details>
+        <details class="advanced-settings" id="personalDetails" hidden><summary data-i18n="personalDates">自分の休日・記念日</summary><div class="refill-fields">
+          <p class="ring-note" data-i18n="personalHint"></p>
+          <ul class="personal-list" id="personalList"></ul>
+          <label id="personalNameRow"><span data-i18n="personalNameLabel">名前</span><input id="personalName" type="text" maxlength="64"></label>
+          <label id="personalKindRow"><span data-i18n="personalType">種類</span><select id="personalKind"><option value="event" data-i18n="personalEvent">記念日・予定</option><option value="off" data-i18n="personalOff">自分の休日</option></select></label>
+          <label id="personalRepeatRow"><span data-i18n="repeatLabel">繰り返し</span><select id="personalRepeat"><option value="once" data-i18n="repeatOnce">特定の日付</option><option value="weekly" data-i18n="repeatWeekly">毎週</option><option value="annual" data-i18n="repeatAnnual">毎年</option></select></label>
+          <label id="personalDateRow"><span data-i18n="personalDateLabel">日付</span><input id="personalDate" type="date" min="1900-01-01" max="2100-12-31"></label>
+          <label id="personalWeekdayRow"><span data-i18n="personalWeekdayLabel">曜日</span><select id="personalWeekday"><option value="0" data-i18n="personalWeekday0">日曜日</option><option value="1" data-i18n="personalWeekday1">月曜日</option><option value="2" data-i18n="personalWeekday2">火曜日</option><option value="3" data-i18n="personalWeekday3">水曜日</option><option value="4" data-i18n="personalWeekday4">木曜日</option><option value="5" data-i18n="personalWeekday5">金曜日</option><option value="6" data-i18n="personalWeekday6">土曜日</option></select></label>
+          <div id="personalAnnual" class="refill-fields">
+          <label id="personalMonthRow"><span data-i18n="personalMonthLabel">月</span><input id="personalMonth" type="number" min="1" max="12" step="1" inputmode="decimal"></label>
+          <label id="personalDayRow"><span data-i18n="personalDayLabel">日</span><input id="personalDay" type="number" min="1" max="31" step="1" inputmode="decimal"></label></div>
+          <label class="refill-check" id="personalEnabledRow"><input id="personalEnabled" type="checkbox"><span data-i18n="personalEnabledLabel">紙面に表示する</span></label>
+          <button class="secondary-action" id="personalSave" type="button" data-i18n="personalSaveLabel">登録する</button>
+          <button class="secondary-action" id="personalCancel" type="button" data-i18n="personalCancelLabel">編集をキャンセル</button>
+          <p class="field-error" id="personalError" role="status"></p></div>
+          </details>
+        <p class="ring-note" id="personalPrintNote" data-i18n="personalPrintNote" hidden></p>
 
         <h3 class="section-heading" data-i18n="ringAppearanceHeading">リングと見た目</h3>
         <div class="setting-group" id="ringSettingsGroup">
@@ -1125,6 +1207,7 @@
         <h3 data-i18n="helpNotesTitle">現在の版について</h3><ul><li data-i18n="helpNotePreview">月間・年間・週間・日間・メモを作成し、実寸またはA4 / US LetterのPDFとして保存できます。</li><li data-i18n="helpNotePdf">実寸PDFに加え、A4 / US Letterへ複数のリフィルを自動配置できます。収まらない場合は縮小せず警告します。パンチ位置は位置合わせの目安で、穴位置を保証するものではありません。</li><li data-i18n="helpNoteRange">日付範囲は1900年1月〜2100年12月、最大60か月です。</li></ul>
         <p class="dialog-note" data-i18n="helpOffline">単一HTML版はローカルで直接開けます。実行時の外部ネットワーク通信はありません。</p>
         <details class="build-details"><summary data-i18n="buildInfo">ビルド情報</summary><div class="build-grid"><div class="build-item"><span data-i18n="appVersion">アプリバージョン</span><strong id="buildVersion">—</strong></div><div class="build-item"><span data-i18n="builtAt">生成日時</span><strong id="builtAt">—</strong></div><div class="build-item"><span data-i18n="dependencies">内包依存数</span><strong id="dependencyCount">0</strong></div></div></details>
+        <h3 data-i18n="helpRefillCustom">紙面と個人の日付を調整する</h3><p data-i18n="helpRefillCustomBody">「紙面の詳しい設定」で日間・週間の欄、バーチカルの目盛り、罫線間隔、月間縦一覧の列名を調整できます。「自分の休日・記念日」で特定日、毎週、毎年の項目を登録できます。日付なしの紙面には表示されません。設定JSONには個人の日付も含まれます。</p>
         <!-- APP:HELP:END -->
       </div>
     </div>
@@ -1134,8 +1217,8 @@
     (() => {
       'use strict';
 
-      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.1.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
-      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-10-23T06:31:34.4626772Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.1.0"},"dependencies":[]};
+      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.2.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
+      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-04T18:54:07.2145606Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
       const assetBundle = {"schemaVersion":2,"dependencies":{}};
       const blobUrls = new Set();
       const assetByteCache = new Map();
@@ -1158,7 +1241,66 @@
       const storageKeys={language:`${APP_CONFIG.slug}:language`,settings:`${APP_CONFIG.slug}:settings:v1`};
       let language=readStorage(storageKeys.language)||detectLanguage();
       const MONTHLY_SPREAD_RAIL=Object.freeze({monthTop:.038,yearTop:.115,minisTop:.38,miniHeight:.27,miniGap:.03,inset:.05,pdfRailOffsetX:-.085,yearOffsetX:-.05,pdfMonthScale:1.42,pdfYearScale:1.78});
-      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
+      const PATTERNS = ['lined', 'grid', 'dot', 'blank'];
+      const SPACING_KEYS = ['spacingLined', 'spacingGrid', 'spacingDot'];
+      const REFILL_CHOICES = {
+        dailyBalance: ['time','equal','side'], dailyPattern: ['original', ...PATTERNS],
+        weeklyBlockExtra: ['memo','todo','blank'], weeklyNotesPattern: ['original', ...PATTERNS],
+        verticalWidth: ['equal','weekday'], verticalStep: ['60','30','none'],
+        verticalExtra: ['none','memo','todo'], verticalPattern: PATTERNS,
+      };
+      const REFILL_DEFAULTS = {
+        dailyTime:true, dailyTodo:true, dailyMemo:true, dailyTodoRows:7, dailyBalance:'time',
+        dailyTimeLabel:'', dailyTodoLabel:'', dailyMemoLabel:'', dailyPattern:'original',
+        weeklyBlockExtra:'memo', weeklyNotesPattern:'original', verticalWidth:'equal',
+        verticalStep:'60', verticalExtra:'none', verticalPattern:'lined', listCount:2,
+        listColumn1:'', listColumn2:'', listColumn3:'', listColumn4:'',
+        spacingLined:null, spacingGrid:null, spacingDot:null, personalDates:[],
+      };
+      function refillSpacingValid(value) {
+        return typeof value === 'number' && value >= 3 && value <= 12 && Number.isInteger(value * 2);
+      }
+      function validRefillLabel(value, maxLength) {
+        return typeof value === 'string' && value.length <= maxLength && !/[\u0000-\u001f\u007f]/u.test(value);
+      }
+      function decodePersonalDate(entry) {
+        if (!settingsRecord(entry) || !validRefillLabel(entry.name, 64) || !entry.name.trim() ||
+            typeof entry.enabled !== 'boolean' || !['off','event'].includes(entry.kind)) throw new Error('Invalid personal date');
+        const { name, kind, enabled, repeat } = entry;
+        const core = { name: name.trim(), kind, enabled, repeat };
+        if (repeat === 'once' && parseDay(entry.date)) return { ...core, date: entry.date };
+        if (repeat === 'weekly' && Number.isInteger(entry.weekday) && entry.weekday >= 0 && entry.weekday < 7) return { ...core, weekday: entry.weekday };
+        if (repeat === 'annual' && Number.isInteger(entry.month) && Number.isInteger(entry.day)) {
+          const date = '2000-' + String(entry.month).padStart(2,'0') + '-' + String(entry.day).padStart(2,'0');
+          if (parseDay(date)) return { ...core, month: entry.month, day: entry.day };
+        }
+        throw new Error('Invalid recurrence');
+      }
+      function decodeRefillOptions(value) {
+        if (!settingsRecord(value)) throw new Error('Invalid refill settings');
+        const result = {};
+        for (const [key, initial] of Object.entries(REFILL_DEFAULTS)) {
+          if (!Object.hasOwn(value, key)) throw new Error('Missing refill setting');
+          const setting = value[key];
+          let valid;
+          if (key === 'personalDates') {
+            if (!Array.isArray(setting) || setting.length > 100) throw new Error('Invalid personal dates');
+            result[key] = setting.map(decodePersonalDate);
+            continue;
+          }
+          if (Object.hasOwn(REFILL_CHOICES,key)) valid = REFILL_CHOICES[key].includes(setting);
+          else if (SPACING_KEYS.includes(key)) valid = setting === null || refillSpacingValid(setting);
+          else if (typeof initial === 'boolean') valid = typeof setting === 'boolean';
+          else if (typeof initial === 'number') valid = Number.isInteger(setting) && setting >= 1 && setting <= (key === 'listCount' ? 4 : 16);
+          else valid = validRefillLabel(setting, key.startsWith('listColumn') ? 24 : 28);
+          if (!valid) throw new Error('Invalid refill option');
+          result[key] = setting;
+        }
+        if (!result.dailyTime && !result.dailyTodo && !result.dailyMemo) throw new Error('No daily sections');
+        return result;
+      }
+
+      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
       // File and local-storage boundaries share an allowlisted, canonical decoder.
       // Derived geometry is never trusted, including in legacy local records.
       const SETTINGS_MAX_BYTES=64*1024;
@@ -1172,14 +1314,14 @@
       const SETTINGS_NUMBERS={customWidth:[40,300],customHeight:[60,400],startHour:[0,23,true],endHour:[1,24,true],notesCount:[1,100,true],noteSpacing:[4,5,true],ringMarginManual:[4,30]};
       const SETTINGS_BOOLEANS=['showAdjacent','showHolidays','showHolidayNames','showPunchGuides','showCropGuides','showPageNumbers','showWeekNumbers'];
       const SETTINGS_COLORS=['saturdayColor','sundayColor','holidayColor'];
-      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot']};
+      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread','monthly-list','monthly-list-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical','weekly-vertical-spread'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot']};
       const SETTINGS_V1_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
       const SETTINGS_V2_DEFAULTS={printMarginMm:0,...DATE_DEFAULTS};
       const SETTINGS_V2_NUMBERS={printMarginMm:[0,20],undatedCount:[1,100,true]};
       const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS)];
       let settingsStorageIssue='',settingsStorageBlocked=false;
       function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
-      function decodeSettings(value,{legacy=false,formatVersion=2}={}){
+      function decodeSettings(value,{legacy=false,formatVersion=3}={}){
         if(!settingsRecord(value))throw new Error('Invalid settings object');
         const decoded={};
         for(const key of SETTINGS_KEYS){
@@ -1216,12 +1358,16 @@
         for(const type of ['weekly','daily'])if(!validDayRange(decoded[type+'StartDate'],decoded[type+'EndDate']))throw new Error('Invalid date range');
         if(!Array.isArray(decoded.dailyWeekdays)||!decoded.dailyWeekdays.length||decoded.dailyWeekdays.some(day=>!Number.isInteger(day)||day<0||day>6)||new Set(decoded.dailyWeekdays).size!==decoded.dailyWeekdays.length)throw new Error('Invalid weekdays');
         decoded.dailyWeekdays=[...decoded.dailyWeekdays];
+        const refillOptions = legacy && !Object.hasOwn(value,'refillOptions') || !legacy && formatVersion < 3 ?
+          REFILL_DEFAULTS : value.refillOptions;
+        decoded.refillOptions = decodeRefillOptions(refillOptions);
         const dimensions=decoded.sizeKey==='custom'?{width:decoded.customWidth,height:decoded.customHeight}:PRESETS[decoded.sizeKey];
         return {...decoded,baseWidth:dimensions.width,baseHeight:dimensions.height,viewIndex:0};
       }
       function settingsSnapshot(value=state){
         const data={};
         for(const key of SETTINGS_KEYS)data[key]=key==='layoutByType'?{...value.layoutByType}:value[key];
+        data.refillOptions=decodeRefillOptions(value.refillOptions);
         return data;
       }
       function loadSavedSettings(){
@@ -1243,7 +1389,7 @@
 
       const translations={
         ja:{
-          brandMeta:'手帳サイズに合わせたリフィルPDF',helpTitle:'使い方と注意事項',close:'閉じる',introTitle:'手帳サイズと期間を選んで、リフィルを作る',lead:'A5・バイブル・ミニ6などのリフィルを作成し、実寸またはA4 / US Letterへ自動配置したPDFとして保存できます。',localBadge:'完全ローカル処理',settingsTitle:'リフィル設定',settingsBody:'種類、サイズ、期間を選ぶとプレビューへすぐ反映されます。',sizeLabel:'サイズ',sizeHelp:'幅 × 高さ',bibleName:'バイブル',mini6Name:'ミニ6',customName:'カスタム',customDim:'寸法を入力',widthLabel:'幅',heightLabel:'高さ',orientationLabel:'向き',orientationHelp:'寸法を自動で入れ替え',portrait:'縦',landscape:'横',refillTypeLabel:'リフィル種類',refillTypeHelp:'表示内容を選択',typeMonthly:'月間',typeYearly:'年間',typeWeekly:'週間',typeDaily:'日間',typeNotes:'メモ',layoutLabel:'レイアウト',layoutHelp:'用途に合わせて選択',layoutMonthlySingle:'月間 1ページ',layoutMonthlySpread:'月間 見開き',layoutYearSingle:'年間 1ページ',layoutYearSpread:'年間 見開き',layoutWeeklyBlock:'週間ブロック',layoutWeeklyNotes:'週間 + メモ',layoutWeeklyVertical:'週間バーチカル',layoutDaily:'1日 1ページ',layoutNotesLined:'横罫',layoutNotesGrid:'方眼',layoutNotesDot:'ドット',startHour:'開始時刻',endHour:'終了時刻',periodLabel:'期間',startMonth:'開始月',endMonth:'終了月',weekStartLabel:'週の始まり',weekStartHelp:'曜日の並びを変更',mondayStart:'月曜日',sundayStart:'日曜日',adjacentTitle:'前後の月の日付',adjacentHelp:'月間の空きマスに表示',holidayTitle:'日本の祝日',holidayHelp:'収録済みの公式データだけを表示',holidayNameTitle:'祝日の名前',holidayNameHelp:'月間・週間・日間に祝日名を表示',holidayColorLabel:'休日の色',holidayColorHelp:'土曜・日曜・祝日を個別に指定',saturdayColorLabel:'土曜日',sundayColorLabel:'日曜日',holidayColorLabelSingle:'祝日',holidayDataAvailable:'祝日データ: 2026年・2027年（内閣府公表分）',holidayDataPartial:'選択期間に祝日データ未収録の年があります。未収録年は推測せず表示しません。',appearanceSettingsTitle:'見た目',stylePresetLabel:'スタイル',stylePresetHelp:'書体・罫線・余白をまとめて変更',styleMinimal:'Minimal',styleClassic:'Classic',styleCompact:'余白狭め',pageColorLabel:'印刷スタイル',pageColorHelp:'見出し・罫線に適用。休日色は別設定',pageColorMono:'モノクロ',pageColorAccent:'アクセントカラー',fontSizeLabel:'文字サイズ',fontSizeSliderHelp:'5段階',fontSizeSliderNote:'1 = 小 / 2 = 標準 / 3 = 大 / 4 = 特大 / 5 = 最大',fontSmall:'小',fontStandard:'標準',fontLarge:'大',fontXLarge:'特大',fontXXLarge:'最大',lineWeightLabel:'罫線',lineLight:'薄い',pageNumberTitle:'ページ番号',pageNumberHelp:'下中央に連番を表示',weekNumberTitle:'週番号',weekNumberHelp:'週間リフィルの見出しに表示',settingsSavedLocally:'設定はこのブラウザー内に自動保存され、次回起動時に復元されます。',resetSettings:'設定を初期状態に戻す',resetSettingsConfirm:'保存済みの設定を消して初期状態に戻しますか？',settingsReset:'設定を初期状態に戻しました',selectedSize:'サイズ',effectiveSize:'実寸',selectedLayout:'レイアウト',pageCount:'生成ページ',pageUnit:'ページ',monthUnit:'か月',yearUnit:'年',weekUnit:'週',dayUnit:'日',notesSettingsLabel:'メモ用紙設定',notesSettingsHelp:'枚数と間隔',notesCountLabel:'枚数',sheetUnit:'枚',noteSpacingLabel:'間隔',notesCountHelp:'横罫は7 mm間隔。方眼・ドットは4 mm / 5 mmから選べます。',invalidNotesCount:'1〜100枚で入力してください。',milestoneTitle:'この版でできること',milestoneBody:'月間・年間・週間・日間・メモ用紙を作成し、祝日や紙面スタイルを反映した実寸PDFまたはA4 / US Letter印刷用PDFとして保存できます。',previewTitle:'リフィルプレビュー',actualRatio:'実寸比率',previewNote:'リング側余白は左右ページで自動反転します。PDFは実寸のままA4 / US Letterへ自動配置することもできます。',previewNoteMonthly:'月間見開きは、左ページに月・年と前後月のミニカレンダーを置き、7曜日の日セルを左右で同じ大きさに揃えます。',previewNoteYearly:'年間見開きでは、1〜6月と7〜12月を左右ページへ分けて表示します。',previewNoteWeekly:'週間+メモは、左ページに1週間、右ページにメモ欄を配置します。',previousItem:'前へ',nextItem:'次へ',helpBasicsTitle:'基本操作',helpStep1:'使っている手帳の実寸サイズと向きを選びます。',helpStep2:'月間・年間・週間・日間・メモから種類を選び、必要なレイアウトと期間または枚数を指定します。',helpStep3:'週の始まりや週間バーチカルの時間帯を調整し、矢印で各ページを確認します。',helpLayoutsTitle:'この版のレイアウト',helpLayoutsBody:'月間・年間・週間に加え、1日1ページの日間、横罫・方眼・ドットのメモ用紙に対応しています。',helpWeeklyTitle:'週間の期間',helpWeeklyBody:'週間は開始日・終了日を含む週全体、日間は指定日と曜日を出力します。日付なしの月間・週間・日間は1〜100単位を指定し、空欄の日付を手書きできます。',helpPrivacyTitle:'プライバシー',helpPrivacyBody:'設定とカレンダー生成はブラウザー内だけで処理されます。このアプリから外部サーバーへデータを送信しません。',helpNotesTitle:'現在の版について',helpNotePreview: "月間・年間・週間・日間・メモを作成し、実寸またはA4 / US LetterのPDFとして保存できます。",helpNotePdf:'実寸PDFに加え、A4 / US Letterへ複数のリフィルを自動配置できます。収まらない場合は縮小せず警告します。パンチ位置は位置合わせの目安で、穴位置を保証するものではありません。',helpNoteRange:'日付範囲は1900年1月〜2100年12月、最大60か月です。',helpOffline:'単一HTML版はローカルで直接開けます。実行時の外部ネットワーク通信はありません。',buildInfo:'ビルド情報',appVersion:'アプリバージョン',builtAt:'生成日時',dependencies:'内包依存数',footer:'単一HTMLとして配布可能',invalidWidth:'40〜300 mmで入力してください。',invalidHeight:'60〜400 mmで入力してください。',invalidDateRange:'終了月は開始月以降にしてください。',rangeTooLong:'期間は最大60か月です。',invalidMonth:'1900年1月〜2100年12月で指定してください。',invalidTimeRange:'開始時刻より後の終了時刻を1〜24時で指定してください。',orientationPortrait:'縦',orientationLandscape:'横',leftPage:'左',rightPage:'右',singlePage:'ページ',notes:'メモ',weekLabel:'第',weekSuffix:'週',ringMarginLabel:'リング側余白',ringMarginHelp:'左右ページで自動反転',ringMarginAuto:'自動',ringMarginManual:'手動',ringMarginValue:'余白幅',firstPageLabel:'最初のページ',firstPageHelp:'1ページ系レイアウトで使用',rightPageLong:'右ページ',leftPageLong:'左ページ',punchGuideTitle:'パンチ位置の目安',punchGuideHelp:'リング側に薄い位置合わせマークを表示',ringBehaviorNote:'見開きレイアウトは左・右ページを固定します。1ページ系は最初のページから左右を交互に切り替えます。',ringMarginSummary:'リング余白',ringAutoSuffix:'自動',invalidRingMargin:'4〜30 mmで入力してください。',pdfExportTitle:'PDF出力',pdfExportHelp:'実寸または印刷用紙へ面付け',filenameLabel:'ファイル名',generatePdf:'PDFを作成',generatingPdf:'PDFを作成中',pdfReady:'PDFを作成しました',savePdf:'PDFを保存',pdfExactNote:'実寸PDFは選択したリフィル寸法で作成します。印刷時は100%（実際のサイズ）を選び、「用紙に合わせる」を使用しないでください。',helpPdfTitle:'PDF保存',helpInvalidDraft:'入力欄が空欄・無効の間は最後の有効なプレビューを表示し、PDFの作成・保存を停止します。入力を直してからPDFを作り直してください。サイズ確認PDFには有効な寸法が必要です。',helpPatternSpacing:'メモの横罫・方眼・ドットは、プレビューとPDFで同じ実寸間隔を使用します。',helpPdfBody:'出力用紙はリフィル実寸 / A4 / US Letterから選べます。A4 / Letterではリフィルを縮小せず自動配置します。印刷時は100%（実際のサイズ）を選びます。',pdfErrorGeneric:'PDFを作成できませんでした。設定を確認して、もう一度お試しください。',pdfPageRasterError:'ページをPDF用に描画できませんでした。',pdfPagesMeta:'{pages} · {size} · {bytes}',pdfImposedMeta:'{sheets} · {paper} · リフィル {refills} · {bytes}',pdfOutdated:'設定が変更されました。PDFを作り直してください。',printModeLabel:'出力用紙',printModeHelp:'縮小せず実寸で配置',printExact:'リフィル実寸',printOutputSummary:'印刷PDF',cropGuideTitle:'裁断ガイド',cropGuideHelp:'各リフィルの外形を細い線で表示',saveSizeTest:'サイズ確認PDFを保存',printPortrait:'縦',printLandscape:'横',perSheet:'1枚に{count}ページ',sheetCountLabel:'{count}枚の用紙',printLayoutDetail:'{cols}列 × {rows}行 · {sheets}',printDoesNotFit:'このリフィルは{paper}へ実寸で収まりません。リフィル実寸PDFを選択してください。',pdfImpositionNote:'リフィルは縮小せず実寸のまま配置します。印刷時は100%（実際のサイズ）を選び、「用紙に合わせる」を使用しないでください。',sizeTestReady:'サイズ確認PDFを保存しました',sizeTestTitle:'印刷サイズ確認',sizeTestInstruction:'この線が100 mmになることを定規で確認してください。',sizeTestPrint:'印刷設定: 100% / 実際のサイズ',sizeTestNoFit:'選択した用紙ではリフィルを実寸配置できません。サイズ確認線のみ出力します。',duplexLabel:'両面印刷',duplexHelp:'プリンターのとじ方向に合わせる',duplexOff:'片面',duplexLong:'長辺とじ',duplexShort:'短辺とじ',frontSide:'表',backSide:'裏',duplexBlankAdded:'最後の裏面を空白にするため、空白ページを1ページ追加します。',duplexLeadingBlank:'見開きを保つため、最初の左ページの前に白紙を1面追加します。',printMarginLabel:'プリンター余白',printMarginHelp:'用紙の四辺に確保 · 0〜20 mm',printMarginWarning:'0 mmはフチなし印刷が必要な場合があります。プリンターの印刷可能範囲を確認してください。',invalidPrintMargin:'0〜20 mmで入力してください。',duplexRotatedBack:'裁断後のリフィルをリング側でめくったときに正立するよう、このとじ方向では裏面の内容を180°回転します。',printBlank:'白紙',printContentCount:'内容{count}ページ',printFaceCount:'PDF {count}面',sizeTestAlignment:'両面位置合わせチェック',sizeTestAlignmentHelp:'この2ページを選択したとじ方向で1枚の両面に印刷し、光に透かして十字の重なりを確認してください。プリンターの位置精度は保証しません。',helpPrintPlanning:'両面では最初の左ページの前と必要な最後の裏面に白紙を加えて見開きを保ちます。A4 / Letterのプリンター余白は縮小せず用紙の四辺に確保します。0 mmはフチなし印刷が必要な場合があります。本印刷の前に両面位置合わせテストを行ってください。',duplexExactNote:'両面印刷ではページを表・裏の順に出力します。プリンター側でも同じ「長辺とじ」または「短辺とじ」を選んでください。',duplexImpositionNote:'表面と裏面のリフィル位置をとじ方向に合わせて反転します。プリンター側でも同じ両面設定を選んでください。',dailySchedule:'予定',dailyTodo:'TODO',dailyNotes:'メモ',notePageLabel:'メモ {page}'
+          brandMeta:'手帳サイズに合わせたリフィルPDF',helpTitle:'使い方と注意事項',close:'閉じる',introTitle:'手帳サイズと期間を選んで、リフィルを作る',lead:'A5・バイブル・ミニ6などのリフィルを作成し、実寸またはA4 / US Letterへ自動配置したPDFとして保存できます。',localBadge:'完全ローカル処理',settingsTitle:'リフィル設定',settingsBody:'種類、サイズ、期間を選ぶとプレビューへすぐ反映されます。',sizeLabel:'サイズ',sizeHelp:'幅 × 高さ',bibleName:'バイブル',mini6Name:'ミニ6',customName:'カスタム',customDim:'寸法を入力',widthLabel:'幅',heightLabel:'高さ',orientationLabel:'向き',orientationHelp:'寸法を自動で入れ替え',portrait:'縦',landscape:'横',refillTypeLabel:'リフィル種類',refillTypeHelp:'表示内容を選択',typeMonthly:'月間',typeYearly:'年間',typeWeekly:'週間',typeDaily:'日間',typeNotes:'メモ',layoutLabel:'レイアウト',layoutHelp:'用途に合わせて選択',layoutMonthlySingle:'月間 1ページ',layoutMonthlySpread:'月間 見開き',layoutYearSingle:'年間 1ページ',layoutYearSpread:'年間 見開き',layoutWeeklyBlock:'週間ブロック',layoutWeeklyNotes:'週間 + メモ',layoutWeeklyVertical:'週間バーチカル',layoutDaily:'1日 1ページ',layoutNotesLined:'横罫',layoutNotesGrid:'方眼',layoutNotesDot:'ドット',startHour:'開始時刻',endHour:'終了時刻',periodLabel:'期間',startMonth:'開始月',endMonth:'終了月',weekStartLabel:'週の始まり',weekStartHelp:'曜日の並びを変更',mondayStart:'月曜日',sundayStart:'日曜日',adjacentTitle:'前後の月の日付',adjacentHelp:'月間の空きマスに表示',holidayTitle:'日本の祝日',holidayHelp:'収録済みの公式データだけを表示',holidayNameTitle:'祝日の名前',holidayNameHelp:'月間・週間・日間に祝日名を表示',holidayColorLabel:'休日の色',holidayColorHelp:'土曜・日曜・祝日を個別に指定',saturdayColorLabel:'土曜日',sundayColorLabel:'日曜日',holidayColorLabelSingle:'祝日',holidayDataAvailable:'祝日データ: 2026年・2027年（内閣府公表分）',holidayDataPartial:'選択期間に祝日データ未収録の年があります。未収録年は推測せず表示しません。',appearanceSettingsTitle:'見た目',stylePresetLabel:'スタイル',stylePresetHelp:'書体・罫線・余白をまとめて変更',styleMinimal:'Minimal',styleClassic:'Classic',styleCompact:'余白狭め',pageColorLabel:'印刷スタイル',pageColorHelp:'見出し・罫線に適用。休日色は別設定',pageColorMono:'モノクロ',pageColorAccent:'アクセントカラー',fontSizeLabel:'文字サイズ',fontSizeSliderHelp:'5段階',fontSizeSliderNote:'1 = 小 / 2 = 標準 / 3 = 大 / 4 = 特大 / 5 = 最大',fontSmall:'小',fontStandard:'標準',fontLarge:'大',fontXLarge:'特大',fontXXLarge:'最大',lineWeightLabel:'罫線',lineLight:'薄い',pageNumberTitle:'ページ番号',pageNumberHelp:'下中央に連番を表示',weekNumberTitle:'週番号',weekNumberHelp:'週間リフィルの見出しに表示',settingsSavedLocally:'設定はこのブラウザー内に自動保存され、次回起動時に復元されます。',resetSettings:'設定を初期状態に戻す',resetSettingsConfirm:'保存済みの設定を消して初期状態に戻しますか？',settingsReset:'設定を初期状態に戻しました',selectedSize:'サイズ',effectiveSize:'実寸',selectedLayout:'レイアウト',pageCount:'生成ページ',pageUnit:'ページ',monthUnit:'か月',yearUnit:'年',weekUnit:'週',dayUnit:'日',notesSettingsLabel:'メモ用紙設定',notesSettingsHelp:'枚数と間隔',notesCountLabel:'枚数',sheetUnit:'枚',noteSpacingLabel:'間隔',notesCountHelp:'罫線間隔は「紙面の詳しい設定」で調整できます。',invalidNotesCount:'1〜100枚で入力してください。',milestoneTitle:'この版でできること',milestoneBody:'月間・年間・週間・日間・メモ用紙を作成し、祝日や紙面スタイルを反映した実寸PDFまたはA4 / US Letter印刷用PDFとして保存できます。',previewTitle:'リフィルプレビュー',actualRatio:'実寸比率',previewNote:'リング側余白は左右ページで自動反転します。PDFは実寸のままA4 / US Letterへ自動配置することもできます。',previewNoteMonthly:'月間見開きは、左ページに月・年と前後月のミニカレンダーを置き、7曜日の日セルを左右で同じ大きさに揃えます。',previewNoteYearly:'年間見開きでは、1〜6月と7〜12月を左右ページへ分けて表示します。',previewNoteWeekly:'週間+メモは、左ページに1週間、右ページにメモ欄を配置します。',previousItem:'前へ',nextItem:'次へ',helpBasicsTitle:'基本操作',helpStep1:'使っている手帳の実寸サイズと向きを選びます。',helpStep2:'月間・年間・週間・日間・メモから種類を選び、必要なレイアウトと期間または枚数を指定します。',helpStep3:'週の始まりや週間バーチカルの時間帯を調整し、矢印で各ページを確認します。',helpLayoutsTitle:'この版のレイアウト',helpLayoutsBody:'月間・年間・週間に加え、1日1ページの日間、横罫・方眼・ドットのメモ用紙に対応しています。',helpWeeklyTitle:'週間の期間',helpWeeklyBody:'週間は開始日・終了日を含む週全体、日間は指定日と曜日を出力します。日付なしの月間・週間・日間は1〜100単位を指定し、空欄の日付を手書きできます。',helpPrivacyTitle:'プライバシー',helpPrivacyBody:'設定とカレンダー生成はブラウザー内だけで処理されます。このアプリから外部サーバーへデータを送信しません。',helpNotesTitle:'現在の版について',helpNotePreview: "月間・年間・週間・日間・メモを作成し、実寸またはA4 / US LetterのPDFとして保存できます。",helpNotePdf:'実寸PDFに加え、A4 / US Letterへ複数のリフィルを自動配置できます。収まらない場合は縮小せず警告します。パンチ位置は位置合わせの目安で、穴位置を保証するものではありません。',helpNoteRange:'日付範囲は1900年1月〜2100年12月、最大60か月です。',helpOffline:'単一HTML版はローカルで直接開けます。実行時の外部ネットワーク通信はありません。',buildInfo:'ビルド情報',appVersion:'アプリバージョン',builtAt:'生成日時',dependencies:'内包依存数',footer:'単一HTMLとして配布可能',invalidWidth:'40〜300 mmで入力してください。',invalidHeight:'60〜400 mmで入力してください。',invalidDateRange:'終了月は開始月以降にしてください。',rangeTooLong:'期間は最大60か月です。',invalidMonth:'1900年1月〜2100年12月で指定してください。',invalidTimeRange:'開始時刻より後の終了時刻を1〜24時で指定してください。',orientationPortrait:'縦',orientationLandscape:'横',leftPage:'左',rightPage:'右',singlePage:'ページ',notes:'メモ',weekLabel:'第',weekSuffix:'週',ringMarginLabel:'リング側余白',ringMarginHelp:'左右ページで自動反転',ringMarginAuto:'自動',ringMarginManual:'手動',ringMarginValue:'余白幅',firstPageLabel:'最初のページ',firstPageHelp:'1ページ系レイアウトで使用',rightPageLong:'右ページ',leftPageLong:'左ページ',punchGuideTitle:'パンチ位置の目安',punchGuideHelp:'リング側に薄い位置合わせマークを表示',ringBehaviorNote:'見開きレイアウトは左・右ページを固定します。1ページ系は最初のページから左右を交互に切り替えます。',ringMarginSummary:'リング余白',ringAutoSuffix:'自動',invalidRingMargin:'4〜30 mmで入力してください。',pdfExportTitle:'PDF出力',pdfExportHelp:'実寸または印刷用紙へ面付け',filenameLabel:'ファイル名',generatePdf:'PDFを作成',generatingPdf:'PDFを作成中',pdfReady:'PDFを作成しました',savePdf:'PDFを保存',pdfExactNote:'実寸PDFは選択したリフィル寸法で作成します。印刷時は100%（実際のサイズ）を選び、「用紙に合わせる」を使用しないでください。',helpPdfTitle:'PDF保存',helpInvalidDraft:'入力欄が空欄・無効の間は最後の有効なプレビューを表示し、PDFの作成・保存を停止します。入力を直してからPDFを作り直してください。サイズ確認PDFには有効な寸法が必要です。',helpPatternSpacing:'メモの横罫・方眼・ドットは、プレビューとPDFで同じ実寸間隔を使用します。',helpPdfBody:'出力用紙はリフィル実寸 / A4 / US Letterから選べます。A4 / Letterではリフィルを縮小せず自動配置します。印刷時は100%（実際のサイズ）を選びます。',pdfErrorGeneric:'PDFを作成できませんでした。設定を確認して、もう一度お試しください。',pdfPageRasterError:'ページをPDF用に描画できませんでした。',pdfPagesMeta:'{pages} · {size} · {bytes}',pdfImposedMeta:'{sheets} · {paper} · リフィル {refills} · {bytes}',pdfOutdated:'設定が変更されました。PDFを作り直してください。',printModeLabel:'出力用紙',printModeHelp:'縮小せず実寸で配置',printExact:'リフィル実寸',printOutputSummary:'印刷PDF',cropGuideTitle:'裁断ガイド',cropGuideHelp:'各リフィルの外形を細い線で表示',saveSizeTest:'サイズ確認PDFを保存',printPortrait:'縦',printLandscape:'横',perSheet:'1枚に{count}ページ',sheetCountLabel:'{count}枚の用紙',printLayoutDetail:'{cols}列 × {rows}行 · {sheets}',printDoesNotFit:'このリフィルは{paper}へ実寸で収まりません。リフィル実寸PDFを選択してください。',pdfImpositionNote:'リフィルは縮小せず実寸のまま配置します。印刷時は100%（実際のサイズ）を選び、「用紙に合わせる」を使用しないでください。',sizeTestReady:'サイズ確認PDFを保存しました',sizeTestTitle:'印刷サイズ確認',sizeTestInstruction:'この線が100 mmになることを定規で確認してください。',sizeTestPrint:'印刷設定: 100% / 実際のサイズ',sizeTestNoFit:'選択した用紙ではリフィルを実寸配置できません。サイズ確認線のみ出力します。',duplexLabel:'両面印刷',duplexHelp:'プリンターのとじ方向に合わせる',duplexOff:'片面',duplexLong:'長辺とじ',duplexShort:'短辺とじ',frontSide:'表',backSide:'裏',duplexBlankAdded:'最後の裏面を空白にするため、空白ページを1ページ追加します。',duplexLeadingBlank:'見開きを保つため、最初の左ページの前に白紙を1面追加します。',printMarginLabel:'プリンター余白',printMarginHelp:'用紙の四辺に確保 · 0〜20 mm',printMarginWarning:'0 mmはフチなし印刷が必要な場合があります。プリンターの印刷可能範囲を確認してください。',invalidPrintMargin:'0〜20 mmで入力してください。',duplexRotatedBack:'裁断後のリフィルをリング側でめくったときに正立するよう、このとじ方向では裏面の内容を180°回転します。',printBlank:'白紙',printContentCount:'内容{count}ページ',printFaceCount:'PDF {count}面',sizeTestAlignment:'両面位置合わせチェック',sizeTestAlignmentHelp:'この2ページを選択したとじ方向で1枚の両面に印刷し、光に透かして十字の重なりを確認してください。プリンターの位置精度は保証しません。',helpPrintPlanning:'両面では最初の左ページの前と必要な最後の裏面に白紙を加えて見開きを保ちます。A4 / Letterのプリンター余白は縮小せず用紙の四辺に確保します。0 mmはフチなし印刷が必要な場合があります。本印刷の前に両面位置合わせテストを行ってください。',duplexExactNote:'両面印刷ではページを表・裏の順に出力します。プリンター側でも同じ「長辺とじ」または「短辺とじ」を選んでください。',duplexImpositionNote:'表面と裏面のリフィル位置をとじ方向に合わせて反転します。プリンター側でも同じ両面設定を選んでください。',dailySchedule:'予定',dailyTodo:'TODO',dailyNotes:'メモ',notePageLabel:'メモ {page}'
         },
         en:{
           brandMeta:'Printable refills sized for your planner',helpTitle:'How to use & notes',close:'Close',introTitle:'Choose a planner size and date range, then build your refill',lead:'Create A5, Bible, Mini 6 and other planner refills, then save exact-size or automatically imposed A4 / US Letter PDFs.',localBadge:'Fully local processing',settingsTitle:'Refill settings',settingsBody:'Type, size and date range update the preview immediately.',sizeLabel:'Size',sizeHelp:'Width × height',bibleName:'Bible',mini6Name:'Mini 6',customName:'Custom',customDim:'Enter dimensions',widthLabel:'Width',heightLabel:'Height',orientationLabel:'Orientation',orientationHelp:'Dimensions swap automatically',portrait:'Portrait',landscape:'Landscape',refillTypeLabel:'Refill type',refillTypeHelp:'Choose what to show',typeMonthly:'Monthly',typeYearly:'Yearly',typeWeekly:'Weekly',typeDaily:'Daily',typeNotes:'Notes',layoutLabel:'Layout',layoutHelp:'Choose for your planning style',layoutMonthlySingle:'Monthly · one page',layoutMonthlySpread:'Monthly · spread',layoutYearSingle:'Year · one page',layoutYearSpread:'Year · spread',layoutWeeklyBlock:'Weekly block',layoutWeeklyNotes:'Weekly + notes',layoutWeeklyVertical:'Weekly vertical',layoutDaily:'Daily · one page',layoutNotesLined:'Ruled',layoutNotesGrid:'Grid',layoutNotesDot:'Dot grid',startHour:'Start hour',endHour:'End hour',periodLabel:'Date range',startMonth:'Start month',endMonth:'End month',weekStartLabel:'Week starts on',weekStartHelp:'Changes weekday order',mondayStart:'Monday',sundayStart:'Sunday',adjacentTitle:'Adjacent month dates',adjacentHelp:'Show in empty monthly cells',holidayTitle:'Japanese holidays',holidayHelp:'Show only bundled official holiday data',holidayNameTitle:'Holiday names',holidayNameHelp:'Show holiday names on monthly, weekly, and daily refills',holidayColorLabel:'Day-off colors',holidayColorHelp:'Set Saturday, Sunday, and holiday colors separately',saturdayColorLabel:'Saturday',sundayColorLabel:'Sunday',holidayColorLabelSingle:'Holiday',holidayDataAvailable:'Holiday data: 2026 and 2027 (Cabinet Office)',holidayDataPartial:'Some selected years do not have bundled holiday data. Unverified dates are not guessed or shown.',appearanceSettingsTitle:'Appearance',stylePresetLabel:'Style',stylePresetHelp:'Change typography, rules, and margins',styleMinimal:'Minimal',styleClassic:'Classic',styleCompact:'Tight Margins',pageColorLabel:'Print style',pageColorHelp:'Monochrome first',pageColorMono:'Monochrome',pageColorAccent:'Accent color',fontSizeLabel:'Text size',fontSizeSliderHelp:'5 levels',fontSizeSliderNote:'1 = Small · 2 = Standard · 3 = Large · 4 = X-Large · 5 = Max',fontSmall:'Small',fontStandard:'Standard',fontLarge:'Large',fontXLarge:'X-Large',fontXXLarge:'Max',lineWeightLabel:'Rules',lineLight:'Light',pageNumberTitle:'Page numbers',pageNumberHelp:'Show sequential numbers at the bottom',weekNumberTitle:'Week numbers',weekNumberHelp:'Show a week number on weekly refills',settingsSavedLocally:'Settings are saved in this browser and restored next time.',resetSettings:'Reset settings',resetSettingsConfirm:'Clear saved settings and restore defaults?',settingsReset:'Settings were reset',selectedSize:'Size',effectiveSize:'Physical size',selectedLayout:'Layout',pageCount:'Generated pages',pageUnit:'pages',monthUnit:'months',yearUnit:'years',weekUnit:'weeks',dayUnit:'days',notesSettingsLabel:'Note paper settings',notesSettingsHelp:'Page count and spacing',notesCountLabel:'Pages',sheetUnit:'pg',noteSpacingLabel:'Spacing',notesCountHelp:'Ruled paper uses 7 mm spacing. Grid and dot grid support 4 mm or 5 mm.',invalidNotesCount:'Enter 1 to 100 pages.',milestoneTitle:'Available in this version',milestoneBody:'Create monthly, yearly, weekly, daily, and note refills with holiday and page-style options, then save exact-size or A4 / US Letter print PDFs.',previewTitle:'Refill preview',actualRatio:'Exact ratio',previewNote:'Ring-side margins flip with the page side. PDFs can also place full-size refills automatically on A4 / US Letter.',previewNoteMonthly:'Monthly spread keeps every day cell the same size, with month/year and previous/next mini calendars in a left-side information rail.',previewNoteYearly:'In yearly spread mode, January–June and July–December are split across facing pages.',previewNoteWeekly:'Weekly + notes places the week on the left page and a notes page on the right.',previousItem:'Previous',nextItem:'Next',helpBasicsTitle:'Basics',helpStep1:'Choose the physical planner size and orientation you use.',helpStep2:'Choose Monthly, Yearly, Weekly, Daily, or Notes, then select a layout and date range or page count.',helpStep3:'Adjust week start or the hour range for Weekly Vertical, then use the arrows to inspect pages.',helpLayoutsTitle:'Layouts in this version',helpLayoutsBody:'Monthly, Yearly, and Weekly are joined by Daily one-page refills plus ruled, grid, and dot-grid note paper.',helpWeeklyTitle:'Weekly date range',helpWeeklyBody:'Weekly output includes each full boundary week. Daily output uses the selected dates and weekdays. Undated Monthly, Weekly and Daily output uses 1–100 units with blank dates for handwriting.',helpPrivacyTitle:'Privacy',helpPrivacyBody:'Settings and calendar generation stay in your browser. This app does not send them to an external server.',helpNotesTitle:'About this version',helpNotePreview: "Create monthly, yearly, weekly, daily, or note refills and save them as exact-size or A4 / US Letter PDFs.",helpNotePdf:'In addition to exact-size PDFs, A4 / US Letter output can place multiple refills without scaling. If they do not fit, the app warns instead of shrinking them. Punch marks remain alignment guides only.',helpNoteRange:'The supported date range is January 1900 through December 2100, up to 60 months at a time.',helpOffline:'The single-HTML build can be opened directly. No runtime network request is made.',buildInfo:'Build information',appVersion:'App version',builtAt:'Built at',dependencies:'Embedded dependencies',footer:'Distributable as one self-contained HTML file',invalidWidth:'Enter a value from 40 to 300 mm.',invalidHeight:'Enter a value from 60 to 400 mm.',invalidDateRange:'End month must be the same as or later than start month.',rangeTooLong:'Choose a range of up to 60 months.',invalidMonth:'Choose a month from January 1900 through December 2100.',invalidTimeRange:'Choose an end hour after the start hour, from 1 through 24.',orientationPortrait:'Portrait',orientationLandscape:'Landscape',leftPage:'Left',rightPage:'Right',singlePage:'Page',notes:'Notes',weekLabel:'Week',weekSuffix:'',ringMarginLabel:'Ring-side margin',ringMarginHelp:'Flips automatically by page side',ringMarginAuto:'Auto',ringMarginManual:'Manual',ringMarginValue:'Margin width',firstPageLabel:'First page',firstPageHelp:'Used for one-page layouts',rightPageLong:'Right page',leftPageLong:'Left page',punchGuideTitle:'Punch position guide',punchGuideHelp:'Show faint alignment marks on the ring side',ringBehaviorNote:'Spread layouts keep fixed left/right pages. One-page layouts alternate sides from the selected first page.',ringMarginSummary:'Ring margin',ringAutoSuffix:'auto',invalidRingMargin:'Enter a value from 4 to 30 mm.',pdfExportTitle:'PDF export',pdfExportHelp:'Exact size or print-sheet imposition',filenameLabel:'Filename',generatePdf:'Create PDF',generatingPdf:'Creating PDF',pdfReady:'PDF created',savePdf:'Save PDF',pdfExactNote:'Exact-size PDF pages use the selected refill dimensions. Print at 100% / Actual size and do not use Fit to page.',helpPdfTitle:'Saving PDF',helpInvalidDraft:'While an active input is empty or invalid, the last valid preview remains visible and PDF creation/saving is blocked. Correct the input and create the PDF again. The print-size test requires valid dimensions.',helpPatternSpacing:'Ruled, grid, and dot note previews use the same physical spacing as the PDF.',helpPdfBody:'Choose Exact refill size, A4, or US Letter. A4 / Letter places refills without scaling. Print at 100% / Actual size.',pdfErrorGeneric:'The PDF could not be created. Check the settings and try again.',pdfPageRasterError:'A page could not be rendered for PDF export.',pdfPagesMeta:'{pages} · {size} · {bytes}',pdfImposedMeta:'{sheets} · {paper} · {refills} refills · {bytes}',pdfOutdated:'Settings changed. Create the PDF again.',printModeLabel:'Output paper',printModeHelp:'Place at full size without scaling',printExact:'Exact refill size',printOutputSummary:'Print PDF',cropGuideTitle:'Crop guides',cropGuideHelp:'Show a thin outline around each refill',saveSizeTest:'Save print-size test PDF',printPortrait:'Portrait',printLandscape:'Landscape',perSheet:'{count} refills per sheet',sheetCountLabel:'{count} sheets',printLayoutDetail:'{cols} columns × {rows} rows · {sheets}',printDoesNotFit:'This refill does not fit on {paper} at full size. Choose Exact refill size instead.',pdfImpositionNote:'Refills are placed at full physical size without scaling. Print at 100% / Actual size and do not use Fit to page.',sizeTestReady:'Print-size test PDF saved',sizeTestTitle:'Print size check',sizeTestInstruction:'Measure this line and confirm it is exactly 100 mm.',sizeTestPrint:'Print setting: 100% / Actual size',sizeTestNoFit:'The selected paper cannot contain the refill at full size. The test line is still included.',duplexLabel:'Duplex printing',duplexHelp:'Match your printer flip edge',duplexOff:'Single-sided',duplexLong:'Long-edge flip',duplexShort:'Short-edge flip',frontSide:'Front',backSide:'Back',duplexBlankAdded:'One blank page will be added so the final back side stays blank.',duplexLeadingBlank:'One blank face is added before the first left page to keep facing spreads together.',printMarginLabel:'Printer margin',printMarginHelp:'Reserved on all four paper edges · 0–20 mm',printMarginWarning:'0 mm may require borderless printing. Check your printer’s printable area.',invalidPrintMargin:'Enter a value from 0 to 20 mm.',duplexRotatedBack:'Back artwork is rotated 180° for this flip edge so cut refills stay upright on the ring edge.',printBlank:'Blank',printContentCount:'{count} content pages',printFaceCount:'{count} PDF faces',sizeTestAlignment:'Duplex alignment check',sizeTestAlignmentHelp:'Print this pair on one sheet with the selected flip edge. Hold it to the light and compare the crosses. Printer alignment is not guaranteed.',helpPrintPlanning:'Duplex adds a blank before a first left page and a final blank when needed, preserving facing spreads. A4 / Letter printer margins reserve paper edges without shrinking refills. At 0 mm, borderless printing may be needed. Use the duplex alignment pair before a full print run.',duplexExactNote:'Duplex output keeps pages in front/back order. Choose the same Long-edge or Short-edge setting in your printer dialog.',duplexImpositionNote:'Back-side refill positions are mirrored for the selected flip edge. Choose the same duplex setting in your printer dialog.',dailySchedule:'Schedule',dailyTodo:'TODO',dailyNotes:'Notes',notePageLabel:'Notes {page}'
@@ -1373,6 +1519,177 @@
         "layoutNotesGridDescription": "Square grid at 4 or 5 mm",
         "layoutNotesDotDescription": "Dot grid at 4 or 5 mm"
 });
+      Object.assign(translations.ja, {
+        "layoutMonthlyList": "月間 縦一覧",
+        "layoutMonthlyListSpread": "月間 縦一覧 見開き",
+        "layoutWeeklyVerticalSpread": "週間バーチカル 見開き",
+        "refillDetails": "紙面の詳しい設定",
+        "dailyTimeSection": "時間軸を表示",
+        "dailyTodoSection": "ToDo欄を表示",
+        "dailyMemoSection": "メモ欄を表示",
+        "dailyTimeHeading": "時間軸の見出し",
+        "dailyTodoHeading": "ToDoの見出し",
+        "dailyMemoHeading": "メモの見出し",
+        "todoRows": "ToDoの行数",
+        "columnBalance": "時間軸と補助欄の幅",
+        "timeWide": "時間軸を広く",
+        "equalWidth": "均等",
+        "sideWide": "補助欄を広く",
+        "pattern": "メモ欄の罫線",
+        "patternLined": "横罫",
+        "patternGrid": "方眼",
+        "patternDot": "ドット",
+        "patternBlank": "無地",
+        "patternOriginal": "従来の罫線",
+        "weeklyBox": "週間ブロックの補助欄",
+        "blockMemo": "メモ",
+        "blockTodo": "ToDo",
+        "blockBlank": "空白",
+        "verticalBox": "下部の補助欄",
+        "boxNone": "なし",
+        "dayWidths": "曜日の幅",
+        "daysEqual": "7日均等",
+        "daysWork": "平日を広く・土日を小さく",
+        "timeSteps": "時間目盛り",
+        "hourStep": "60分",
+        "halfStep": "30分",
+        "noTime": "時刻表示なし",
+        "monthlyColumns": "記入列の数",
+        "column1": "1列目の名前",
+        "column2": "2列目の名前",
+        "column3": "3列目の名前",
+        "column4": "4列目の名前",
+        "entryColumn": "記入欄",
+        "spacingTitle": "罫線間隔",
+        "spacingPreset": "間隔のプリセット",
+        "spacingDefault": "既定値",
+        "spacingCustom": "数値指定",
+        "spacingMm": "間隔 (mm)",
+        "spacingInvalid": "3〜12 mmの範囲で、0.5 mm刻みで入力してください。",
+        "dailyOneRequired": "欄を1つ以上表示してください。",
+        "dailyRowsInvalid": "ToDoの行数は1〜16の整数で入力してください。",
+        "densePaper": "記入欄が狭くなる設定です。プレビューや試し刷りでご確認ください。",
+        "personalDates": "自分の休日・記念日",
+        "personalType": "種類",
+        "personalOff": "自分の休日",
+        "personalEvent": "記念日・予定",
+        "personalNameLabel": "名前",
+        "repeatLabel": "繰り返し",
+        "repeatOnce": "特定の日付",
+        "repeatWeekly": "毎週",
+        "repeatAnnual": "毎年",
+        "personalDateLabel": "日付",
+        "personalWeekdayLabel": "曜日",
+        "personalMonthLabel": "月",
+        "personalDayLabel": "日",
+        "personalEnabledLabel": "紙面に表示する",
+        "personalSaveLabel": "登録する",
+        "personalUpdate": "変更を保存",
+        "personalCancelLabel": "編集をキャンセル",
+        "personalEdit": "編集",
+        "personalDelete": "削除",
+        "personalRemove": "この項目を削除しますか？",
+        "personalInvalid": "名前と有効な日付・曜日を入力してください。登録は100件までです。",
+        "personalEmpty": "登録はありません。",
+        "personalHidden": "非表示",
+        "personalHint": "◆は自分の休日、•は記念日・予定です。同じ日に複数あるときは件数を併記し、長い名前は省略する場合があります。年間は印のみです。設定JSONには登録内容も含まれます。",
+        "personalPrintNote": "自分の休日・記念日の全文は設定一覧で確認できます。紙面では名前を省略する場合があります。",
+        "helpRefillCustom": "紙面と個人の日付を調整する",
+        "helpRefillCustomBody": "「紙面の詳しい設定」で日間・週間の欄、バーチカルの目盛り、罫線間隔、月間縦一覧の列名を調整できます。「自分の休日・記念日」で特定日、毎週、毎年の項目を登録できます。日付なしの紙面には表示されません。設定JSONには個人の日付も含まれます。",
+        "personalWeekday0": "日曜日",
+        "personalWeekday1": "月曜日",
+        "personalWeekday2": "火曜日",
+        "personalWeekday3": "水曜日",
+        "personalWeekday4": "木曜日",
+        "personalWeekday5": "金曜日",
+        "personalWeekday6": "土曜日"
+      });
+      Object.assign(translations.en, {
+        "layoutMonthlyList": "Monthly list",
+        "layoutMonthlyListSpread": "Monthly list spread",
+        "layoutWeeklyVerticalSpread": "Weekly vertical spread",
+        "refillDetails": "Page details",
+        "dailyTimeSection": "Show time grid",
+        "dailyTodoSection": "Show checklist",
+        "dailyMemoSection": "Show notes",
+        "dailyTimeHeading": "Time grid heading",
+        "dailyTodoHeading": "Checklist heading",
+        "dailyMemoHeading": "Notes heading",
+        "todoRows": "Checklist rows",
+        "columnBalance": "Time grid and sidebar widths",
+        "timeWide": "Wider time grid",
+        "equalWidth": "Equal widths",
+        "sideWide": "Wider sidebar",
+        "pattern": "Notes ruling",
+        "patternLined": "Ruled",
+        "patternGrid": "Grid",
+        "patternDot": "Dot grid",
+        "patternBlank": "Blank",
+        "patternOriginal": "Original ruling",
+        "weeklyBox": "Weekly block extra section",
+        "blockMemo": "Notes",
+        "blockTodo": "Checklist",
+        "blockBlank": "Blank",
+        "verticalBox": "Bottom section",
+        "boxNone": "None",
+        "dayWidths": "Day column widths",
+        "daysEqual": "Equal days",
+        "daysWork": "Wider weekdays, narrower weekends",
+        "timeSteps": "Time divisions",
+        "hourStep": "60 minutes",
+        "halfStep": "30 minutes",
+        "noTime": "No time grid",
+        "monthlyColumns": "Writing columns",
+        "column1": "Column 1 name",
+        "column2": "Column 2 name",
+        "column3": "Column 3 name",
+        "column4": "Column 4 name",
+        "entryColumn": "Writing space",
+        "spacingTitle": "Ruling spacing",
+        "spacingPreset": "Spacing preset",
+        "spacingDefault": "Default",
+        "spacingCustom": "Custom",
+        "spacingMm": "Spacing (mm)",
+        "spacingInvalid": "Enter 3–12 mm in 0.5 mm increments.",
+        "dailyOneRequired": "Keep at least one section visible.",
+        "dailyRowsInvalid": "Enter a whole number from 1 to 16 for checklist rows.",
+        "densePaper": "Writing space may be limited. Check the preview or a trial print.",
+        "personalDates": "Personal days off and events",
+        "personalType": "Type",
+        "personalOff": "Day off",
+        "personalEvent": "Event",
+        "personalNameLabel": "Name",
+        "repeatLabel": "Repeat",
+        "repeatOnce": "Specific date",
+        "repeatWeekly": "Weekly",
+        "repeatAnnual": "Yearly",
+        "personalDateLabel": "Date",
+        "personalWeekdayLabel": "Weekday",
+        "personalMonthLabel": "Month",
+        "personalDayLabel": "Day",
+        "personalEnabledLabel": "Show on dated pages",
+        "personalSaveLabel": "Save entry",
+        "personalUpdate": "Save changes",
+        "personalCancelLabel": "Cancel editing",
+        "personalEdit": "Edit",
+        "personalDelete": "Delete",
+        "personalRemove": "Delete this entry?",
+        "personalInvalid": "Enter a name and a valid date or weekday. Up to 100 entries are supported.",
+        "personalEmpty": "No entries yet.",
+        "personalHidden": "Hidden",
+        "personalHint": "◆ marks days off and • marks events. Extra entries are counted, and long names may be shortened. Yearly pages show marks only. Settings JSON includes these entries.",
+        "personalPrintNote": "Full event names are in Settings. Names may be shortened on the printed page.",
+        "helpRefillCustom": "Customize pages and personal dates",
+        "helpRefillCustomBody": "Open Page details to change daily and weekly sections, vertical week divisions, ruling spacing, or monthly list columns. Add one-time, weekly, and yearly entries under Personal days off and events. Undated pages omit these entries. Settings JSON includes them.",
+        "personalWeekday0": "Sunday",
+        "personalWeekday1": "Monday",
+        "personalWeekday2": "Tuesday",
+        "personalWeekday3": "Wednesday",
+        "personalWeekday4": "Thursday",
+        "personalWeekday5": "Friday",
+        "personalWeekday6": "Saturday"
+      });
+
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
       Object.assign(translations.en,{"dated": "Dated", "undated": "Undated", "undatedCountLabel": "Units to generate", "invalidUndatedCount": "Enter a whole number from 1 to 100 units.", "startDate": "Start date", "endDate": "End date", "invalidDayRange": "Choose real dates from 1900-01-01 through 2100-12-31, with end on or after start and at most 60 calendar months.", "dailyWeekdaysLabel": "Days to include", "invalidWeekdays": "Select at least one weekday and make sure the range contains a selected day.", "allDays": "All days", "workdays": "Weekdays", "thisMonth": "This month", "nextMonth": "Next month", "thisYear": "This year", "nextYear": "Next year", "thisWeek": "This week", "nextWeek": "Next week", "fourWeeks": "Next 4 weeks", "today": "Today", "nextDay": "Next day", "sevenDays": "Next 7 days", "weekday0": "Sun", "weekday1": "Mon", "weekday2": "Tue", "weekday3": "Wed", "weekday4": "Thu", "weekday5": "Fri", "weekday6": "Sat"});
@@ -1464,7 +1781,7 @@
       function holidayInfo(date){if(!date||!state.showHolidays||isUndated())return null;const item=JP_HOLIDAYS[dateKey(date)];return item?{ja:item[0],en:item[1],name:item[language==='ja'?0:1]}:null;}
       function dayKind(date){const day=date.getUTCDay();return day===6?'saturday':day===0?'sunday':'weekday';}
       function weekdayKindAtColumn(index){const day=state.weekStart==='monday'?(index+1)%7:index;return day===6?'saturday':day===0?'sunday':'weekday';}
-      function dateAccentColor(date,holiday=holidayInfo(date)){if(!date)return null;if(holiday)return state.holidayColor;const kind=dayKind(date);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
+      function dateAccentColor(date,holiday=holidayInfo(date),entries=personalEntriesFor(date)){if(!date)return null;if(holiday||hasPersonalDayOff(entries))return state.holidayColor;const kind=dayKind(date);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function weekdayAccentColor(index){const kind=weekdayKindAtColumn(index);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function holidayRangeFullyCovered(){
         if(isUndated()||state.refillType==='notes')return true;
@@ -1473,6 +1790,7 @@
           if(state.refillType==='weekly')return item.days.every(covered);
           if(state.refillType==='daily')return covered(item);
           if(state.refillType==='yearly')return item>=2026&&item<=2027;
+          if(monthlyListLayout())return item.year>=2026&&item.year<=2027;
           const cells=calendarCells(item.year,item.month);
           if(!cells.filter(cell=>cell.current||state.showAdjacent).every(cell=>covered(cell.date)))return false;
           if(currentLayout()==='monthly-spread')return [-1,1].every(delta=>{const month=shiftMonth(item.year,item.month,delta);return month.year>=2026&&month.year<=2027;});
@@ -1526,11 +1844,11 @@
       function yearItems(){const start=monthSerial(state.startMonth),end=monthSerial(state.endMonth);if(start==null||end==null)return[];const a=monthFromSerial(start).year,b=monthFromSerial(end).year;const out=[];for(let y=a;y<=b;y+=1)out.push(y);return out;}
       function weekItems(){const start=parseDay(state.weeklyStartDate),end=parseDay(state.weeklyEndDate);if(!start||!end)return[];const out=[];for(let cursor=startOfWeek(start),last=startOfWeek(end);cursor<=last;cursor=addDays(cursor,7))out.push({start:cursor,days:Array.from({length:7},(_,i)=>addDays(cursor,i))});return out;}
       function viewItems(){if(isUndated())return Array.from({length:state.undatedCount},(_,index)=>({undated:true,unit:index+1}));if(state.refillType==='monthly'){const start=monthSerial(state.startMonth),count=monthCount();return Array.from({length:count},(_,i)=>monthFromSerial(start+i));}if(state.refillType==='yearly')return yearItems();if(state.refillType==='weekly')return weekItems();if(state.refillType==='daily')return dailyItems();return notesItems();}
-      function pageCount(){const count=viewItems().length,layout=currentLayout();if(layout==='monthly-spread'||layout==='year-spread'||layout==='weekly-notes')return count*2;return count;}
-      function layoutSummary(){const key={ 'monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'}[currentLayout()];return t(key);}
+      function pageCount(){const count=viewItems().length,layout=currentLayout();if(fixedSpreadLayout())return count*2;return count;}
+      function layoutSummary(){const key={ 'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'}[currentLayout()];return t(key);}
       function autoRingMargin(){const values={a5:15,bible:12,mini6:10,'davinci-pocket':10,micro5:8,hbwa5:15,custom:12};return values[state.sizeKey]??12;}
       function effectiveRingMargin(){const {width}=effectiveDimensions();const raw=state.ringMarginMode==='auto'?autoRingMargin():state.ringMarginManual;return Math.min(raw,Math.max(4,width*.35));}
-      function fixedSpreadLayout(){const layout=currentLayout();return layout==='monthly-spread'||layout==='year-spread'||layout==='weekly-notes';}
+      function fixedSpreadLayout(){const layout=currentLayout();return ['monthly-spread','monthly-list-spread','year-spread','weekly-notes','weekly-vertical-spread'].includes(layout);}
       function createMonthlySpreadPage(year,month,side,pageLabel,gutterClass=''){const {holder,sheet}=makeSheet(pageLabel,gutterClass,side);const page=document.createElement('div');page.className='calendar-page calendar-spread-page';const layout=document.createElement('div');layout.className=`spread-calendar-layout ${side}`;const columns=side==='left'?[0,1,2]:[3,4,5,6];if(side==='left'){const rail=document.createElement('aside');rail.className='calendar-info-rail';const railMetrics=MONTHLY_SPREAD_RAIL;const minisHeight=railMetrics.miniHeight*2+railMetrics.miniGap;rail.style.setProperty('--spread-month-top',`${railMetrics.monthTop*100}%`);rail.style.setProperty('--spread-year-top',`${railMetrics.yearTop*100}%`);rail.style.setProperty('--spread-minis-top',`${railMetrics.minisTop*100}%`);rail.style.setProperty('--spread-minis-height',`${minisHeight*100}%`);rail.style.setProperty('--spread-minis-gap',`${railMetrics.miniGap/minisHeight*100}%`);rail.style.setProperty('--spread-rail-inset',`${railMetrics.inset*100}%`);const monthTitle=document.createElement('div');monthTitle.className='calendar-info-month';if(language==='ja'){const monthNo=document.createElement('span');monthNo.className='calendar-info-month-number';monthNo.textContent=String(month);const suffix=document.createElement('span');suffix.className='calendar-info-month-suffix';suffix.textContent='月';monthTitle.append(monthNo,suffix);}else{const monthText=document.createElement('span');monthText.className='calendar-info-month-text';monthText.textContent=new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(year,month-1,1)));monthTitle.append(monthText);}const yearTitle=document.createElement('div');yearTitle.className='calendar-info-year';yearTitle.textContent=String(year);const minis=document.createElement('div');minis.className='calendar-info-minis';const previous=shiftMonth(year,month,-1),next=shiftMonth(year,month,1);minis.append(miniMonth(previous.year,previous.month),miniMonth(next.year,next.month));rail.append(monthTitle,yearTitle,minis);layout.append(rail);}const weekdays=weekdayNames();const weekdayRow=document.createElement('div');weekdayRow.className='weekday-row';weekdayRow.style.gridTemplateColumns=`repeat(${columns.length},minmax(0,1fr))`;columns.forEach(index=>{const el=document.createElement('div');const kind=weekdayKindAtColumn(index);el.className=`weekday${kind!=='weekday'?` ${kind}`:''}`;el.textContent=weekdays[index];weekdayRow.append(el);});const grid=document.createElement('div');grid.className='calendar-grid';grid.style.gridTemplateColumns=`repeat(${columns.length},minmax(0,1fr))`;const cells=calendarCells(year,month);for(let week=0;week<6;week+=1){columns.forEach(columnIndex=>{const cellData=cells[week*7+columnIndex];const cell=document.createElement('div');const holiday=holidayInfo(cellData.date);const kind=dayKind(cellData.date);cell.className=`day-cell${cellData.current?'':' outside'}${kind!=='weekday'?` ${kind}`:''}${holiday?' holiday':''}${!state.showAdjacent&&!cellData.current?' empty-adjacent':''}`;if(holiday)cell.title=holiday.name;const number=document.createElement('span');number.className='day-number';number.textContent=String(cellData.day);cell.append(number);if(holiday){if(state.showHolidayNames&&cellData.current){const holidayName=document.createElement('span');holidayName.className='holiday-name';holidayName.textContent=holiday.name;cell.append(holidayName);}const mark=document.createElement('span');mark.className='holiday-mark';mark.setAttribute('aria-hidden','true');cell.append(mark);}grid.append(cell);});}layout.append(weekdayRow,grid);page.append(layout);sheet.append(page);return holder;}
       function createMonthlySpreadCanvasPreview(year,month,side,pageLabel,gutterClass=''){const {holder,sheet}=makeSheet(pageLabel,gutterClass,side);sheet.querySelectorAll('.ring-margin-line,.punch-guides').forEach(el=>el.remove());const {width,height}=effectiveDimensions();const canvas=renderPageSpecCanvas({kind:'monthly-spread',year,month,side,pageLabel},width,height,120);canvas.className='spread-preview-canvas';sheet.append(canvas);return holder;}
       function pageSideAt(index){if(fixedSpreadLayout())return index%2===0?'left':'right';const first=state.firstPageSide;return index%2===0?first:(first==='right'?'left':'right');}
@@ -1552,6 +1870,7 @@
         if(state.sizeKey==='custom'&&(!numberValid(customWidth,40,300)||!numberValid(customHeight,60,400)))return false;
         if(state.printMode!=='exact'&&!numberValid($('#printMarginMm'),0,20))return false;
         if(dimensionsOnly)return true;
+        if(activeRefillInvalidField())return false;
         if(state.ringMarginMode==='manual'&&!numberValid($('#ringMarginValue'),4,30))return false;
         if(state.refillType==='notes')return numberValid($('#notesCount'),1,100,true);
         if(isUndated()){
@@ -1564,7 +1883,7 @@
           const start=monthSerial(startMonthInput.value),end=monthSerial(endMonthInput.value);
           if(start==null||end==null||end<start||end-start+1>60)return false;
         }
-        if(state.refillType==='daily'||currentLayout()==='weekly-vertical')return numberValid(startHourInput,0,23,true)&&numberValid(endHourInput,1,24,true)&&Number(endHourInput.value)>Number(startHourInput.value);
+        if(hoursActive())return numberValid(startHourInput,0,23,true)&&numberValid(endHourInput,1,24,true)&&Number(endHourInput.value)>Number(startHourInput.value);
         return true;
       }
       function setPreset(key){state.sizeKey=key;if(key==='custom'){state.baseWidth=state.customWidth;state.baseHeight=state.customHeight;customFields.hidden=false;}else{state.baseWidth=PRESETS[key].width;state.baseHeight=PRESETS[key].height;customFields.hidden=true;}render();}
@@ -1618,7 +1937,7 @@
         }
         state.viewIndex=0;render();
       }
-      function setRefillType(type){state.refillType=type;state.viewIndex=0;$$('.layout-option').forEach(el=>{el.hidden=el.dataset.refill!==type;});const layout=state.layoutByType[type];const input=$(`input[name="layout"][value="${layout}"]`);if(input)input.checked=true;$('#layoutOptions').classList.toggle('weekly',type==='weekly'||type==='notes');$('#adjacentRow').hidden=type!=='monthly';$('#weeklyHours').hidden=!(layout==='weekly-vertical'||type==='daily');$('#periodSettingGroup').hidden=type==='notes';$('#weekStartSettingGroup').hidden=type==='daily'||type==='notes';$('#holidaySettingGroup').hidden=type==='notes';$('#notesOptions').hidden=type!=='notes';$('#noteSpacingGroup').hidden=type!=='notes'||layout==='notes-lined';render();}
+      function setRefillType(type){state.refillType=type;state.viewIndex=0;$$('.layout-option').forEach(el=>{el.hidden=el.dataset.refill!==type;});const layout=state.layoutByType[type];const input=$(`input[name="layout"][value="${layout}"]`);if(input)input.checked=true;$('#layoutOptions').classList.toggle('weekly',type==='weekly'||type==='notes');$('#adjacentRow').hidden=type!=='monthly';$('#periodSettingGroup').hidden=type==='notes';$('#weekStartSettingGroup').hidden=type==='daily'||type==='notes';$('#holidaySettingGroup').hidden=type==='notes';$('#notesOptions').hidden=type!=='notes';render();}
 
       function makeSheet(pageLabel,gutterClass='',side='right'){const {width,height}=effectiveDimensions();const holder=document.createElement('div');holder.className='sheet-holder';const sheet=document.createElement('div');sheet.className=`sheet ${gutterClass}`;sheet.dataset.pageLabel=pageLabel;sheet.dataset.pageWidth=String(width);sheet.dataset.pageHeight=String(height);decorateSheetForRing(sheet,side);const chip=document.createElement('span');chip.className='page-size-chip';chip.textContent=`${formatMm(width)} × ${formatMm(height)} mm`;holder.append(sheet,chip);return{holder,sheet};}
       function createCalendarPage(year,month,columnIndexes,pageLabel,gutterClass='',side='right'){const {holder,sheet}=makeSheet(pageLabel,gutterClass,side);const page=document.createElement('div');page.className='calendar-page';const title=document.createElement('div');title.className='calendar-title';const monthTitle=document.createElement('div');monthTitle.className='month-title';monthTitle.textContent=language==='ja'?`${month}月`:new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(year,month-1,1)));const yearTitle=document.createElement('div');yearTitle.className='year-title';yearTitle.textContent=String(year);title.append(monthTitle,yearTitle);const weekdays=weekdayNames();const weekdayRow=document.createElement('div');weekdayRow.className='weekday-row';weekdayRow.style.gridTemplateColumns=`repeat(${columnIndexes.length},minmax(0,1fr))`;columnIndexes.forEach(index=>{const el=document.createElement('div');const kind=weekdayKindAtColumn(index);el.className=`weekday${kind!=='weekday'?` ${kind}`:''}`;el.textContent=weekdays[index];weekdayRow.append(el);});const grid=document.createElement('div');grid.className='calendar-grid';grid.style.gridTemplateColumns=`repeat(${columnIndexes.length},minmax(0,1fr))`;const cells=calendarCells(year,month);for(let week=0;week<6;week+=1){columnIndexes.forEach(columnIndex=>{const cellData=cells[week*7+columnIndex];const cell=document.createElement('div');const holiday=holidayInfo(cellData.date);const kind=dayKind(cellData.date);cell.className=`day-cell${cellData.current?'':' outside'}${kind!=='weekday'?` ${kind}`:''}${holiday?' holiday':''}${!state.showAdjacent&&!cellData.current?' empty-adjacent':''}`;if(holiday)cell.title=holiday.name;const number=document.createElement('span');number.className='day-number';number.textContent=String(cellData.day);cell.append(number);if(holiday){if(state.showHolidayNames&&cellData.current){const holidayName=document.createElement('span');holidayName.className='holiday-name';holidayName.textContent=holiday.name;cell.append(holidayName);}const mark=document.createElement('span');mark.className='holiday-mark';mark.setAttribute('aria-hidden','true');cell.append(mark);}grid.append(cell);});}page.append(title,weekdayRow,grid);sheet.append(page);return holder;}
@@ -1652,7 +1971,7 @@
         return pageSpecsForItem(item, itemIndex).map(spec => createPdfParityPreviewPage(spec, navigationLabel(item)));
       }
       function pageHoldersForItem(item,itemIndex=state.viewIndex){return appendPreviewPageNumbers(pageHoldersForItemRaw(item,itemIndex),itemIndex);}
-      function settingsSignature(){return JSON.stringify({...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
+      function settingsSignature(){return JSON.stringify({refillOptions:state.refillOptions,...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
       function safeFilename(value){let name=String(value||'').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'-').replace(/\s+/g,' ').slice(0,120);if(!name)name='planner-refill.pdf';if(!/\.pdf$/i.test(name))name+='.pdf';return name;}
       function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes'}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
       function formatBytes(bytes){if(bytes<1024)return `${bytes} B`;if(bytes<1024*1024)return `${(bytes/1024).toFixed(bytes<10240?1:0)} KB`;return `${(bytes/(1024*1024)).toFixed(1)} MB`;}
@@ -1714,16 +2033,264 @@
       function clearGeneratedPdf({outdated=false}={}){delete pdfError.dataset.i18n;if(generatedPdf.url){URL.revokeObjectURL(generatedPdf.url);generatedPdf.url=null;}generatedPdf.blob=null;generatedPdf.signature='';generatedPdf.pageCount=0;generatedPdf.scope='full';generatedPdf.scopeLabel='';generatedPdf.filenameSuffix='';savePdfButton.disabled=true;pdfResult.hidden=true;if(outdated&&!pdfBusy){pdfError.dataset.i18n='pdfOutdated';pdfError.textContent=t('pdfOutdated');pdfError.hidden=false;}else if(!pdfBusy){pdfError.hidden=true;}}
       // A monotonic revision rejects A -> B -> A edits during async rendering.
       // Raw applicable drafts participate even when committed preview state stays valid.
-      function outputDraftSignature(){const values=[];if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(state.refillType==='daily'||currentLayout()==='weekly-vertical')values.push(startHourInput.value,endHourInput.value);}return JSON.stringify([settingsSignature(),values]);}
+      function outputDraftSignature(){const values=[];if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(hoursActive())values.push(startHourInput.value,endHourInput.value);}const invalidRefill=activeRefillInvalidField();if(invalidRefill)values.push(invalidRefill.id,invalidRefill.value);return JSON.stringify([settingsSignature(),values]);}
       function syncPdfFreshness(){const draft=outputDraftSignature();if(draft!==lastOutputDraft){lastOutputDraft=draft;outputRevision+=1;}if(generatedPdf.blob&&(!draftInputsValid()||generatedPdf.signature!==settingsSignature()))clearGeneratedPdf({outdated:true});savePdfButton.disabled=pdfBusy||!generatedPdf.blob||!draftInputsValid();if(!filenameTouched)outputFilename.value=defaultPdfFilename();}
       function undatedPageSpecs(itemIndex){
         const layout=currentLayout(),side=pageSideAt(itemIndex),spec=(kind,pageSide)=>({kind,undated:true,side:pageSide,pageLabel:pageSideText(pageSide)});
+        if(['monthly-list-spread','weekly-vertical-spread'].includes(layout))return [spec(layout,'left'),spec(layout,'right')];
         if(layout==='monthly-spread')return [spec('monthly-spread','left'),spec('monthly-spread','right')];
         if(layout==='weekly-notes')return [spec('weekly-list','left'),spec('notes','right')];
         if(layout==='monthly-single')return [{...spec('monthly',side),columns:[0,1,2,3,4,5,6]}];
         return [spec(layout,side)];
       }
-      function pageSpecsForItem(item,itemIndex=0){if(item?.undated)return undatedPageSpecs(itemIndex);const layout=currentLayout();if(state.refillType==='monthly'){if(layout==='monthly-spread')return[{kind:'monthly-spread',year:item.year,month:item.month,side:'left',pageLabel:t('leftPage')},{kind:'monthly-spread',year:item.year,month:item.month,side:'right',pageLabel:t('rightPage')}];const side=pageSideAt(itemIndex);return[{kind:'monthly',year:item.year,month:item.month,columns:[0,1,2,3,4,5,6],pageLabel:pageSideText(side),side}];}if(state.refillType==='yearly'){if(layout==='year-spread')return[{kind:'yearly',year:item,months:[1,2,3,4,5,6],pageLabel:t('leftPage'),side:'left'},{kind:'yearly',year:item,months:[7,8,9,10,11,12],pageLabel:t('rightPage'),side:'right'}];const side=pageSideAt(itemIndex);return[{kind:'yearly',year:item,months:[1,2,3,4,5,6,7,8,9,10,11,12],pageLabel:pageSideText(side),side}];}if(state.refillType==='weekly'){if(layout==='weekly-notes')return[{kind:'weekly-list',week:item,pageLabel:t('leftPage'),side:'left'},{kind:'notes',pageLabel:t('rightPage'),side:'right'}];const side=pageSideAt(itemIndex);if(layout==='weekly-vertical')return[{kind:'weekly-vertical',week:item,pageLabel:pageSideText(side),side}];return[{kind:'weekly-block',week:item,pageLabel:pageSideText(side),side}];}const side=pageSideAt(itemIndex);if(state.refillType==='daily')return[{kind:'daily',date:item,pageLabel:pageSideText(side),side}];return[{kind:layout,pageNo:item,pageLabel:pageSideText(side),side}];}
+      function pageSpecsForItem(item,itemIndex=0){if(item?.undated)return undatedPageSpecs(itemIndex);const layout=currentLayout();if(state.refillType==='monthly'){if(monthlyListLayout(layout)){
+        const sides=layout==='monthly-list-spread'?['left','right']:[pageSideAt(itemIndex)];
+        return sides.map(side=>({kind:layout,year:item.year,month:item.month,side,pageLabel:pageSideText(side)}));
+      }if(layout==='monthly-spread')return[{kind:'monthly-spread',year:item.year,month:item.month,side:'left',pageLabel:t('leftPage')},{kind:'monthly-spread',year:item.year,month:item.month,side:'right',pageLabel:t('rightPage')}];const side=pageSideAt(itemIndex);return[{kind:'monthly',year:item.year,month:item.month,columns:[0,1,2,3,4,5,6],pageLabel:pageSideText(side),side}];}if(state.refillType==='yearly'){if(layout==='year-spread')return[{kind:'yearly',year:item,months:[1,2,3,4,5,6],pageLabel:t('leftPage'),side:'left'},{kind:'yearly',year:item,months:[7,8,9,10,11,12],pageLabel:t('rightPage'),side:'right'}];const side=pageSideAt(itemIndex);return[{kind:'yearly',year:item,months:[1,2,3,4,5,6,7,8,9,10,11,12],pageLabel:pageSideText(side),side}];}if(state.refillType==='weekly'){if(layout==='weekly-vertical-spread'){
+        return ['left','right'].map(side=>({kind:layout,week:item,side,pageLabel:pageSideText(side)}));
+      }if(layout==='weekly-notes')return[{kind:'weekly-list',week:item,pageLabel:t('leftPage'),side:'left'},{kind:'notes',pageLabel:t('rightPage'),side:'right'}];const side=pageSideAt(itemIndex);if(layout==='weekly-vertical')return[{kind:'weekly-vertical',week:item,pageLabel:pageSideText(side),side}];return[{kind:'weekly-block',week:item,pageLabel:pageSideText(side),side}];}const side=pageSideAt(itemIndex);if(state.refillType==='daily')return[{kind:'daily',date:item,pageLabel:pageSideText(side),side}];return[{kind:layout,pageNo:item,pageLabel:pageSideText(side),side}];}
+      function personalEntriesFor(date) {
+        if (!date || isUndated()) return [];
+        const key = dateKey(date);
+        return state.refillOptions.personalDates.filter(entry => {
+          if (!entry.enabled) return false;
+          if (entry.repeat === 'once') return entry.date === key;
+          if (entry.repeat === 'weekly') return entry.weekday === date.getUTCDay();
+          return entry.month === date.getUTCMonth() + 1 && entry.day === date.getUTCDate();
+        });
+      }
+      function hasPersonalDayOff(entries) {
+        return entries.some(entry => entry.kind === 'off');
+      }
+      function personalMark(entries) {
+        return hasPersonalDayOff(entries) ? '◆' : '•';
+      }
+      function boundedPaperText(ctx, value, x, y, size, width, options = {}) {
+        canvasFont(ctx, size, options.weight ?? 600);
+        const chars = Array.from(String(value));
+        if (ctx.measureText(value).width > width) {
+          while (chars.length && ctx.measureText(chars.join('') + '…').width > width) chars.pop();
+          value = chars.join('') + '…';
+        }
+        text(ctx, value, x, y, size, { ...options, maxWidth: width });
+      }
+      function drawPersonalNames(ctx, entries, x, y, width, size, options = {}) {
+        if (!entries.length) return;
+        const suffix = entries.length > 1 ? ' +' + (entries.length - 1) : '';
+        const mark = personalMark(entries);
+        const color = hasPersonalDayOff(entries) ? state.holidayColor : '#39443f';
+        canvasFont(ctx, size, 750);
+        const chars = Array.from(entries[0].name);
+        const label = () => mark + ' ' + chars.join('') + (chars.join('') !== entries[0].name ? '…' : '') + suffix;
+        while (chars.length && ctx.measureText(label()).width > width) chars.pop();
+        text(ctx, label(), x, y, size, { baseline:'top', weight:750, color, ...options, maxWidth:width });
+      }
+
+      // Draw physical patterns in page coordinates before any print-sheet imposition.
+      function drawPatternBox(ctx, x, y, width, height, pattern, pxPerMmX, pxPerMmY) {
+        if (pattern === 'blank') return;
+        const spacing = spacingFor(pattern), dx = spacing * pxPerMmX, dy = spacing * pxPerMmY;
+        const stroke = Math.max(.5, pxPerMmY * .12);
+        const xEnd = x + width, yEnd = y + height;
+        if (pattern === 'lined') {
+          for (let row = y + dy; row < yEnd; row += dy) line(ctx,x,row,xEnd,row,'#d9dfdc',stroke);
+        } else if (pattern === 'grid') {
+          for (let col = x; col <= xEnd + .001; col += dx) line(ctx,col,y,col,yEnd,'#dfe4e1',stroke);
+          for (let row = y; row <= yEnd + .001; row += dy) line(ctx,x,row,xEnd,row,'#dfe4e1',stroke);
+        } else if (pattern === 'dot') {
+          ctx.fillStyle = '#9fa9a4';
+          for (let row = y; row <= yEnd + .001; row += dy) {
+            for (let col = x; col <= xEnd + .001; col += dx) {
+              ctx.beginPath();
+              ctx.arc(col,row,Math.max(.9, pxPerMmY * .18),0,Math.PI * 2);
+              ctx.fill();
+            }
+          }
+        }
+      }
+      function paperContentBox(w, h, spec, widthMm) {
+        const margin = pageMarginRatio(), base = w * margin;
+        const ring = Math.max(base, effectiveRingMargin() * w / widthMm);
+        const left = spec.side === 'right' ? ring : base;
+        const right = spec.side === 'left' ? ring : base;
+        return { x:left, y:h * margin, width:w - left - right, height:h * (1 - 2 * margin) };
+      }
+      function drawChecklist(ctx, x, y, width, height, count) {
+        const rowH = height / count;
+        const box = Math.min(width * .065, rowH * .36);
+        for (let row = 0; row < count; row++) {
+          const top = y + row * rowH;
+          ctx.strokeStyle = '#9da6a2';
+          ctx.lineWidth = Math.max(.65, box * .12);
+          ctx.strokeRect(x, top + rowH * .23, box, box);
+          line(ctx, x + box * 1.65, top + rowH * .64, x + width, top + rowH * .64, '#e5e8e6', .7);
+        }
+      }
+      function drawDailySections(ctx, w, h, widthMm, heightMm, x, y, width, height) {
+        const options = state.refillOptions;
+        const { dailyTime, dailyTodo, dailyMemo, dailyBalance } = options;
+        const hasSidebar = dailyTodo || dailyMemo;
+        const gap = dailyTime && hasSidebar ? width * .04 : 0;
+        const timeRatio = {time:.62, equal:.5, side:.38}[dailyBalance];
+        const timeWidth = dailyTime ? hasSidebar ? width * timeRatio : width : 0;
+        const sideX = x + timeWidth + gap, sideWidth = width - timeWidth - gap;
+        const header = height * .045, labelSize = Math.max(6, w * .011);
+        const sectionLabel = (key, fallback, left, top, availableWidth) =>
+          boundedPaperText(ctx, options[key] || t(fallback), left, top, labelSize, availableWidth,
+            { weight:850, color:'#53615c', baseline:'top' });
+        if (dailyTime) {
+          sectionLabel('dailyTimeLabel','dailySchedule',x,y,timeWidth);
+          const rows = state.endHour - state.startHour, top = y + header;
+          const rowH = (height - header) / rows, gutter = timeWidth * .18;
+          for (let row = 0; row <= rows; row++) {
+            const yy = top + row * rowH;
+            line(ctx,x,yy,x + timeWidth,yy,'#e1e5e2',.7);
+            if (row < rows) text(ctx,String(state.startHour + row).padStart(2,'0'),x + gutter * .82,yy + rowH * .18,
+              Math.min(Math.max(5,w * .009),rowH * .55 / pageFontScale()),
+              { weight:750, color:'#7b8581', align:'right', baseline:'top', maxWidth:gutter * .8 });
+          }
+          line(ctx,x + gutter,top,x + gutter,y + height,'#e1e5e2',.7);
+        }
+        const todoHeight = dailyMemo ? height * .38 : height - header;
+        if (dailyTodo) {
+          sectionLabel('dailyTodoLabel','dailyTodo',sideX,y,sideWidth);
+          drawChecklist(ctx,sideX,y + header,sideWidth,todoHeight,options.dailyTodoRows);
+        }
+        if (dailyMemo) {
+          const memoY = dailyTodo ? y + header + todoHeight + height * .08 : y;
+          sectionLabel('dailyMemoLabel','dailyNotes',sideX,memoY,sideWidth);
+          const rulingTop = memoY + header, rulingHeight = y + height - rulingTop;
+          const pattern = options.dailyPattern;
+          if (pattern === 'original' && options.spacingLined === null) {
+            for (let i = 1; i <= 8; i++) {
+              const yy = rulingTop + rulingHeight * i / 8;
+              line(ctx,sideX,yy,sideX + sideWidth,yy,'#e2e6e4',Math.max(.6,w * .0008));
+            }
+          } else drawPatternBox(ctx,sideX,rulingTop,sideWidth,rulingHeight,pattern === 'original' ? 'lined' : pattern,w / widthMm,h / heightMm);
+        }
+      }
+      function drawWeeklyNotesPattern(ctx, w, h, spec, widthMm, heightMm) {
+        const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
+        const top = y + height * .108;
+        text(ctx,t('notes'),x,y + height * .055,Math.min(w * .038,h * .027),{weight:850});
+        line(ctx,x,y + height * .078,x + width,y + height * .078,'#28493f',Math.max(1.5,w * .003));
+        const pattern = state.refillOptions.weeklyNotesPattern;
+        drawPatternBox(ctx,x,top,width,y + height - top,pattern === 'original' ? 'lined' : pattern,w / widthMm,h / heightMm);
+      }
+      function drawCustomVertical(ctx, w, h, spec, widthMm, heightMm) {
+        const options = state.refillOptions;
+        const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
+        const week = spec.undated ? {undated:true,days:Array(7).fill(null)} : spec.week;
+        const indexes = spec.kind === 'weekly-vertical-spread' ?
+          spec.side === 'left' ? [0,1,2] : [3,4,5,6] : [0,1,2,3,4,5,6];
+        const title = week.undated ? '____ / ____ – ____ / ____' : formatWeekLabel(week);
+        const weekNumber = !week.undated && state.showWeekNumbers ? 'W' + weekNumberForDate(week.start) : '';
+        text(ctx,title,x,y + height * .055,Math.min(w * .038,h * .027),{weight:850,maxWidth:width * .82});
+        if (weekNumber) text(ctx,weekNumber,x + width,y + height * .055,w * .019,{weight:750,align:'right'});
+        line(ctx,x,y + height * .078,x + width,y + height * .078,'#28493f',Math.max(1.5,w * .003));
+        const top = y + height * .103, end = y + height;
+        const footer = options.verticalExtra === 'none' ? 0 : height * .2;
+        const bottom = end - footer;
+        const timeWidth = options.verticalStep === 'none' ? 0 : width * .13;
+        const dayWidth = width - timeWidth;
+        const weight = index => options.verticalWidth === 'weekday' && isWeekendColumn(index) ? .57 : 1;
+        const sum = days => days.reduce((total,index) => total + weight(index),0);
+        const weights = indexes.map(weight);
+        // Keep the same width for each weekday across both sides of a spread.
+        const span = spec.kind.endsWith('spread') ? Math.max(sum([0,1,2]),sum([3,4,5,6])) : sum(indexes);
+        const unit = dayWidth / span;
+        const names = weekdayNames(), header = (bottom - top) * .115;
+        let colX = x + timeWidth;
+        indexes.forEach((index,i) => {
+          const colW = unit * weights[i], date = week.days[index], holiday = holidayInfo(date);
+          const entries = personalEntriesFor(date);
+          if (holiday || hasPersonalDayOff(entries)) {
+            ctx.fillStyle = '#f2f3f1';
+            ctx.fillRect(colX,top,colW,header);
+          }
+          const center = colX + colW / 2, size = Math.min(w * .016,header * .23 / pageFontScale());
+          text(ctx,names[index] + ' ' + (date ? date.getUTCDate() : '___'),center,top + header * .24,size,
+            { weight:850, color:dateAccentColor(date,holiday,entries) || '#5d6864', align:'center', baseline:'middle', maxWidth:colW * .92 });
+          if (holiday && state.showHolidayNames) boundedPaperText(ctx,holiday.name,center,top + header * .51,size * .8,colW * .91,
+            {weight:800,align:'center',baseline:'middle',color:state.holidayColor});
+          drawPersonalNames(ctx,entries,center,top + header * (holiday && state.showHolidayNames ? .69 : .53),colW * .91,size * .8,{align:'center'});
+          line(ctx,colX,top,colX,bottom,'#d8ddda',.8);
+          colX += colW;
+        });
+        line(ctx,x + width,top,x + width,bottom,'#d8ddda',.8);
+        line(ctx,x,top,x + width,top,'#d8ddda',.8);
+        line(ctx,x,top + header,x + width,top + header,'#d8ddda',.8);
+        if (timeWidth) {
+          const halves = options.verticalStep === '30', divisions = halves ? 2 : 1;
+          const rows = (state.endHour - state.startHour) * divisions, rowH = (bottom - top - header) / rows;
+          const size = Math.min(w * .011,rowH * .72 / pageFontScale());
+          line(ctx,x,top,x,bottom,'#d8ddda',.8);
+          for (let row = 0; row < rows; row++) {
+            const yy = top + header + row * rowH, half = halves && row % 2;
+            if (row) line(ctx,half ? x + timeWidth : x,yy,x + width,yy,half ? '#edf0ee' : '#d8ddda',half ? .6 : .9);
+            const hour = String(state.startHour + Math.floor(row / divisions)).padStart(2,'0');
+            text(ctx,half ? ':30' : hour,x + timeWidth * .85,yy + rowH * .1,size,
+              {weight:half ? 550 : 750,align:'right',baseline:'top',maxWidth:timeWidth * .8});
+          }
+        }
+        line(ctx,x,bottom,x + width,bottom,'#d8ddda',.8);
+        if (footer) {
+          const heading = options.verticalExtra === 'todo' ? 'blockTodo' : 'blockMemo';
+          text(ctx,t(heading),x,bottom + footer * .12,w * .015,{weight:850,baseline:'top'});
+          const body = bottom + footer * .3;
+          if (options.verticalExtra === 'todo') drawChecklist(ctx,x,body,width,end - body,3);
+          else drawPatternBox(ctx,x,body,width,end - body,options.verticalPattern,w / widthMm,h / heightMm);
+        }
+      }
+      function drawMonthlyList(ctx, w, h, spec, widthMm) {
+        const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
+        const options = state.refillOptions;
+        const spread = spec.kind === 'monthly-list-spread';
+        const columns = Array.from({length:options.listCount},(_,i) => i + 1);
+        const split = Math.ceil(columns.length / 2);
+        const visible = spread ? spec.side === 'left' ? columns.slice(0,split) : columns.slice(split) : columns;
+        const count = spec.undated ? 31 : new Date(Date.UTC(spec.year,spec.month,0)).getUTCDate();
+        const title = spec.undated ? '____ / ____' : formatMonthLabel(spec.year,spec.month);
+        const labelWidth = width * (visible.length >= 3 ? .30 : .35);
+        const nameWidth = (width - labelWidth) / Math.max(visible.length,1);
+        const top = y + height * .112, bodyTop = y + height * .162, end = y + height;
+        const rowH = (end - bodyTop) / count;
+        const rowSize = Math.min(w * .017,rowH * .57 / pageFontScale());
+        text(ctx,title,x,y + height * .069,Math.min(w * .04,h * .026),{weight:850,maxWidth:width});
+        line(ctx,x,top,x + width,top,'#28493f',Math.max(1,w * .002));
+        if (!visible.length) boundedPaperText(ctx,t('notes'),x + labelWidth + width * .014,top + (bodyTop - top) * .5,
+          Math.min(w * .018,(bodyTop - top) * .55 / pageFontScale()),nameWidth * .93,{baseline:'middle',weight:800});
+        visible.forEach((column,i) => {
+          const left = x + labelWidth + nameWidth * i;
+          boundedPaperText(ctx,options['listColumn' + column] || t('entryColumn') + ' ' + column,left + width * .014,top + (bodyTop - top) * .5,
+            Math.min(w * .018,(bodyTop - top) * .55 / pageFontScale()),nameWidth * .93,{baseline:'middle',weight:800});
+          line(ctx,left,top,left,end,'#d8ddda',.85);
+        });
+        if (!visible.length) line(ctx,x + labelWidth,top,x + labelWidth,end,'#d8ddda',.85);
+        for (let i = 0; i < count; i++) {
+          const day = i + 1, yy = bodyTop + rowH * i;
+          const date = spec.undated ? null : new Date(Date.UTC(spec.year,spec.month - 1,day));
+          const holiday = holidayInfo(date), entries = personalEntriesFor(date);
+          if (holiday || hasPersonalDayOff(entries)) {
+            ctx.fillStyle = '#f2f3f1';
+            ctx.fillRect(x,yy,labelWidth,rowH);
+          }
+          line(ctx,x,yy,x + width,yy,'#d8ddda',.7);
+          const dow = date ? t('personalWeekday' + date.getUTCDay()).slice(0,language === 'ja' ? 1 : 3) : '';
+          const officialName = holiday && state.showHolidayNames ? holiday.name : '';
+          const dateColor = dateAccentColor(date,holiday,entries) || '#27312e';
+          const dateWidth = labelWidth * (officialName || entries.length ? .36 : .94);
+          text(ctx,[day,dow].filter(Boolean).join(' '),x + width * .014,yy + rowH * .51,rowSize,
+            {weight:holiday || hasPersonalDayOff(entries) ? 900 : 700,color:dateColor,baseline:'middle',maxWidth:dateWidth});
+          const nameX = x + labelWidth * .42, nameWidth = labelWidth * .55;
+          const labelSize = rowSize * (officialName && entries.length ? .67 : .78);
+          if (officialName) boundedPaperText(ctx,officialName,nameX,yy + rowH * (entries.length ? .27 : .51),labelSize,nameWidth,
+            {baseline:'middle',color:state.holidayColor,weight:750});
+          drawPersonalNames(ctx,entries,nameX,yy + rowH * (officialName ? .51 : .23),nameWidth,labelSize);
+        }
+        line(ctx,x,end,x + width,end,'#d8ddda',.7);
+      }
+
       let renderingRefillPage=false;
       function pageFontFamily(){if(state.stylePreset==='classic')return 'Georgia,"Yu Mincho","Hiragino Mincho ProN","Noto Serif JP",serif';if(state.stylePreset==='compact')return '"Arial Narrow","Roboto Condensed","Noto Sans JP","Yu Gothic UI",sans-serif';return 'Arial,"Helvetica Neue","Noto Sans JP","Yu Gothic UI",Meiryo,sans-serif';}
       function pageFontWeight(weight){if(state.stylePreset==='minimal')return weight>=850?700:weight>=700?600:500;if(state.stylePreset==='classic')return weight>=850?700:weight>=700?650:550;if(state.stylePreset==='compact')return weight>=800?900:weight>=650?750:650;return weight;}
@@ -1731,9 +2298,9 @@
       function line(ctx,x1,y1,x2,y2,color='#d8ddda',width=1){ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.strokeStyle=renderingRefillPage?pageColor(color):color;ctx.lineWidth=width*(renderingRefillPage?pageLineScale():1);ctx.stroke();}
       function text(ctx,value,x,y,sizePx,{weight=600,color='#27312e',align='left',baseline='alphabetic',maxWidth}={}){canvasFont(ctx,sizePx,weight);ctx.fillStyle=renderingRefillPage?pageColor(color):color;ctx.textAlign=align;ctx.textBaseline=baseline;if(maxWidth)ctx.fillText(String(value),x,y,maxWidth);else ctx.fillText(String(value),x,y);}
       function drawPhysicalPageNumber(ctx,pageNumber,w,h){if(!state.showPageNumbers||!pageNumber)return;text(ctx,pageNumber,w*.5,h*.974,Math.max(7,w*.011),{weight:750,color:'#8c9490',align:'center'});}
-      function drawMonthlyCanvas(ctx,w,h,spec){const margin=state.stylePreset==='compact'?.04:.055,mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2;const titleBase=my+ch*.052;const monthName=spec.undated?'____ / ____':language==='ja'?`${spec.month}月`:new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(spec.year,spec.month-1,1)));text(ctx,monthName,mx,titleBase,Math.min(w*.052,h*.038),{weight:850});text(ctx,spec.undated?'____':spec.year,mx+cw,titleBase,Math.min(w*.025,h*.019),{weight:800,color:'#77817d',align:'right'});const titleLine=my+ch*.075;line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const weekdayTop=titleLine+ch*.018,weekdayH=ch*.055,gridTop=weekdayTop+weekdayH,gridH=my+ch-gridTop;const cols=spec.columns.length,colW=cw/cols,rowH=gridH/6;const names=weekdayNames();spec.columns.forEach((col,j)=>{const x=mx+(j+.5)*colW;text(ctx,names[col],x,weekdayTop+weekdayH*.54,Math.max(7,w*.018),{weight:850,color:weekdayAccentColor(col)||'#5d6864',align:'center',baseline:'middle',maxWidth:colW*.9});});line(ctx,mx,gridTop,mx+cw,gridTop,'#cfd5d1',Math.max(1,w*.0015));for(let r=0;r<=6;r++)line(ctx,mx,gridTop+r*rowH,mx+cw,gridTop+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=cols;c++)line(ctx,mx+c*colW,gridTop,mx+c*colW,gridTop+gridH,'#d8ddda',Math.max(.8,w*.001));if(spec.undated)return;const cells=calendarCells(spec.year,spec.month);for(let r=0;r<6;r++){for(let j=0;j<cols;j++){const col=spec.columns[j],cell=cells[r*7+col],holiday=holidayInfo(cell.date);if(holiday&&cell.current){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(mx+j*colW+1,gridTop+r*rowH+1,colW-2,rowH-2);}if(!cell.current){ctx.fillStyle='#fbfbfa';ctx.fillRect(mx+j*colW+1,gridTop+r*rowH+1,colW-2,rowH-2);}if(!state.showAdjacent&&!cell.current)continue;const accent=cell.current?dateAccentColor(cell.date,holiday):null;text(ctx,cell.day,mx+j*colW+colW*.08,gridTop+r*rowH+rowH*.19,Math.max(7,w*.020),{weight:holiday&&cell.current?900:780,color:cell.current?(accent||'#27312e'):'#a6aaa7',baseline:'top'});if(holiday&&state.showHolidayNames&&cell.current)text(ctx,holiday.name,mx+j*colW+colW*.08,gridTop+r*rowH+rowH*.38,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.84});}}
+      function drawMonthlyCanvas(ctx,w,h,spec){const margin=state.stylePreset==='compact'?.04:.055,mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2;const titleBase=my+ch*.052;const monthName=spec.undated?'____ / ____':language==='ja'?`${spec.month}月`:new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(spec.year,spec.month-1,1)));text(ctx,monthName,mx,titleBase,Math.min(w*.052,h*.038),{weight:850});text(ctx,spec.undated?'____':spec.year,mx+cw,titleBase,Math.min(w*.025,h*.019),{weight:800,color:'#77817d',align:'right'});const titleLine=my+ch*.075;line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const weekdayTop=titleLine+ch*.018,weekdayH=ch*.055,gridTop=weekdayTop+weekdayH,gridH=my+ch-gridTop;const cols=spec.columns.length,colW=cw/cols,rowH=gridH/6;const names=weekdayNames();spec.columns.forEach((col,j)=>{const x=mx+(j+.5)*colW;text(ctx,names[col],x,weekdayTop+weekdayH*.54,Math.max(7,w*.018),{weight:850,color:weekdayAccentColor(col)||'#5d6864',align:'center',baseline:'middle',maxWidth:colW*.9});});line(ctx,mx,gridTop,mx+cw,gridTop,'#cfd5d1',Math.max(1,w*.0015));for(let r=0;r<=6;r++)line(ctx,mx,gridTop+r*rowH,mx+cw,gridTop+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=cols;c++)line(ctx,mx+c*colW,gridTop,mx+c*colW,gridTop+gridH,'#d8ddda',Math.max(.8,w*.001));if(spec.undated)return;const cells=calendarCells(spec.year,spec.month);for(let r=0;r<6;r++){for(let j=0;j<cols;j++){const col=spec.columns[j],cell=cells[r*7+col],holiday=holidayInfo(cell.date);if(holiday&&cell.current){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(mx+j*colW+1,gridTop+r*rowH+1,colW-2,rowH-2);}if(!cell.current){ctx.fillStyle='#fbfbfa';ctx.fillRect(mx+j*colW+1,gridTop+r*rowH+1,colW-2,rowH-2);}if(!state.showAdjacent&&!cell.current)continue;const accent=cell.current?dateAccentColor(cell.date,holiday):null;text(ctx,cell.day,mx+j*colW+colW*.08,gridTop+r*rowH+rowH*.19,Math.max(7,w*.020),{weight:holiday&&cell.current?900:780,color:cell.current?(accent||'#27312e'):'#a6aaa7',baseline:'top'});if(holiday&&state.showHolidayNames&&cell.current)text(ctx,holiday.name,mx+j*colW+colW*.08,gridTop+r*rowH+rowH*.38,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.84});if(cell.current||state.showAdjacent)drawPersonalNames(ctx,personalEntriesFor(cell.date),mx+j*colW+colW*.08,gridTop+r*rowH+rowH*.63,colW*.84,Math.min(w*.014,rowH*.15/pageFontScale()));}}
       }
-      function drawMonthlySpreadCanvas(ctx,w,h,spec){const margin=pageMarginRatio(),mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2,colW=cw/4,weekdayH=ch*.07,gridTop=my+weekdayH,gridH=ch-weekdayH,rowH=gridH/6,columns=spec.side==='left'?[0,1,2]:[3,4,5,6],dayX=spec.side==='left'?mx+colW:mx,names=weekdayNames();if(spec.side==='left'){ctx.fillStyle=state.stylePreset==='classic'?'#fbfaf6':state.stylePreset==='compact'?'#f7f8f6':'#fff';ctx.fillRect(mx,my,colW,ch);line(ctx,mx+colW,my,mx+colW,my+ch,'#d8ddda',Math.max(.8,w*.001));const railMetrics=MONTHLY_SPREAD_RAIL,railCenter=mx+colW*(.5+railMetrics.pdfRailOffsetX);if(spec.undated){text(ctx,'____ / ____',railCenter,my+ch*railMetrics.monthTop,Math.max(10,w*.025),{weight:850,align:'center'});}else{if(language==='ja'){const monthNo=String(spec.month),numberSize=Math.max(18,w*.054)*railMetrics.pdfMonthScale,suffixSize=Math.max(8,w*.018)*railMetrics.pdfMonthScale,gap=Math.max(2,w*.0035);canvasFont(ctx,numberSize,900);const numberWidth=ctx.measureText(monthNo).width;canvasFont(ctx,suffixSize,750);const suffixWidth=ctx.measureText('月').width;const startX=railCenter-(numberWidth+gap+suffixWidth)/2;text(ctx,monthNo,startX,my+ch*railMetrics.monthTop,numberSize,{weight:900,baseline:'top'});text(ctx,'月',startX+numberWidth+gap,my+ch*(railMetrics.monthTop+.021),suffixSize,{weight:750,baseline:'top'});}else{const monthName=new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(spec.year,spec.month-1,1)));text(ctx,monthName,railCenter,my+ch*(railMetrics.monthTop+.005),Math.max(10,w*.023)*railMetrics.pdfMonthScale,{weight:900,align:'center',baseline:'top',maxWidth:colW*.88});}const yearCenter=railCenter+colW*railMetrics.yearOffsetX;text(ctx,spec.year,yearCenter,my+ch*railMetrics.yearTop,Math.max(6,w*.013)*railMetrics.pdfYearScale,{weight:750,color:'#77817d',align:'center',baseline:'top'});const previous=shiftMonth(spec.year,spec.month,-1),next=shiftMonth(spec.year,spec.month,1),miniX=mx+colW*railMetrics.inset,miniW=colW*(1-railMetrics.inset*2),miniH=ch*railMetrics.miniHeight;drawMiniMonthCanvas(ctx,miniX,my+ch*railMetrics.minisTop,miniW,miniH,previous.year,previous.month);drawMiniMonthCanvas(ctx,miniX,my+ch*(railMetrics.minisTop+railMetrics.miniHeight+railMetrics.miniGap),miniW,miniH,next.year,next.month);}}columns.forEach((col,j)=>{const x=dayX+(j+.5)*colW;text(ctx,names[col],x,my+weekdayH*.52,Math.max(7,w*.018),{weight:850,color:weekdayAccentColor(col)||'#5d6864',align:'center',baseline:'middle',maxWidth:colW*.9});});line(ctx,dayX,gridTop,dayX+columns.length*colW,gridTop,'#cfd5d1',Math.max(1,w*.0015));for(let r=0;r<=6;r++)line(ctx,dayX,gridTop+r*rowH,dayX+columns.length*colW,gridTop+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=columns.length;c++)line(ctx,dayX+c*colW,gridTop,dayX+c*colW,gridTop+gridH,'#d8ddda',Math.max(.8,w*.001));if(spec.undated)return;const cells=calendarCells(spec.year,spec.month);for(let r=0;r<6;r++){for(let j=0;j<columns.length;j++){const col=columns[j],cell=cells[r*7+col],x=dayX+j*colW,y=gridTop+r*rowH,holiday=holidayInfo(cell.date);if(holiday&&cell.current){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}if(!cell.current){ctx.fillStyle='#fbfbfa';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}if(!state.showAdjacent&&!cell.current)continue;const accent=cell.current?dateAccentColor(cell.date,holiday):null;text(ctx,cell.day,x+colW*.08,y+rowH*.19,Math.max(7,w*.020),{weight:holiday&&cell.current?900:780,color:cell.current?(accent||'#27312e'):'#a6aaa7',baseline:'top'});if(holiday&&state.showHolidayNames&&cell.current)text(ctx,holiday.name,x+colW*.08,y+rowH*.38,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.84});}}}
+      function drawMonthlySpreadCanvas(ctx,w,h,spec){const margin=pageMarginRatio(),mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2,colW=cw/4,weekdayH=ch*.07,gridTop=my+weekdayH,gridH=ch-weekdayH,rowH=gridH/6,columns=spec.side==='left'?[0,1,2]:[3,4,5,6],dayX=spec.side==='left'?mx+colW:mx,names=weekdayNames();if(spec.side==='left'){ctx.fillStyle=state.stylePreset==='classic'?'#fbfaf6':state.stylePreset==='compact'?'#f7f8f6':'#fff';ctx.fillRect(mx,my,colW,ch);line(ctx,mx+colW,my,mx+colW,my+ch,'#d8ddda',Math.max(.8,w*.001));const railMetrics=MONTHLY_SPREAD_RAIL,railCenter=mx+colW*(.5+railMetrics.pdfRailOffsetX);if(spec.undated){text(ctx,'____ / ____',railCenter,my+ch*railMetrics.monthTop,Math.max(10,w*.025),{weight:850,align:'center'});}else{if(language==='ja'){const monthNo=String(spec.month),numberSize=Math.max(18,w*.054)*railMetrics.pdfMonthScale,suffixSize=Math.max(8,w*.018)*railMetrics.pdfMonthScale,gap=Math.max(2,w*.0035);canvasFont(ctx,numberSize,900);const numberWidth=ctx.measureText(monthNo).width;canvasFont(ctx,suffixSize,750);const suffixWidth=ctx.measureText('月').width;const startX=railCenter-(numberWidth+gap+suffixWidth)/2;text(ctx,monthNo,startX,my+ch*railMetrics.monthTop,numberSize,{weight:900,baseline:'top'});text(ctx,'月',startX+numberWidth+gap,my+ch*(railMetrics.monthTop+.021),suffixSize,{weight:750,baseline:'top'});}else{const monthName=new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(spec.year,spec.month-1,1)));text(ctx,monthName,railCenter,my+ch*(railMetrics.monthTop+.005),Math.max(10,w*.023)*railMetrics.pdfMonthScale,{weight:900,align:'center',baseline:'top',maxWidth:colW*.88});}const yearCenter=railCenter+colW*railMetrics.yearOffsetX;text(ctx,spec.year,yearCenter,my+ch*railMetrics.yearTop,Math.max(6,w*.013)*railMetrics.pdfYearScale,{weight:750,color:'#77817d',align:'center',baseline:'top'});const previous=shiftMonth(spec.year,spec.month,-1),next=shiftMonth(spec.year,spec.month,1),miniX=mx+colW*railMetrics.inset,miniW=colW*(1-railMetrics.inset*2),miniH=ch*railMetrics.miniHeight;drawMiniMonthCanvas(ctx,miniX,my+ch*railMetrics.minisTop,miniW,miniH,previous.year,previous.month);drawMiniMonthCanvas(ctx,miniX,my+ch*(railMetrics.minisTop+railMetrics.miniHeight+railMetrics.miniGap),miniW,miniH,next.year,next.month);}}columns.forEach((col,j)=>{const x=dayX+(j+.5)*colW;text(ctx,names[col],x,my+weekdayH*.52,Math.max(7,w*.018),{weight:850,color:weekdayAccentColor(col)||'#5d6864',align:'center',baseline:'middle',maxWidth:colW*.9});});line(ctx,dayX,gridTop,dayX+columns.length*colW,gridTop,'#cfd5d1',Math.max(1,w*.0015));for(let r=0;r<=6;r++)line(ctx,dayX,gridTop+r*rowH,dayX+columns.length*colW,gridTop+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=columns.length;c++)line(ctx,dayX+c*colW,gridTop,dayX+c*colW,gridTop+gridH,'#d8ddda',Math.max(.8,w*.001));if(spec.undated)return;const cells=calendarCells(spec.year,spec.month);for(let r=0;r<6;r++){for(let j=0;j<columns.length;j++){const col=columns[j],cell=cells[r*7+col],x=dayX+j*colW,y=gridTop+r*rowH,holiday=holidayInfo(cell.date);if(holiday&&cell.current){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}if(!cell.current){ctx.fillStyle='#fbfbfa';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}if(!state.showAdjacent&&!cell.current)continue;const accent=cell.current?dateAccentColor(cell.date,holiday):null;text(ctx,cell.day,x+colW*.08,y+rowH*.19,Math.max(7,w*.020),{weight:holiday&&cell.current?900:780,color:cell.current?(accent||'#27312e'):'#a6aaa7',baseline:'top'});if(holiday&&state.showHolidayNames&&cell.current)text(ctx,holiday.name,x+colW*.08,y+rowH*.38,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.84});if(cell.current||state.showAdjacent)drawPersonalNames(ctx,personalEntriesFor(cell.date),x+colW*.08,y+rowH*.63,colW*.84,Math.min(w*.014,rowH*.15/pageFontScale()));}}}
       function drawMiniMonthCanvas(ctx, x, y, w, h, year, month) {
         const name = language === 'ja' ? `${month}月` : new Intl.DateTimeFormat('en', { month: 'short', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, 1)));
         // Restrict *rendered* font height, including the five-step font scale.
@@ -1755,25 +2322,42 @@
         const cells = calendarCells(year, month);
         cells.forEach((cell, i) => {
           if (!cell.current) return;
-          const r = Math.floor(i / 7), c = i % 7, holiday = holidayInfo(cell.date);
+          const r = Math.floor(i / 7), c = i % 7, holiday = holidayInfo(cell.date), entries = personalEntriesFor(cell.date);
           text(ctx, cell.day, x + (c + .5) * colW, gridTop + (r + .52) * rowH, daySize, {
             weight: holiday ? 900 : isWeekendColumn(c) ? 780 : 550,
-            color: dateAccentColor(cell.date, holiday) || '#39443f',
+            color: dateAccentColor(cell.date, holiday, entries) || '#39443f',
             align: 'center', baseline: 'middle', maxWidth: colW * .9
           });
+          if (entries.length) {
+            const markerSize = cap(daySize * .65, rowH * .42);
+            text(ctx, personalMark(entries), x + (c + .87) * colW, gridTop + (r + .25) * rowH, markerSize,
+              {weight:850, align:'center', baseline:'middle', color:hasPersonalDayOff(entries) ? state.holidayColor : '#39443f', maxWidth:colW * .23});
+          }
         });
       }
       function drawYearlyCanvas(ctx,w,h,spec){const margin=pageMarginRatio(),mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2;text(ctx,spec.year,mx,my+ch*.055,Math.min(w*.055,h*.04),{weight:850});text(ctx,spec.months.length===12?(language==='ja'?'年間':'YEAR'):`${spec.months[0]}–${spec.months.at(-1)}`,mx+cw,my+ch*.055,Math.min(w*.022,h*.017),{weight:800,color:'#77817d',align:'right'});const titleLine=my+ch*.078;line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const top=titleLine+ch*.035,bottom=my+ch;const cols=spec.months.length===6?2:3,rows=spec.months.length===6?3:4,gx=cw*.025,gy=(bottom-top)*.028,boxW=(cw-gx*(cols-1))/cols,boxH=((bottom-top)-gy*(rows-1))/rows;spec.months.forEach((month,i)=>{const c=i%cols,r=Math.floor(i/cols);drawMiniMonthCanvas(ctx,mx+c*(boxW+gx),top+r*(boxH+gy),boxW,boxH,spec.year,month);});}
       function drawWeeklyTitleCanvas(ctx,w,h,week){const margin=pageMarginRatio(),mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2;const y=my+ch*.055;text(ctx,week.undated?'____ / ____ – ____ / ____':formatWeekLabel(week),mx,y,Math.min(w*.038,h*.027),{weight:850,maxWidth:cw*.78});text(ctx,week.undated?'____':state.showWeekNumbers?`${week.start.getUTCFullYear()} · W${weekNumberForDate(week.start)}`:week.start.getUTCFullYear(),mx+cw,y,Math.min(w*.020,h*.015),{weight:800,color:'#77817d',align:'right'});const titleLine=my+ch*.078;line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));return{mx,my,cw,ch,titleLine};}
-      function drawWeeklyBlockCanvas(ctx,w,h,spec){const week=spec.undated?{undated:true,days:Array(7).fill(null)}:spec.week;const b=drawWeeklyTitleCanvas(ctx,w,h,week),top=b.titleLine+b.ch*.028,bottom=b.my+b.ch,gridH=bottom-top,colW=b.cw/4,rowH=gridH/2,names=weekdayLongNames();for(let r=0;r<=2;r++)line(ctx,b.mx,top+r*rowH,b.mx+b.cw,top+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=4;c++)line(ctx,b.mx+c*colW,top,b.mx+c*colW,bottom,'#d8ddda',Math.max(.8,w*.001));week.days.forEach((date,i)=>{const r=Math.floor(i/4),c=i%4,x=b.mx+c*colW,y=top+r*rowH,holiday=holidayInfo(date);if(holiday){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}else if(isWeekendColumn(i)){ctx.fillStyle='#fbfcfb';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}text(ctx,names[i],x+colW*.06,y+rowH*.08,Math.max(6,w*.014),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||undefined,baseline:'top',maxWidth:colW*.65});text(ctx,date?date.getUTCDate():'____',x+colW*.93,y+rowH*.08,Math.max(7,w*.019),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||'#39443f',align:'right',baseline:'top'});if(holiday&&state.showHolidayNames)text(ctx,holiday.name,x+colW*.06,y+rowH*.18,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.88});for(let k=1;k<=3;k++)line(ctx,x+colW*.06,y+rowH*(.25+k*.18),x+colW*.94,y+rowH*(.25+k*.18),'#edf0ee',Math.max(.5,w*.0008));});const mx=b.mx+3*colW,my=top+rowH;ctx.fillStyle='#fafaf8';ctx.fillRect(mx+1,my+1,colW-2,rowH-2);text(ctx,t('notes'),mx+colW*.06,my+rowH*.08,Math.max(6,w*.014),{weight:850,baseline:'top'});}
-      function drawWeeklyListCanvas(ctx,w,h,spec){const week=spec.undated?{undated:true,days:Array(7).fill(null)}:spec.week;const b=drawWeeklyTitleCanvas(ctx,w,h,week),top=b.titleLine+b.ch*.028,bottom=b.my+b.ch,rowH=(bottom-top)/7,labelW=b.cw*.31,names=weekdayLongNames();for(let r=0;r<=7;r++)line(ctx,b.mx,top+r*rowH,b.mx+b.cw,top+r*rowH,'#d8ddda',Math.max(.8,w*.001));line(ctx,b.mx+labelW,top,b.mx+labelW,bottom,'#d8ddda',Math.max(.8,w*.001));week.days.forEach((date,i)=>{const y=top+i*rowH,holiday=holidayInfo(date);if(holiday){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(b.mx+1,y+1,b.cw-2,rowH-2);}text(ctx,names[i],b.mx+labelW*.07,y+rowH*.16,Math.max(6,w*.014),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||undefined,baseline:'top',maxWidth:labelW*.68});text(ctx,date?date.getUTCDate():'____',b.mx+labelW*.93,y+rowH*.16,Math.max(7,w*.018),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||'#39443f',align:'right',baseline:'top'});if(holiday&&state.showHolidayNames)text(ctx,holiday.name,b.mx+labelW+b.cw*.02,y+rowH*.15,Math.max(6.6,w*.0142),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:b.cw-labelW-b.cw*.05});line(ctx,b.mx+labelW+b.cw*.02,y+rowH*.52,b.mx+b.cw-b.cw*.02,y+rowH*.52,'#f0f2f1',Math.max(.5,w*.0007));});}
+      function drawWeeklyBlockCanvas(ctx,w,h,spec){const week=spec.undated?{undated:true,days:Array(7).fill(null)}:spec.week;const b=drawWeeklyTitleCanvas(ctx,w,h,week),top=b.titleLine+b.ch*.028,bottom=b.my+b.ch,gridH=bottom-top,colW=b.cw/4,rowH=gridH/2,names=weekdayLongNames();for(let r=0;r<=2;r++)line(ctx,b.mx,top+r*rowH,b.mx+b.cw,top+r*rowH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=4;c++)line(ctx,b.mx+c*colW,top,b.mx+c*colW,bottom,'#d8ddda',Math.max(.8,w*.001));week.days.forEach((date,i)=>{const r=Math.floor(i/4),c=i%4,x=b.mx+c*colW,y=top+r*rowH,holiday=holidayInfo(date);if(holiday){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}else if(isWeekendColumn(i)){ctx.fillStyle='#fbfcfb';ctx.fillRect(x+1,y+1,colW-2,rowH-2);}text(ctx,names[i],x+colW*.06,y+rowH*.08,Math.max(6,w*.014),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||undefined,baseline:'top',maxWidth:colW*.65});text(ctx,date?date.getUTCDate():'____',x+colW*.93,y+rowH*.08,Math.max(7,w*.019),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||'#39443f',align:'right',baseline:'top'});if(holiday&&state.showHolidayNames)text(ctx,holiday.name,x+colW*.06,y+rowH*.18,Math.max(7.4,w*.0168),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:colW*.88});drawPersonalNames(ctx,personalEntriesFor(date),x+colW*.06,y+rowH*.30,colW*.88,Math.min(w*.014,rowH*.12/pageFontScale()));for(let k=1;k<=3;k++)line(ctx,x+colW*.06,y+rowH*(.25+k*.18),x+colW*.94,y+rowH*(.25+k*.18),'#edf0ee',Math.max(.5,w*.0008));});const extra=state.refillOptions.weeklyBlockExtra;if(extra==='blank')return;const mx=b.mx+3*colW,my=top+rowH;ctx.fillStyle='#fafaf8';ctx.fillRect(mx+1,my+1,colW-2,rowH-2);text(ctx,t(extra==='todo'?'blockTodo':'notes'),mx+colW*.06,my+rowH*.08,Math.max(6,w*.014),{weight:850,baseline:'top'});if(extra==='todo')drawChecklist(ctx,mx+colW*.06,my+rowH*.19,colW*.88,rowH*.77,5);}
+      function drawWeeklyListCanvas(ctx,w,h,spec){const week=spec.undated?{undated:true,days:Array(7).fill(null)}:spec.week;const b=drawWeeklyTitleCanvas(ctx,w,h,week),top=b.titleLine+b.ch*.028,bottom=b.my+b.ch,rowH=(bottom-top)/7,labelW=b.cw*.31,names=weekdayLongNames();for(let r=0;r<=7;r++)line(ctx,b.mx,top+r*rowH,b.mx+b.cw,top+r*rowH,'#d8ddda',Math.max(.8,w*.001));line(ctx,b.mx+labelW,top,b.mx+labelW,bottom,'#d8ddda',Math.max(.8,w*.001));week.days.forEach((date,i)=>{const y=top+i*rowH,holiday=holidayInfo(date);if(holiday){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(b.mx+1,y+1,b.cw-2,rowH-2);}text(ctx,names[i],b.mx+labelW*.07,y+rowH*.16,Math.max(6,w*.014),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||undefined,baseline:'top',maxWidth:labelW*.68});text(ctx,date?date.getUTCDate():'____',b.mx+labelW*.93,y+rowH*.16,Math.max(7,w*.018),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||'#39443f',align:'right',baseline:'top'});if(holiday&&state.showHolidayNames)text(ctx,holiday.name,b.mx+labelW+b.cw*.02,y+rowH*.15,Math.max(6.6,w*.0142),{weight:800,color:state.holidayColor,baseline:'top',maxWidth:b.cw-labelW-b.cw*.05});drawPersonalNames(ctx,personalEntriesFor(date),b.mx+labelW+b.cw*.02,y+rowH*.58,b.cw-labelW-b.cw*.05,Math.min(w*.014,rowH*.22/pageFontScale()));line(ctx,b.mx+labelW+b.cw*.02,y+rowH*.52,b.mx+b.cw-b.cw*.02,y+rowH*.52,'#f0f2f1',Math.max(.5,w*.0007));});}
       function drawNotesCanvas(ctx,w,h){const margin=pageMarginRatio(),mx=w*margin,my=h*margin,cw=w-mx*2,ch=h-my*2;text(ctx,t('notes'),mx,my+ch*.055,Math.min(w*.038,h*.027),{weight:850});const titleLine=my+ch*.078;line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const top=titleLine+ch*.03,bottom=my+ch,count=Math.max(10,Math.floor((bottom-top)/(h*.045)));for(let i=1;i<=count;i++){const y=top+(bottom-top)*i/count;line(ctx,mx,y,mx+cw,y,'#e1e5e2',Math.max(.6,w*.0008));}}
       function drawWeeklyVerticalCanvas(ctx,w,h,spec){const week=spec.undated?{undated:true,days:Array(7).fill(null)}:spec.week;const b=drawWeeklyTitleCanvas(ctx,w,h,week),top=b.titleLine+b.ch*.025,bottom=b.my+b.ch,rows=state.endHour-state.startHour,headH=(bottom-top)*.07,timeW=b.cw*.12,colW=(b.cw-timeW)/7,rowH=(bottom-top-headH)/rows,names=weekdayNames();line(ctx,b.mx,top,b.mx+b.cw,top,'#d8ddda',Math.max(.8,w*.001));line(ctx,b.mx,top+headH,b.mx+b.cw,top+headH,'#d8ddda',Math.max(.8,w*.001));for(let c=0;c<=8;c++){const x=c===0?b.mx:c===1?b.mx+timeW:b.mx+timeW+(c-1)*colW;line(ctx,x,top,x,bottom,'#d8ddda',Math.max(.7,w*.0009));}week.days.forEach((date,i)=>{const holiday=holidayInfo(date),x=b.mx+timeW+i*colW;if(holiday){ctx.fillStyle=state.pageColor==='accent'?'#eef5f2':'#f2f3f1';ctx.fillRect(x+1,top+1,colW-2,headH-2);}text(ctx,`${names[i]} ${date?date.getUTCDate():'____'}`,x+colW*.5,top+headH*((holiday&&state.showHolidayNames)?0.38:0.52),Math.max(5,w*.010),{weight:holiday?900:850,color:dateAccentColor(date,holiday)||'#5d6864',align:'center',baseline:'middle',maxWidth:colW*.92});if(holiday&&state.showHolidayNames)text(ctx,holiday.name,x+colW*.5,top+headH*.73,Math.max(5.2,w*.0106),{weight:800,color:state.holidayColor,align:'center',baseline:'middle',maxWidth:colW*.9});});for(let r=0;r<=rows;r++){const y=top+headH+r*rowH;line(ctx,b.mx,y,b.mx+b.cw,y,'#e0e4e2',Math.max(.6,w*.0008));if(r<rows)text(ctx,String(state.startHour+r).padStart(2,'0'),b.mx+timeW*.82,y+rowH*.2,Math.max(5,w*.009),{weight:700,color:'#77817d',align:'right',baseline:'top'});}}
-      function drawDailyCanvas(ctx,w,h,spec){const margin=pageMarginRatio(),base=w*margin,ring=Math.max(base,effectiveRingMargin()/effectiveDimensions().width*w),left=spec.side==='right'?ring:base,right=spec.side==='left'?ring:base,mx=left,my=h*margin,cw=w-left-right,ch=h-my*2,parts=spec.undated?{main:'____ / ____ / ____',sub:'',weekday:'____'}:formatDailyTitle(spec.date),holiday=holidayInfo(spec.date),titleLine=my+ch*.105;text(ctx,parts.main,mx,my+ch*.052,Math.min(w*.052,h*.035),{weight:900,color:dateAccentColor(spec.date,holiday)||'#27312e'});text(ctx,parts.sub,mx,my+ch*.095,Math.max(6,w*.012),{weight:750,color:'#64706b'});text(ctx,parts.weekday,mx+cw,my+ch*.08,Math.max(6,w*.012),{weight:800,color:dateAccentColor(spec.date,holiday)||'#64706b',align:'right'});if(holiday&&state.showHolidayNames){const label=language==='ja'?holiday.ja:holiday.en;text(ctx,label,mx+cw,my+ch*.103,Math.max(8,w*.0158),{weight:900,color:state.holidayColor,align:'right',maxWidth:cw*.46});}line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const bodyTop=titleLine+ch*.03,bodyBottom=my+ch,bodyH=bodyBottom-bodyTop,gap=cw*.04,scheduleW=cw*.62,sideX=mx+scheduleW+gap,sideW=cw-scheduleW-gap;text(ctx,t('dailySchedule'),mx,bodyTop,Math.max(6,w*.011),{weight:850,color:'#53615c',baseline:'top'});const scheduleTop=bodyTop+bodyH*.045,rows=state.endHour-state.startHour,rowH=(bodyBottom-scheduleTop)/rows,timeW=scheduleW*.18;for(let r=0;r<=rows;r++)line(ctx,mx,scheduleTop+r*rowH,mx+scheduleW,scheduleTop+r*rowH,'#e1e5e2',Math.max(.6,w*.0008));line(ctx,mx+timeW,scheduleTop,mx+timeW,bodyBottom,'#e1e5e2',Math.max(.6,w*.0008));for(let r=0;r<rows;r++)text(ctx,String(state.startHour+r).padStart(2,'0'),mx+timeW*.82,scheduleTop+r*rowH+rowH*.18,Math.max(5,w*.009),{weight:750,color:'#7b8581',align:'right',baseline:'top'});text(ctx,t('dailyTodo'),sideX,bodyTop,Math.max(6,w*.011),{weight:850,color:'#53615c',baseline:'top'});const todoTop=bodyTop+bodyH*.045,todoH=bodyH*.38,todoRow=todoH/7;for(let r=0;r<7;r++){const y=todoTop+r*todoRow;ctx.strokeStyle='#9da6a2';ctx.lineWidth=Math.max(.7,w*.001);ctx.strokeRect(sideX,y+todoRow*.3,Math.max(4,w*.009),Math.max(4,w*.009));line(ctx,sideX+w*.015,y+todoRow*.62,sideX+sideW,y+todoRow*.62,'#e5e8e6',Math.max(.6,w*.0008));}const notesTop=todoTop+todoH+bodyH*.08;text(ctx,t('dailyNotes'),sideX,notesTop,Math.max(6,w*.011),{weight:850,color:'#53615c',baseline:'top'});const lineTop=notesTop+bodyH*.045,count=8;for(let i=1;i<=count;i++)line(ctx,sideX,lineTop+(bodyBottom-lineTop)*i/count,sideX+sideW,lineTop+(bodyBottom-lineTop)*i/count,'#e2e6e4',Math.max(.6,w*.0008));}
-      function drawPatternCanvas(ctx,w,h,spec,widthMm,heightMm){const margin=pageMarginRatio(),base=w*margin,ring=Math.max(base,effectiveRingMargin()/widthMm*w),left=spec.side==='right'?ring:base,right=spec.side==='left'?ring:base,top=h*margin,bottom=h*margin,x0=left,x1=w-right,y0=top,y1=h-bottom,pxPerMmX=w/widthMm,pxPerMmY=h/heightMm,layout=spec.kind,spacing=layout==='notes-lined'?7:state.noteSpacing;ctx.save();ctx.strokeStyle='#d9dfdc';ctx.fillStyle='#9fa9a4';ctx.lineWidth=Math.max(.55,w*.00075);if(layout==='notes-lined'){for(let y=y0+spacing*pxPerMmY;y<y1;y+=spacing*pxPerMmY)line(ctx,x0,y,x1,y,'#d9dfdc',Math.max(.55,w*.00075));}else if(layout==='notes-grid'){for(let x=x0;x<=x1+.1;x+=spacing*pxPerMmX)line(ctx,x,y0,x,y1,'#dfe4e1',Math.max(.5,w*.00068));for(let y=y0;y<=y1+.1;y+=spacing*pxPerMmY)line(ctx,x0,y,x1,y,'#dfe4e1',Math.max(.5,w*.00068));}else{const r=Math.max(.9,w*.0015);for(let y=y0;y<=y1+.1;y+=spacing*pxPerMmY){for(let x=x0;x<=x1+.1;x+=spacing*pxPerMmX){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}}}ctx.restore();}
+      function drawDailyCanvas(ctx,w,h,spec,widthMm,heightMm){const margin=pageMarginRatio(),base=w*margin,ring=Math.max(base,effectiveRingMargin()/effectiveDimensions().width*w),left=spec.side==='right'?ring:base,right=spec.side==='left'?ring:base,mx=left,my=h*margin,cw=w-left-right,ch=h-my*2,parts=spec.undated?{main:'____ / ____ / ____',sub:'',weekday:'____'}:formatDailyTitle(spec.date),holiday=holidayInfo(spec.date),entries=personalEntriesFor(spec.date),titleLine=my+ch*(entries.length?.14:.105);text(ctx,parts.main,mx,my+ch*.052,Math.min(w*.052,h*.035),{weight:900,color:dateAccentColor(spec.date,holiday)||'#27312e'});text(ctx,parts.sub,mx,my+ch*.095,Math.max(6,w*.012),{weight:750,color:'#64706b'});text(ctx,parts.weekday,mx+cw,my+ch*.08,Math.max(6,w*.012),{weight:800,color:dateAccentColor(spec.date,holiday)||'#64706b',align:'right'});if(holiday&&state.showHolidayNames){const label=language==='ja'?holiday.ja:holiday.en;text(ctx,label,mx+cw,my+ch*.103,Math.max(8,w*.0158),{weight:900,color:state.holidayColor,align:'right',maxWidth:cw*.46});}drawPersonalNames(ctx,entries,mx,my+ch*.108,cw,Math.min(w*.015,ch*.026/pageFontScale()));line(ctx,mx,titleLine,mx+cw,titleLine,'#28493f',Math.max(1.5,w*.003));const top=titleLine+ch*.03;
+        drawDailySections(ctx,w,h,widthMm,heightMm,mx,top,cw,my+ch-top);
+      }
+      function drawPatternCanvas(ctx,w,h,spec,widthMm,heightMm) {
+        const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
+        drawPatternBox(ctx,x,y,width,height,spec.kind.slice('notes-'.length),w / widthMm,h / heightMm);
+      }
       function drawPunchGuidesCanvas(ctx,w,h,side,widthMm){if(!state.showPunchGuides)return;const edgeMm=Math.min(9,widthMm*.08),x=edgeMm/widthMm*w;ctx.save();ctx.strokeStyle='rgba(22,98,79,.5)';ctx.fillStyle='#fff';ctx.lineWidth=Math.max(1,w*.0012);[.24,.32,.40,.60,.68,.76].forEach(pos=>{const cx=side==='right'?x:w-x,cy=h*pos,r=Math.max(2,w*.006);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();ctx.stroke();});ctx.restore();}
       function withRingTransform(ctx,w,widthMm,side,draw){const base=w*pageMarginRatio(),ring=Math.max(base,effectiveRingMargin()/widthMm*w);const left=side==='right'?ring:base,right=side==='left'?ring:base;const source=w-base*2,target=w-left-right,scale=Math.max(.5,target/source),tx=left-scale*base;ctx.save();ctx.setTransform(scale,0,0,1,tx,0);draw();ctx.restore();}
-      function renderPageSpecCanvas(spec,widthMm,heightMm,dpi=180){const pxWidth=Math.max(240,Math.round(widthMm/25.4*dpi)),pxHeight=Math.max(320,Math.round(heightMm/25.4*dpi));const canvas=document.createElement('canvas');canvas.width=pxWidth;canvas.height=pxHeight;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,pxWidth,pxHeight);if(!spec)return canvas;const direct=spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
+      function renderPageSpecCanvas(spec,widthMm,heightMm,dpi=180){const pxWidth=Math.max(240,Math.round(widthMm/25.4*dpi)),pxHeight=Math.max(320,Math.round(heightMm/25.4*dpi));const canvas=document.createElement('canvas');canvas.width=pxWidth;canvas.height=pxHeight;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,pxWidth,pxHeight);if(!spec)return canvas;const options=state.refillOptions;
+        const customWeeklyNotes=spec.kind==='notes'&&(options.weeklyNotesPattern!=='original'||options.spacingLined!==null);
+        const customVertical=verticalLayout(spec.kind)&&(spec.kind.endsWith('spread')||options.verticalWidth!=='equal'||options.verticalStep!=='60'||options.verticalExtra!=='none'||spec.week?.days.some(date=>personalEntriesFor(date).length));
+        const direct=monthlyListLayout(spec.kind)||customWeeklyNotes||customVertical||spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{
+          if(monthlyListLayout(spec.kind))drawMonthlyList(ctx,pxWidth,pxHeight,spec,widthMm);
+          else if(customVertical)drawCustomVertical(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
+          else if(customWeeklyNotes)drawWeeklyNotesPattern(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
+          else if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
       async function canvasJpeg(canvas,quality=.96){const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!blob)throw new Error(t('pdfPageRasterError'));return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height};}
       function drawPrintPageCanvas(ctx,pageCanvas,x,y,w,h,rotation=0){ctx.save();if(rotation===180){ctx.translate(x+w,y+h);ctx.rotate(Math.PI);ctx.drawImage(pageCanvas,0,0,w,h);}else ctx.drawImage(pageCanvas,x,y,w,h);ctx.restore();}
       async function rasterizePageSpec(spec,widthMm,heightMm,rotation=0){const pageCanvas=renderPageSpecCanvas(spec,widthMm,heightMm,180);if(!rotation)return canvasJpeg(pageCanvas);const canvas=document.createElement('canvas');canvas.width=pageCanvas.width;canvas.height=pageCanvas.height;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));drawPrintPageCanvas(ctx,pageCanvas,0,0,canvas.width,canvas.height,rotation);return canvasJpeg(canvas);}
@@ -2144,7 +2728,8 @@
           const input = $('#' + id), value = Number(input.value);
           return input.value.trim() === '' || !Number.isFinite(value) || value < min || value > max || (integer && !Number.isInteger(value)) ? input : null;
         };
-        let field;
+        let field = activeRefillInvalidField();
+        if (field) return field;
         if (state.sizeKey === 'custom' && (field = numeric('customWidth', 40, 300) || numeric('customHeight', 60, 400))) return field;
         if (state.printMode !== 'exact' && (field = numeric('printMarginMm', 0, 20))) return field;
         if (state.ringMarginMode === 'manual' && (field = numeric('ringMarginValue', 4, 30))) return field;
@@ -2158,7 +2743,7 @@
           const start = monthSerial(startMonthInput.value), end = monthSerial(endMonthInput.value);
           if (start === null || end === null || end < start || end - start + 1 > 60) return startMonthInput;
         }
-        if (state.refillType === 'daily' || currentLayout() === 'weekly-vertical') return numeric('startHour', 0, 23, true) || numeric('endHour', 1, 24, true) || (Number(endHourInput.value) <= Number(startHourInput.value) ? endHourInput : null);
+        if (hoursActive()) return numeric('startHour', 0, 23, true) || numeric('endHour', 1, 24, true) || (Number(endHourInput.value) <= Number(startHourInput.value) ? endHourInput : null);
         return null;
       }
 
@@ -2182,11 +2767,253 @@
       function countText(count,unitKey){let unit=t(unitKey);if(language==='en'&&count===1)unit=unit.replace(/s$/,'');return `${count} ${unit}`;}
       function unitCountText(items){if(state.refillType==='monthly')return countText(items.length,'monthUnit');if(state.refillType==='yearly')return countText(items.length,'yearUnit');if(state.refillType==='weekly')return countText(items.length,'weekUnit');if(state.refillType==='daily')return countText(items.length,'dayUnit');return countText(items.length,'pageUnit');}
       function previewNote(){if(isUndated())return t('undatedPreviewNote');if(state.refillType==='monthly'&&currentLayout()==='monthly-spread')return t('previewNoteMonthly');if(state.refillType==='yearly'&&currentLayout()==='year-spread')return t('previewNoteYearly');if(state.refillType==='weekly'&&currentLayout()==='weekly-notes')return t('previewNoteWeekly');return t('previewNote');}
-      function render(){syncDateControls();const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;$('#weeklyHours').hidden=!(currentLayout()==='weekly-vertical'||state.refillType==='daily');$('#noteSpacingGroup').hidden=state.refillType!=='notes'||currentLayout()==='notes-lined';const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays||isUndated()||state.refillType==='notes';holidayNameRow.hidden=!state.showHolidays||isUndated();holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();renderWorkflowControls();persistSettings();$('#saveSettingsButton').disabled=!draftInputsValid();$('#settingsFileStatus').textContent=settingsFileMessage?t(settingsFileMessage):'';}
+      function render(){syncDateControls();renderRefillControls();const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays||isUndated()||state.refillType==='notes';holidayNameRow.hidden=!state.showHolidays||isUndated();holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();renderWorkflowControls();persistSettings();$('#saveSettingsButton').disabled=!draftInputsValid();$('#settingsFileStatus').textContent=settingsFileMessage?t(settingsFileMessage):'';}
       function applyLanguage(){document.documentElement.lang=language;document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});document.querySelectorAll('[data-i18n-title]').forEach(el=>{el.title=t(el.dataset.i18nTitle);});document.querySelectorAll('[data-i18n-aria-label]').forEach(el=>{el.setAttribute('aria-label',t(el.dataset.i18nAriaLabel));});$('#languageButton').textContent=language==='ja'?'EN':'JA';$('#languageButton').setAttribute('aria-label',language==='ja'?'英語に切り替え':'Switch to Japanese');$('#languageButton').title=language==='ja'?'英語に切り替え':'Switch to Japanese';document.title=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#brandName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#footerName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;render();}
 
       function showSettingsFileStatus(key){settingsFileMessage=key;$('#settingsFileStatus').textContent=key?t(key):'';}
       function cancelSettingsImport(){settingsImportToken+=1;AppConfirm.cancel();if(settingsFileMessage==='settingsFileReading')showSettingsFileStatus('settingsFileCancelled');}
+      function verticalLayout(layout = currentLayout()) {
+        return layout === 'weekly-vertical' || layout === 'weekly-vertical-spread';
+      }
+      function monthlyListLayout(layout = currentLayout()) {
+        return layout === 'monthly-list' || layout === 'monthly-list-spread';
+      }
+      function hoursActive() {
+        return state.refillType === 'daily' ? state.refillOptions.dailyTime :
+          verticalLayout() && state.refillOptions.verticalStep !== 'none';
+      }
+      function activeRuling() {
+        const options = state.refillOptions, layout = currentLayout();
+        if (state.refillType === 'notes') return layout.slice('notes-'.length);
+        if (layout === 'daily' && options.dailyMemo) return options.dailyPattern === 'original' ? 'lined' : options.dailyPattern;
+        if (layout === 'weekly-notes') return options.weeklyNotesPattern === 'original' ? 'lined' : options.weeklyNotesPattern;
+        if (verticalLayout(layout) && options.verticalExtra === 'memo') return options.verticalPattern;
+        return '';
+      }
+      function spacingKey(pattern) {
+        return SPACING_KEYS.find(key => key.toLowerCase() === 'spacing' + pattern);
+      }
+      function defaultSpacing(key) {
+        return key === 'spacingLined' ? 7 : state.noteSpacing;
+      }
+      function spacingFor(pattern) {
+        const key = spacingKey(pattern);
+        return state.refillOptions[key] ?? defaultSpacing(key);
+      }
+      function activeRefillInvalidField() {
+        const key = spacingKey(activeRuling());
+        if (key && $('#' + key + 'Preset').value === 'custom' && !refillSpacingValid(Number($('#' + key).value))) return $('#' + key);
+        const count = $('#dailyTodoRows');
+        if (state.refillType === 'daily' && state.refillOptions.dailyTodo &&
+            (!Number.isInteger(Number(count.value)) || Number(count.value) < 1 || Number(count.value) > 16)) return count;
+        return null;
+      }
+      function syncRefillControls() {
+        for (const [key, value] of Object.entries(state.refillOptions)) {
+          const field = $('#' + key);
+          if (!field) continue;
+          if (typeof value === 'boolean') field.checked = value;
+          else if (SPACING_KEYS.includes(key)) {
+            field.value = String(value ?? defaultSpacing(key));
+            $('#' + key + 'Preset').value = value === null ? 'default' : [4,5,6,7].includes(value) ? String(value) : 'custom';
+          } else field.value = String(value);
+        }
+        clearPersonalEditor();
+        $('#dailySectionError').textContent = '';
+      }
+      function renderRefillControls() {
+        $('#adjacentRow').hidden = state.refillType !== 'monthly' || monthlyListLayout() || isUndated();
+        const layout = currentLayout(), options = state.refillOptions;
+        const visible = (id, show) => { $('#' + id).hidden = !show; };
+        visible('refillDetails', state.refillType !== 'yearly' && (state.refillType !== 'monthly' || monthlyListLayout()));
+        visible('dailySections', layout === 'daily');
+        visible('dailyTimeLabelRow', options.dailyTime);
+        visible('dailyTodoLabelRow', options.dailyTodo);
+        visible('dailyTodoRowsRow', options.dailyTodo);
+        $('#dailyRowsError').textContent = activeRefillInvalidField()?.id === 'dailyTodoRows' ? t('dailyRowsInvalid') : '';
+        visible('dailyMemoLabelRow', options.dailyMemo);
+        visible('dailyPatternRow', options.dailyMemo);
+        visible('dailyBalanceRow', options.dailyTime && (options.dailyTodo || options.dailyMemo));
+        visible('verticalSections', verticalLayout());
+        visible('verticalPatternRow', options.verticalExtra === 'memo');
+        visible('weeklyBlockExtraRow', layout === 'weekly-block');
+        visible('weeklyNotesPatternRow', layout === 'weekly-notes');
+        visible('listSections', monthlyListLayout());
+        for (let i = 1; i <= 4; i++) visible('listColumn' + i + 'Row', i <= options.listCount);
+        const ruling = activeRuling();
+        const spacing = spacingKey(ruling);
+        const legacyRuling = layout === 'daily' && options.dailyMemo && options.dailyPattern === 'original' ||
+          layout === 'weekly-notes' && options.weeklyNotesPattern === 'original';
+        visible('refillSpacing', Boolean(spacing || legacyRuling));
+        for (const key of SPACING_KEYS) {
+          const custom = $('#' + key + 'Preset').value === 'custom';
+          visible(key + 'Group', key === spacing || (legacyRuling && key === 'spacingLined'));
+          visible(key + 'Row', custom);
+          $('#' + key + 'Error').textContent = custom && !refillSpacingValid(Number($('#' + key).value)) ? t('spacingInvalid') : '';
+        }
+        visible('noteSpacingGroup', false);
+        visible('weeklyHours', hoursActive());
+        const {width,height} = effectiveDimensions();
+        const writingWidth = width - effectiveRingMargin() - width * pageMarginRatio();
+        const tightWeek = verticalLayout() && (writingWidth / (layout.endsWith('spread') ? 4 : 7) < 11 ||
+          options.verticalStep === '30' && height * .7 / (2 * (state.endHour - state.startHour)) < 3.5);
+        const columnsPerSide = layout.endsWith('spread') ? Math.ceil(options.listCount / 2) : options.listCount;
+        visible('densePaper', tightWeek || monthlyListLayout() && (writingWidth / (columnsPerSide + 1) < 11 || height * .8 / 31 < 3));
+        visible('personalDetails', state.refillType !== 'notes');
+        visible('personalPrintNote', state.refillType !== 'notes' && !isUndated() && options.personalDates.some(entry => entry.enabled));
+        renderPersonalEditor();
+      }
+      function bindRefillControls() {
+        for (const [key, initial] of Object.entries(REFILL_DEFAULTS)) {
+          const field = $('#' + key);
+          if (!field) continue;
+          if (SPACING_KEYS.includes(key)) {
+            $('#' + key + 'Preset').addEventListener('change', event => {
+              const preset = event.currentTarget.value;
+              if (preset !== 'custom') {
+                state.refillOptions[key] = preset === 'default' ? null : Number(preset);
+                field.value = String(state.refillOptions[key] ?? defaultSpacing(key));
+              }
+              beginDateButtonEdit();
+              render();
+            });
+          }
+          const eventName = field.tagName === 'SELECT' || typeof initial === 'boolean' ? 'change' : 'input';
+          field.addEventListener(eventName, () => {
+            const options = state.refillOptions;
+            if (typeof initial === 'boolean') {
+              if (!field.checked && ['dailyTime','dailyTodo','dailyMemo'].every(id => id === key || !options[id])) {
+                field.checked = true;
+                $('#dailySectionError').textContent = t('dailyOneRequired');
+                return;
+              }
+              $('#dailySectionError').textContent = '';
+              options[key] = field.checked;
+            } else if (SPACING_KEYS.includes(key)) {
+              $('#' + key + 'Preset').value = 'custom';
+              if (refillSpacingValid(Number(field.value))) options[key] = Number(field.value);
+            } else if (key === 'dailyTodoRows') {
+              const count = Number(field.value);
+              if (Number.isInteger(count) && count >= 1 && count <= 16) options[key] = count;
+            } else if (key === 'listCount') {
+              options[key] = Number(field.value);
+            } else if (Object.hasOwn(REFILL_CHOICES,key)) {
+              options[key] = field.value;
+            } else {
+              const label = field.value.replace(/[\u0000-\u001f\u007f]/gu,' ').slice(0,key.startsWith('listColumn') ? 24 : 28);
+              if (label !== field.value) field.value = label;
+              options[key] = label;
+            }
+            beginDateButtonEdit();
+            render();
+          });
+        }
+      }
+
+      let personalEditIndex = -1;
+      let personalListSignature = '';
+      function clearPersonalEditor() {
+        personalEditIndex = -1;
+        for (const [id, value] of Object.entries({
+          personalName:'', personalKind:'event', personalRepeat:'once', personalDate:'',
+          personalWeekday:'1', personalMonth:'1', personalDay:'1',
+        })) $('#' + id).value = value;
+        $('#personalEnabled').checked = true;
+        $('#personalError').textContent = '';
+      }
+      function personalEntryCaption(entry) {
+        if (entry.repeat === 'once') return entry.date;
+        if (entry.repeat === 'weekly') return t('repeatWeekly') + ' · ' + t('personalWeekday' + entry.weekday);
+        const date = new Date(Date.UTC(2000, entry.month - 1, entry.day));
+        return t('repeatAnnual') + ' · ' + formatShortDate(date);
+      }
+      function editPersonalEntry(entry, index) {
+        personalEditIndex = index;
+        $('#personalName').value = entry.name;
+        $('#personalKind').value = entry.kind;
+        $('#personalRepeat').value = entry.repeat;
+        $('#personalEnabled').checked = entry.enabled;
+        if (entry.repeat === 'once') $('#personalDate').value = entry.date;
+        if (entry.repeat === 'weekly') $('#personalWeekday').value = String(entry.weekday);
+        if (entry.repeat === 'annual') {
+          $('#personalMonth').value = String(entry.month);
+          $('#personalDay').value = String(entry.day);
+        }
+        $('#personalError').textContent = '';
+        renderPersonalEditor();
+        $('#personalName').focus();
+      }
+      async function removePersonalEntry(index, entry) {
+        beginDateButtonEdit();
+        const revision = settingsEditRevision;
+        const accepted = await AppConfirm.ask({ title:t('personalRemove'), message:entry.name,
+          confirmLabel:t('personalDelete'), cancelLabel:t('settingsCancel'), tone:'danger' });
+        if (!accepted || revision !== settingsEditRevision || state.refillOptions.personalDates[index] !== entry) return;
+        state.refillOptions.personalDates.splice(index, 1);
+        clearPersonalEditor();
+        render();
+        $('#personalName').focus();
+      }
+      function renderPersonalEditor() {
+        const repeat = $('#personalRepeat').value;
+        $('#personalDateRow').hidden = repeat !== 'once';
+        $('#personalWeekdayRow').hidden = repeat !== 'weekly';
+        $('#personalAnnual').hidden = repeat !== 'annual';
+        $('#personalCancel').hidden = personalEditIndex < 0;
+        $('#personalSave').textContent = t(personalEditIndex < 0 ? 'personalSaveLabel' : 'personalUpdate');
+        const entries = state.refillOptions.personalDates;
+        const signature = JSON.stringify([language, entries]);
+        if (signature === personalListSignature) return;
+        personalListSignature = signature;
+        const list = $('#personalList');
+        list.replaceChildren();
+        if (!entries.length) {
+          const item = document.createElement('li');
+          item.textContent = t('personalEmpty');
+          list.append(item);
+        }
+        entries.forEach((entry, index) => {
+          const row = document.createElement('li'), title = document.createElement('strong');
+          const caption = document.createElement('span'), actions = document.createElement('div');
+          title.textContent = (entry.kind === 'off' ? '◆ ' : '• ') + entry.name;
+          caption.textContent = personalEntryCaption(entry) + (entry.enabled ? '' : ' · ' + t('personalHidden'));
+          caption.className = 'ring-note';
+          actions.className = 'personal-actions';
+          for (const [key, action] of [['personalEdit', () => editPersonalEntry(entry,index)], ['personalDelete', () => removePersonalEntry(index,entry)]]) {
+            const button = document.createElement('button');
+            button.type = 'button'; button.className = 'secondary-action';
+            button.textContent = t(key);
+            button.setAttribute('aria-label', t(key) + ' · ' + entry.name);
+            button.addEventListener('click', action);
+            actions.append(button);
+          }
+          row.append(title, caption, actions);
+          list.append(row);
+        });
+      }
+      function savePersonalEntry() {
+        const entries = state.refillOptions.personalDates;
+        let entry;
+        try {
+          if (personalEditIndex < 0 && entries.length >= 100) throw new Error('Too many entries');
+          entry = decodePersonalDate({
+            name:$('#personalName').value, kind:$('#personalKind').value,
+            repeat:$('#personalRepeat').value, enabled:$('#personalEnabled').checked,
+            date:$('#personalDate').value, weekday:Number($('#personalWeekday').value),
+            month:Number($('#personalMonth').value), day:Number($('#personalDay').value),
+          });
+        } catch {
+          $('#personalError').textContent = t('personalInvalid');
+          return;
+        }
+        beginDateButtonEdit();
+        if (personalEditIndex < 0) entries.push(entry);
+        else entries[personalEditIndex] = entry;
+        clearPersonalEditor();
+        render();
+        $('#personalName').focus();
+      }
+
       function replaceSettings(next){
         // Replacement is a boundary even if its values match A -> B -> A or the same file.
         outputRevision+=1;settingsEditRevision+=1;clearGeneratedPdf();
@@ -2199,7 +3026,7 @@
       }
       function saveSettingsFile(){
         if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
-        const data={app:'planner-refill-maker',formatVersion:2,settings:settingsSnapshot()};
+        const data={app:'planner-refill-maker',formatVersion:3,settings:settingsSnapshot()};
         const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
         const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
         document.body.append(link);
@@ -2207,7 +3034,7 @@
       }
       function settingsImportSummary(next){
         const landscape=next.orientation==='landscape',width=landscape?next.baseHeight:next.baseWidth,height=landscape?next.baseWidth:next.baseHeight;
-        const layoutKeys={'monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'};
+        const layoutKeys={'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'};
         return formatTemplate(t('settingsFileSummary'),{size:next.sizeKey==='custom'?t('customName'):PRESETS[next.sizeKey][language],width:formatMm(width),height:formatMm(height),orientation:t(landscape?'orientationLandscape':'orientationPortrait'),layout:t(layoutKeys[next.layoutByType[next.refillType]]),period:['monthly','weekly','daily'].includes(next.refillType)&&next.dateMode==='undated'?`${t('undated')} · ${next.undatedCount}`:['weekly','daily'].includes(next.refillType)?formatTemplate(t('settingsFilePeriod'),{start:next[next.refillType+'StartDate'],end:next[next.refillType+'EndDate']}):next.refillType==='notes'?formatTemplate(t('settingsFileCount'),{count:next.notesCount}):formatTemplate(t('settingsFilePeriod'),{start:next.startMonth,end:next.endMonth})});
       }
       async function loadSettingsFile(event){
@@ -2223,7 +3050,7 @@
           if(!current())return;
           if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
           const data=JSON.parse(text);
-          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2].includes(data.formatVersion))throw new Error('Unsupported settings format');
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3].includes(data.formatVersion))throw new Error('Unsupported settings format');
           const next=decodeSettings(data.settings,{formatVersion:data.formatVersion});
           const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
           if(!current())return;
@@ -2233,6 +3060,7 @@
       }
 
       function syncControlsFromState(){
+        syncRefillControls();
         const checks={dateMode:state.dateMode,plannerSize:state.sizeKey,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),weekStart:state.weekStart,ringMarginMode:state.ringMarginMode,firstPageSide:state.firstPageSide,printMode:state.printMode,duplexMode:state.duplexMode,noteSpacing:String(state.noteSpacing),stylePreset:state.stylePreset,pageColor:state.pageColor,lineWeight:state.lineWeight};
         Object.entries(checks).forEach(([name,value])=>{$$(`input[name="${name}"]`).forEach(input=>{input.checked=input.value===value;});});
         for(const type of ['weekly','daily'])for(const edge of ['Start','End'])$('#'+type+edge+'Date').value=state[type+edge+'Date'];
@@ -2248,6 +3076,10 @@
         showSettingsFileStatus('');AppToast.show({message:t('settingsReset')});
       }
       syncControlsFromState();
+      bindRefillControls();
+      $('#personalRepeat').addEventListener('change', renderPersonalEditor);
+      $('#personalSave').addEventListener('click', savePersonalEntry);
+      $('#personalCancel').addEventListener('click', () => { clearPersonalEditor(); renderPersonalEditor(); $('#personalName').focus(); });
       $$('input').filter(input=>!['pdfFilename','settingsFileInput'].includes(input.id)).forEach(input=>{
         for(const type of ['input','change'])input.addEventListener(type,()=>{settingsEditRevision+=1;const pending=settingsFileMessage==='settingsFileReading';cancelSettingsImport();if(pending)showSettingsFileStatus('settingsFileStale');});
       });

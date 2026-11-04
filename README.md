@@ -38,6 +38,15 @@ GitHub Pages delivers the initial HTML. After it loads, calendar generation, pre
 
 - **Reusable settings files** — Save your setup as local `.settings.json`, then review and restore it later. Stored settings and imported files are validated before use.
 
+## Customize pages
+
+Open **Page details** to show or hide the daily time grid, checklist, and notes, and adjust headings and checklist rows. Choose the extra block on weekly block pages or the ruling on the weekly notes page.
+
+- **Vertical weeks** come in one-page and facing-page layouts, with equal or wider weekday columns, 60- or 30-minute divisions, an untimed layout, and an optional notes or checklist footer.
+- **Ruling spacing** can be set separately for ruled, grid, and dot paper from 3 to 12 mm in 0.5 mm steps. It also applies to notes sections using that pattern.
+- **Monthly lists** use one row per day and up to four named writing columns. The spread aligns date rows across both pages. Undated lists print numbers 1–31.
+- **Personal days off and events** can repeat weekly or yearly, or apply to a specific date. Yearly pages use marks, and compact layouts may shorten names. Settings JSON includes these entries and the app can still read earlier settings files.
+
 ## Quick start
 
 ### Use the web demo

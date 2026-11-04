@@ -31,7 +31,7 @@ test('all dated and undated layouts preview the exact PDF artwork', async () => 
   for (const language of ['ja', 'en']) {
     const h = loadPlanner(undefined, { language });
     for (const [type, layout] of [
-      ['monthly', 'monthly-single'], ['monthly', 'monthly-spread'],
+      ['monthly', 'monthly-single'], ['monthly', 'monthly-spread'], ['monthly', 'monthly-list'], ['monthly', 'monthly-list-spread'],
       ['yearly', 'year-single'], ['yearly', 'year-spread'],
       ['weekly', 'weekly-block'], ['weekly', 'weekly-notes'],
       ['weekly', 'weekly-vertical'], ['daily', 'daily'],

@@ -6,6 +6,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.2.0]
+
+- Customize daily sections and weekly notes or checklist areas.
+- Add facing vertical weeks with configurable day widths, 30-minute divisions, an untimed option, and a footer.
+- Set physical spacing for ruled, grid, and dot patterns.
+- Add one-page and facing monthly lists with named writing columns.
+- Add local days off and events with one-time, weekly, or yearly recurrence. Settings files now use version 3 and still accept versions 1 and 2.
+
 ## [1.1.0] - 2026-10-23
 
 ### Added

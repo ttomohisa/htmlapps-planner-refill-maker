@@ -52,7 +52,7 @@ test('valid partial legacy settings get defaults and validated Custom geometry',
 test('save exports only versioned allowlisted settings with the editable filename stem', async () => {
   const h=loadPlanner(); await h.input('pdfFilename','My/weekly:setup.pdf');
   const data=await save(h);
-  assert.equal(data.app,'planner-refill-maker'); assert.equal(data.formatVersion,2); assert.equal(data.settings.printMarginMm,0);
+  assert.equal(data.app,'planner-refill-maker'); assert.equal(data.formatVersion,3); assert.equal(data.settings.printMarginMm,0);
   assert.equal(h.downloads.at(-1).filename,'My-weekly-setup.settings.json');
   assert.equal(data.settings.layoutByType.weekly,'weekly-block');
   for(const key of ['language','baseWidth','baseHeight','viewIndex','blob','url','pdfBusy']) assert.equal(key in data.settings,false,key);
@@ -89,7 +89,7 @@ test('cancel, Escape and backdrop preserve setup and existing generated PDF',asy
 });
 test('invalid settings documents are rejected without partial state/PDF/storage changes',async()=>{
   const valid=await saved();
-  const mutations=[x=>{x.app='other';},x=>{x.formatVersion=3;},x=>{x.settings=[];},x=>{x.settings.sizeKey='other';},x=>{x.settings.customWidth='95';},x=>{x.settings.customHeight=401;},x=>{x.settings.notesCount=1.5;},x=>{x.settings.showHolidays='false';},x=>{x.settings.startMonth='2026-13';},x=>{x.settings.startMonth='2026-12';x.settings.endMonth='2026-01';},x=>{x.settings.startMonth='2020-01';x.settings.endMonth='2026-01';},x=>{x.settings.startHour=23;x.settings.endHour=22;},x=>{x.settings.layoutByType.monthly='weekly-block';},x=>{x.settings.saturdayColor='<svg>';},x=>{x.settings.noteSpacing=7;},x=>{x.settings.ringMarginManual=31;}];
+  const mutations=[x=>{x.app='other';},x=>{x.formatVersion=4;},x=>{x.settings=[];},x=>{x.settings.sizeKey='other';},x=>{x.settings.customWidth='95';},x=>{x.settings.customHeight=401;},x=>{x.settings.notesCount=1.5;},x=>{x.settings.showHolidays='false';},x=>{x.settings.startMonth='2026-13';},x=>{x.settings.startMonth='2026-12';x.settings.endMonth='2026-01';},x=>{x.settings.startMonth='2020-01';x.settings.endMonth='2026-01';},x=>{x.settings.startHour=23;x.settings.endHour=22;},x=>{x.settings.layoutByType.monthly='weekly-block';},x=>{x.settings.saturdayColor='<svg>';},x=>{x.settings.noteSpacing=7;},x=>{x.settings.ringMarginManual=31;}];
   const h=loadPlanner();await h.radio('refillType','notes');await h.run(()=>h.app.createPdf());const before=plain(h.app.state),pdf=h.app.generatedPdf.blob,storage=h.storage.get(KEY);
   for(const mutate of mutations){const x=plain(valid);mutate(x);await load(h,x);assert.deepEqual(plain(h.app.state),before);assert.equal(h.app.generatedPdf.blob,pdf);assert.equal(h.storage.get(KEY),storage);assert.notEqual(h.get('appConfirmDialog').open,true);assert.ok(h.get('settingsFileStatus').textContent);}
   for(const raw of ['','{','null','[]'])await load(h,file(raw));
@@ -190,7 +190,7 @@ test('explicit replacement retries persistence after an initial storage-read fai
 
 
 test('v1 settings keep every original required field and migrate new fields to defaults',async()=>{
-  const data=await saved(); data.formatVersion=1; for(const key of ['printMarginMm','dateMode','undatedCount','weeklyStartDate','weeklyEndDate','dailyStartDate','dailyEndDate','dailyWeekdays'])delete data.settings[key];
+  const data=await saved(); data.formatVersion=1; for(const key of ['printMarginMm','dateMode','undatedCount','weeklyStartDate','weeklyEndDate','dailyStartDate','dailyEndDate','dailyWeekdays','refillOptions'])delete data.settings[key];
   const h=loadPlanner(); const pending=load(h,data); await confirm(h); await pending;
   assert.equal(h.app.state.printMarginMm,0);
   for(const key of Object.keys(data.settings)){
@@ -200,7 +200,7 @@ test('v1 settings keep every original required field and migrate new fields to d
 });
 test('v2 requires and validates printer margin while legacy storage supplies its default',async()=>{
   const h=loadPlanner(undefined,{savedSettings:{printMode:'a4'}}); assert.equal(h.app.state.printMarginMm,0);
-  const data=await saved();
+  const data=await saved(); data.formatVersion=2; delete data.settings.refillOptions;
   for(const value of [undefined,null,'5',-1,21]){
     const invalid=plain(data); if(value===undefined)delete invalid.settings.printMarginMm;else invalid.settings.printMarginMm=value;
     await load(h,invalid); assert.notEqual(h.get('appConfirmDialog').open,true,String(value));
