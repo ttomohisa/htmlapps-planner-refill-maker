@@ -128,3 +128,13 @@ test('landscape month headings and holidays have separate text rows', () => {
     }
   }
 });
+
+test('portrait monthly rail keeps the year directly below the month', () => {
+  const h = loadPlanner(undefined, { language:'ja' });
+  const canvas = h.app.renderPageSpecCanvas({kind:'monthly-spread',year:2027,month:1,side:'left'},148,210);
+  const calls = canvas.getContext('2d').calls.filter(call=>call[0]==='fillText');
+  const monthBottom = calls[0][3] + fontSize(calls[0]);
+  const yearTop = calls[2][3];
+  assert.ok(yearTop > monthBottom);
+  assert.ok(yearTop - monthBottom < canvas.height * .04, 'year should follow the month without a large gap');
+});
