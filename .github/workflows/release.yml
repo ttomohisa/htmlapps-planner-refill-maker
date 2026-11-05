@@ -1,0 +1,80 @@
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version from app.config.json, without v (example: 1.2.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    env:
+      RELEASE_VERSION: ${{ inputs.version }}
+    steps:
+      - name: Require main branch
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_REF -ne 'refs/heads/main') { throw 'Run this workflow from main after merging the release PR.' }
+
+      - name: Checkout selected commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate PowerShell syntax and encoding
+        shell: powershell
+        run: .\scripts\check-powershell-syntax.ps1
+
+      - name: Build and run repository checks
+        shell: pwsh
+        run: ./scripts/check-repository.ps1
+
+      - name: Prepare versioned assets and checksums
+        shell: pwsh
+        run: |
+          node scripts/prepare-release.mjs "$env:RELEASE_VERSION"
+          if ($LASTEXITCODE -ne 0) { throw 'Release preparation failed.' }
+
+      - name: Retain checked release files
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ github.sha }}
+          path: dist/release/
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Create tag and publish GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tag = "v$env:RELEASE_VERSION"
+          # Reject existing tags, including annotated tags; never move a released tag.
+          $refs = @(git ls-remote --tags origin "refs/tags/$tag" "refs/tags/$tag^{}")
+          if ($LASTEXITCODE -ne 0) { throw 'Could not check existing tags.' }
+          if ($refs.Count -gt 0) { throw "Tag $tag already exists. Inspect the existing release instead of overwriting it." }
+          $stem = "planner-refill-maker-$tag"
+          gh release create $tag --repo "$env:GITHUB_REPOSITORY" --target "$env:GITHUB_SHA" --draft --title "Planner Refill Maker $tag" --notes-file dist/release/release-notes.md "dist/release/$stem.html" "dist/release/$stem.self-extract.html" dist/release/SHA256SUMS.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Release creation failed. Any partial draft is left for inspection.' }
+          gh release edit $tag --repo "$env:GITHUB_REPOSITORY" --draft=false --latest
+          if ($LASTEXITCODE -ne 0) { throw 'Publishing failed. The draft is left for inspection.' }

@@ -11,6 +11,8 @@ function extract(name) {
 const context = {
   state: { weekStart:'monday', saturdayColor:'#1122aa', sundayColor:'#cc2233', holidayColor:'#0a8f5a' },
   holidayInfo: () => null,
+  personalEntriesFor: () => [],
+  hasPersonalDayOff: entries => entries.some(entry => entry.kind === "off"),
 };
 vm.createContext(context);
 vm.runInContext([extract('dayKind'), extract('weekdayKindAtColumn'), extract('dateAccentColor'), extract('weekdayAccentColor')].join('\n'), context);
@@ -21,6 +23,7 @@ assert.equal(context.dateAccentColor(sat, null), '#1122aa');
 assert.equal(context.dateAccentColor(sun, null), '#cc2233');
 assert.equal(context.dateAccentColor(mon, null), null);
 assert.equal(context.dateAccentColor(sun, {name:'holiday'}), '#0a8f5a', 'holiday color should override Sunday color');
+assert.equal(context.dateAccentColor(sun, null, [{kind:"off"}]), "#0a8f5a", "personal days off should override Sunday color");
 assert.equal(context.weekdayAccentColor(5), '#1122aa', 'Monday-start column 5 is Saturday');
 assert.equal(context.weekdayAccentColor(6), '#cc2233', 'Monday-start column 6 is Sunday');
 context.state.weekStart='sunday';

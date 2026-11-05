@@ -5,6 +5,8 @@ const { test } = require('node:test');
 const { gunzipSync } = require('node:zlib');
 
 const rejected = [
+  "この版のレイアウト",
+  "月間・年間・週間に加え、1日1ページの日間、横罫・方眼・ドットのメモ用紙に対応しています。",
   "ダイアログを開いている間は背景のスクロールが止まります。内容はダイアログ内でスクロールできます。",
   "Background scrolling is paused while a dialog is open. Scroll inside the dialog to read its contents.",
   "v1.0.3正式版です。月間・年間・週間・日間・メモを作成し、実寸またはA4 / US LetterのPDFとして保存できます。",
@@ -21,6 +23,7 @@ test('help contains user guidance rather than implementation or layout audit pro
     let html = fs.readFileSync(filename, 'utf8');
     const payload = html.match(/<script id="self-extract-payload"[^>]*>([\s\S]*?)<\/script>/);
     if (payload) html = gunzipSync(Buffer.from(payload[1].replace(/\s/g, ''), 'base64')).toString('utf8');
+    assert.equal(html.match(/<h1 id="heroTitle"[^>]*>([^<]+)<\/h1>/)?.[1], "手帳に合うリフィルを必要な分だけ", file);
     for (const copy of rejected) assert.ok(!html.includes(copy), `${file}: remove internal-facing help copy: ${copy}`);
   }
 });

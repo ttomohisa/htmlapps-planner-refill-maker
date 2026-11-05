@@ -22,6 +22,7 @@ try {
     const result = spawnSync(process.execPath, ['--test',
       'tests/pdf-output-consistency.test.mjs', 'tests/print-planning.test.mjs',
       'tests/date-selection.test.mjs', 'tests/undated-output.test.mjs',
+      'tests/custom-refills.test.mjs',
       'tests/preview-workflow.test.mjs', 'tests/settings-files.test.mjs',
       'tests/header-language.test.mjs', 'tests/modal-scroll.test.mjs',
     ], {

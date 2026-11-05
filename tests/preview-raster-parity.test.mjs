@@ -31,7 +31,7 @@ test('all dated and undated layouts preview the exact PDF artwork', async () => 
   for (const language of ['ja', 'en']) {
     const h = loadPlanner(undefined, { language });
     for (const [type, layout] of [
-      ['monthly', 'monthly-single'], ['monthly', 'monthly-spread'],
+      ['monthly', 'monthly-single'], ['monthly', 'monthly-spread'], ['monthly', 'monthly-list'], ['monthly', 'monthly-list-spread'],
       ['yearly', 'year-single'], ['yearly', 'year-spread'],
       ['weekly', 'weekly-block'], ['weekly', 'weekly-notes'],
       ['weekly', 'weekly-vertical'], ['daily', 'daily'],
@@ -99,4 +99,42 @@ test('preview stage has a definite height at all breakpoints to prevent resize f
   assert.match(source, /\.preview-stage\s*\{\s*max-height:none;min-height:0;/);
   assert.match(source, /const page = renderPageSpecCanvas\(spec, dimensions.width, dimensions.height, 180\);/,
     'print-sheet previews retain PDF typography even when the composite canvas is low resolution');
+});
+
+test('year spreads omit redundant half-year labels on both pages', () => {
+  const h = loadPlanner();
+  for (const [side, first] of [['left', 1], ['right', 7]]) {
+    const months = Array.from({length:6}, (_, index) => first + index);
+    const ctx = h.app.renderPageSpecCanvas({kind:'yearly',year:2027,months,side}, 148, 210).getContext('2d');
+    assert.ok(ctx.calls.some(call => call[0] === 'fillText' && call[1] === '2027'));
+    assert.ok(!ctx.calls.some(call => call[0] === 'fillText' && call[1] === `${first}–${first + 5}`));
+  }
+});
+
+test('landscape month headings and holidays have separate text rows', () => {
+  for (const layout of ['monthly', 'monthly-spread']) {
+    for (const [width,height] of [[210,148], [105,62], [300,40]]) {
+      const h = loadPlanner(undefined, { language:'ja' });
+      Object.assign(h.app.state,{orientation:'landscape',fontSize:'xxlarge',showHolidays:true,showHolidayNames:true});
+      const canvas = h.app.renderPageSpecCanvas({kind:layout,year:2027,month:1,side:'left',columns:[0,1,2,3,4,5,6]},width,height);
+      const calls = canvas.getContext('2d').calls.filter(call=>call[0]==='fillText');
+      const separated = (above, below) => assert.ok(above[3] + fontSize(above) < below[3], `${layout} ${width}×${height}: ${above[1]} overlaps ${below[1]}`);
+      if (layout === 'monthly-spread') {
+        separated(calls[0],calls[2]);
+      }
+      const holiday = calls.findIndex(call=>call[1]===(layout==='monthly-spread'?'成人の日':'元日'));
+      assert.ok(holiday>0);
+      separated(calls[holiday-1],calls[holiday]);
+    }
+  }
+});
+
+test('portrait monthly rail keeps the year directly below the month', () => {
+  const h = loadPlanner(undefined, { language:'ja' });
+  const canvas = h.app.renderPageSpecCanvas({kind:'monthly-spread',year:2027,month:1,side:'left'},148,210);
+  const calls = canvas.getContext('2d').calls.filter(call=>call[0]==='fillText');
+  const monthBottom = calls[0][3] + fontSize(calls[0]);
+  const yearTop = calls[2][3];
+  assert.ok(yearTop > monthBottom);
+  assert.ok(yearTop - monthBottom < canvas.height * .04, 'year should follow the month without a large gap');
 });

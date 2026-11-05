@@ -1,10 +1,22 @@
 # Changelog
 
-## Unreleased
-
-- Clarify Japanese and English help by removing internal layout, implementation, and audit commentary while preserving usage guidance and cautions.
-
 All notable changes to this project are documented in this file.
+
+## [1.2.0]
+
+- Add a manual main-branch release workflow that verifies the version/build, creates its version tag, and publishes both standalone HTML variants with SHA-256 checksums.
+- Close every weekday column in facing vertical weeks, keeping the spare left-page area separate from the final weekday.
+- Fit the preview paper and its note into the remaining viewport; compact wide-panel controls and remove excess space around landscape paper.
+- Clarify Japanese and English help while preserving usage guidance and cautions.
+
+- Keep calendar labels within their rows on landscape and short custom pages, and omit the half-year range on yearly spreads.
+
+- Customize daily sections and weekly notes or checklist areas.
+- Add facing vertical weeks with configurable day widths, 30-minute divisions, an untimed option, and a footer.
+- Set physical spacing for ruled, grid, and dot patterns.
+- Add one-page and facing monthly lists with named writing columns.
+- Add local days off and events with one-time, weekly, or yearly recurrence. Settings files now use version 3 and still accept versions 1 and 2.
+- Group settings into collapsible sections and give layout cards consistent sizing with previews that match the printed page structure.
 
 ## [1.1.0] - 2026-10-23
 
