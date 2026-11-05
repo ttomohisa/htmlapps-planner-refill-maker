@@ -8,6 +8,8 @@ All notable changes to this project are documented in this file.
 
 ## [1.2.0]
 
+- Keep calendar labels within their rows on landscape and short custom pages, and omit the half-year range on yearly spreads.
+
 - Customize daily sections and weekly notes or checklist areas.
 - Add facing vertical weeks with configurable day widths, 30-minute divisions, an untimed option, and a footer.
 - Set physical spacing for ruled, grid, and dot patterns.

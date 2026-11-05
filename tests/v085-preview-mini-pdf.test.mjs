@@ -29,7 +29,7 @@ assert.match(source,
   /railCenter\s*=\s*mx\+colW\*\(\.5\+railMetrics\.pdfRailOffsetX\)/,
   'PDF rail content should use the shared left offset');
 assert.match(source,
-  /numberSize=Math\.max\(18,w\*\.054\)\*railMetrics\.pdfMonthScale/,
+  /numberSize=fitPaperText\(Math\.max\(18,w\*\.054\)\*railMetrics\.pdfMonthScale,monthHeight\*\.82\)/,
   'PDF Japanese month number should use the enlargement scale');
 assert.match(source,
   /Math\.max\(6,w\*\.013\)\*railMetrics\.pdfYearScale/,
