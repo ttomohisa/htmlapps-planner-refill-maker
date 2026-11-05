@@ -134,6 +134,7 @@ test('sheet backs use physical PDF rotation while bound spreads show readable fa
   assert.equal(h.canvases.some(canvas => canvas.getContext('2d').calls.some(call => call[0] === 'rotate' && call[1] === Math.PI)), false);
   await h.radio('duplexMode', 'off');
   assert.equal(h.get('previewBoundOption').disabled, true);
+  assert.match(h.get('previewBoundOption').textContent, /requires double-sided printing/i);
   assert.notEqual(h.get('previewMode').value, 'bound');
 });
 

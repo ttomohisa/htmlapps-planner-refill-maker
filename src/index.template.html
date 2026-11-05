@@ -60,7 +60,7 @@
     .main { width:min(1280px,100%);margin:0 auto;padding:24px clamp(14px,2.8vw,30px) 54px; }
     .page-intro { display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:20px;padding:0 2px; }
     .page-intro h1 { margin:0;font-size:clamp(22px,2.6vw,30px);line-height:1.25;letter-spacing:-.025em; }
-    .page-intro p { max-width:62ch;margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.65; }
+    .page-intro p { max-width:none;margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.65; }
     .local-badge { display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;margin-top:3px;padding:7px 10px;border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line));border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:750; }
     .local-badge svg { width:15px;height:15px; }
 
@@ -109,8 +109,8 @@
     .weekday-filters { display:flex;flex-wrap:wrap;gap:6px;margin-top:8px; }
     .weekday-filters label { display:flex;align-items:center;gap:6px;min-height:44px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;cursor:pointer; }
     .weekday-filters input { accent-color:var(--accent); }
-    #dateShortcuts { display:flex;flex-wrap:wrap;gap:7px; }
-    #dateShortcuts .secondary-action { width:auto;flex:1 1 110px;min-height:44px; }
+    #dateShortcuts { display:flex;gap:6px;margin-top:10px;padding-top:0;border-top:0; }
+    #dateShortcuts .secondary-action { width:auto;min-width:0;flex:1 1 0;min-height:34px;padding:5px 7px;font-size:12px; }
     #dateShortcuts[hidden],#dateShortcuts [hidden] { display:none!important; }
     #undatedControls { display:grid;gap:7px;margin-top:10px; }
     #undatedControls[hidden],#weeklyRangeControls[hidden],#dailyRangeControls[hidden] { display:none!important; }
@@ -539,6 +539,7 @@
       .choice-card label { min-height:58px;padding:8px 9px; }
       .custom-fields { grid-template-columns:1fr; }
       .date-range,.time-range { grid-template-columns:1fr; }
+      #dateShortcuts .secondary-action { min-height:44px;padding:5px 3px;font-size:11px; }
       .date-range-error { grid-column:1; }
       .current-summary { grid-template-columns:1fr 1fr; }
       .segmented.three { grid-template-columns:1fr; }
@@ -877,7 +878,7 @@
           </div>
           <div id="dayRangeError" class="field-error" role="status"></div>
         </div>
-        <div class="setting-group" id="dateShortcuts">
+        <div id="dateShortcuts">
           <button class="secondary-action" type="button" id="shortcutThisMonth" data-shortcut="thisMonth" data-shortcut-type="month" data-i18n="thisMonth">期間</button>
           <button class="secondary-action" type="button" id="shortcutNextMonth" data-shortcut="nextMonth" data-shortcut-type="month" data-i18n="nextMonth">期間</button>
           <button class="secondary-action" type="button" id="shortcutThisYear" data-shortcut="thisYear" data-shortcut-type="month" data-i18n="thisYear">期間</button>
@@ -1225,7 +1226,7 @@
         <p data-i18n="helpMobileTip">スマートフォンでは、画面下の「設定」「プレビュー」「PDF出力」で切り替えます。</p>
         <h3 data-i18n="helpPrintTipsTitle">印刷で迷ったら</h3>
         <ul>
-          <li data-i18n="helpDuplexBody">両面印刷では、アプリとプリンターで同じとじ方向を選びます。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。</li>
+          <li data-i18n="helpDuplexBody">「PDF出力」の「両面印刷」で「長辺とじ」か「短辺とじ」を選ぶと、プレビューの「綴じた状態」が使えます。アプリとプリンターで同じとじ方向を選んでください。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。</li>
           <li data-i18n="helpScaleBody">寸法や表裏のずれが気になるときは「サイズ確認PDFを保存」から確認用の紙を印刷します。パンチ位置の印は穴を開ける際の目安です。</li>
           <li data-i18n="helpFitBody">A4やUS Letterに実寸で収まらない場合は、リフィルサイズか出力用紙を変更します。裁断線が用紙の端で欠ける場合は「プリンター余白」を広げて試してください。</li>
           <li data-i18n="helpInputBody">PDFを作れないときは「入力を確認」で空欄や範囲外の値を直し、もう一度「PDFを作成」を押します。</li>
@@ -1492,7 +1493,7 @@
         "boundPreviewLabel": "見開き {number}",
         "sheetsPreviewNote": "実際に印刷する表・裏です。白紙とページ順を確認し、プリンターでも同じとじ方向を選んでください。",
         "boundPreviewNote": "裁断後、リング側でめくるときの読みやすい向きです。印刷用紙の裏面回転はこの表示に適用しません。",
-        "boundUnavailable": "綴じた状態は両面印刷で使用できます。",
+        "boundUnavailable": "綴じた状態（両面印刷で使用）",
         "layoutMonthlySingleDescription": "月ごとに1枚",
         "layoutMonthlySpreadDescription": "月の予定を左右に",
         "layoutYearSingleDescription": "12か月を一覧に",
@@ -1535,7 +1536,7 @@
         "boundPreviewLabel": "Spread {number}",
         "sheetsPreviewNote": "These are the actual printed fronts and backs. Check blanks and page order, then match the flip edge in your printer settings.",
         "boundPreviewNote": "Readable facing pages after cutting and turning on the ring edge. The physical back-side rotation appears in Print sheets instead.",
-        "boundUnavailable": "Bound preview is available with duplex printing.",
+        "boundUnavailable": "Bound (requires double-sided printing)",
         "layoutMonthlySingleDescription": "One page per month",
         "layoutMonthlySpreadDescription": "A month across two pages",
         "layoutYearSingleDescription": "All twelve months at a glance",
@@ -1727,7 +1728,7 @@
         "helpSaveBody": "「PDFを作成」を押し、完了したら「PDFを保存」。印刷画面では用紙サイズを合わせ、「100%」または「実際のサイズ」を選びます。「用紙に合わせる」を選ぶと、リフィルの寸法が変わります。",
         "helpMobileTip": "スマートフォンでは、画面下の「設定」「プレビュー」「PDF出力」で切り替えます。",
         "helpPrintTipsTitle": "印刷で迷ったら",
-        "helpDuplexBody": "両面印刷では、アプリとプリンターで同じとじ方向を選びます。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。",
+        "helpDuplexBody": "「PDF出力」の「両面印刷」で「長辺とじ」か「短辺とじ」を選ぶと、プレビューの「綴じた状態」が使えます。アプリとプリンターで同じとじ方向を選んでください。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。",
         "helpScaleBody": "寸法や表裏のずれが気になるときは「サイズ確認PDFを保存」から確認用の紙を印刷します。パンチ位置の印は穴を開ける際の目安です。",
         "helpFitBody": "A4やUS Letterに実寸で収まらない場合は、リフィルサイズか出力用紙を変更します。裁断線が用紙の端で欠ける場合は「プリンター余白」を広げて試してください。",
         "helpInputBody": "PDFを作れないときは「入力を確認」で空欄や範囲外の値を直し、もう一度「PDFを作成」を押します。",
@@ -1750,7 +1751,7 @@
         "helpSaveBody": "Select “Create PDF”, then “Save PDF”. In the print dialog, match the paper size and select “100%” or “Actual size”. “Fit to page” can change the dimensions of the refill.",
         "helpMobileTip": "On a phone, use the Settings, Preview, and PDF output tabs at the bottom.",
         "helpPrintTipsTitle": "Printing tips",
-        "helpDuplexBody": "For double-sided printing, select the same flip edge in the app and in your printer settings. The PDF may include blank pages so spreads face each other when bound.",
+        "helpDuplexBody": "To enable “Bound” in Preview, choose “Long-edge flip” or “Short-edge flip” under “Duplex printing” in PDF export. Select the same flip edge in your printer settings. The PDF may include blank pages so spreads face each other when bound.",
         "helpScaleBody": "If size or front-to-back alignment is a concern, use “Save print-size test PDF” and print the test sheet. Punch marks are guides for positioning holes.",
         "helpFitBody": "If the refill does not fit at actual size on A4 or US Letter, change the refill size or output paper. If crop guides are cut off at the edge, try a larger printer margin.",
         "helpInputBody": "If PDF creation is blocked, select “Review inputs”, correct the missing or out-of-range values, and select “Create PDF” again.",
@@ -2763,7 +2764,9 @@
       }
 
       function renderPreview() {
-        $('#previewBoundOption').disabled = !duplexEnabled();
+        const boundOption = $('#previewBoundOption');
+        boundOption.disabled = !duplexEnabled();
+        boundOption.textContent = t(duplexEnabled() ? 'viewBound' : 'boundUnavailable');
         if (previewPresentation.mode === 'bound' && !duplexEnabled()) previewPresentation.mode = 'refill';
         $('#previewMode').value = previewPresentation.mode;
         setPreviewIndex(activePreviewIndex());
