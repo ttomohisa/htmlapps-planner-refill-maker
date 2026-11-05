@@ -2299,7 +2299,9 @@
           line(ctx,colX,top,colX,bottom,'#d8ddda',.8);
           colX += colW;
         });
-        line(ctx,x + width,top,x + width,bottom,'#d8ddda',.8);
+        line(ctx,colX,top,colX,bottom,'#d8ddda',.8);
+        // The three-day side can leave a spare column; keep it separate from the last day.
+        if (x + width - colX > .1) line(ctx,x + width,top,x + width,bottom,'#d8ddda',.8);
         line(ctx,x,top,x + width,top,'#d8ddda',.8);
         line(ctx,x,top + header,x + width,top + header,'#d8ddda',.8);
         if (timeWidth) {

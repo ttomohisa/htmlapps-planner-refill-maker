@@ -135,6 +135,18 @@ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-
 
 Do not edit generated files in `dist/` directly.
 
+## Publish a GitHub Release
+
+After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.2.0`).
+
+The workflow builds and checks the selected commit, creates `v1.2.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
+
+- `planner-refill-maker-v1.2.0.html` — readable standalone app.
+- `planner-refill-maker-v1.2.0.self-extract.html` — gzip self-extracting standalone app.
+- `SHA256SUMS.txt` — SHA-256 checksums of both HTML files.
+
+PR updates and merges do not publish a release automatically. The workflow rejects a mismatched version, a branch other than `main`, or an existing tag. A failed upload or publication may leave a draft release for inspection; it does not overwrite an existing release. The checked files are also retained as an Actions artifact. Release publication requires repository permission to create tags/releases.
+
 ## Privacy and runtime network protection
 
 Planner settings, calendar generation, preview rendering, and PDF creation are processed locally in the browser.

@@ -1,12 +1,13 @@
 # Changelog
 
-## Unreleased
-
-- Clarify Japanese and English help by removing internal layout, implementation, and audit commentary while preserving usage guidance and cautions.
-
 All notable changes to this project are documented in this file.
 
 ## [1.2.0]
+
+- Add a manual main-branch release workflow that verifies the version/build, creates its version tag, and publishes both standalone HTML variants with SHA-256 checksums.
+- Close every weekday column in facing vertical weeks, keeping the spare left-page area separate from the final weekday.
+- Fit the preview paper and its note into the remaining viewport; compact wide-panel controls and remove excess space around landscape paper.
+- Clarify Japanese and English help while preserving usage guidance and cautions.
 
 - Keep calendar labels within their rows on landscape and short custom pages, and omit the half-year range on yearly spreads.
 

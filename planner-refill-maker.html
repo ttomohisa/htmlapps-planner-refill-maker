@@ -1255,7 +1255,7 @@
       'use strict';
 
       const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.2.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
-      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:33:29.1522826Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
+      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:45:52.3348822Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
       const assetBundle = {"schemaVersion":2,"dependencies":{}};
       const blobUrls = new Set();
       const assetByteCache = new Map();
@@ -2299,7 +2299,9 @@
           line(ctx,colX,top,colX,bottom,'#d8ddda',.8);
           colX += colW;
         });
-        line(ctx,x + width,top,x + width,bottom,'#d8ddda',.8);
+        line(ctx,colX,top,colX,bottom,'#d8ddda',.8);
+        // The three-day side can leave a spare column; keep it separate from the last day.
+        if (x + width - colX > .1) line(ctx,x + width,top,x + width,bottom,'#d8ddda',.8);
         line(ctx,x,top,x + width,top,'#d8ddda',.8);
         line(ctx,x,top + header,x + width,top + header,'#d8ddda',.8);
         if (timeWidth) {

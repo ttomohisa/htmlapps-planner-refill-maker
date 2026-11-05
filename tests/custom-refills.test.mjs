@@ -66,6 +66,30 @@ test('equal weekday columns stay equal across both sides of a spread', async () 
   }
 });
 
+test('vertical spread closes every weekday cell at its computed width', async () => {
+  const h = loadPlanner();
+  await h.radio('refillType', 'weekly');
+  await h.radio('layout', 'weekly-vertical-spread');
+  for (const weekStart of ['monday', 'sunday']) {
+    await h.radio('weekStart', weekStart);
+    const cellWidths = [];
+    for (const spec of h.app.allPageSpecs().slice(0, 2)) {
+      const calls = paint(h, spec);
+      const borders = calls.flatMap((call, i) => {
+        const end = calls[i + 1];
+        return call[0] === 'moveTo' && end?.[0] === 'lineTo' && call[1] === end[1] && end[2] - call[2] > 500 ? [call[1]] : [];
+      }).sort((a, b) => a - b);
+      for (const label of calls.filter(call => call[0] === 'fillText' && /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) \d+$/.test(call[1]))) {
+        const center = label[2], left = borders.filter(x => x < center).at(-1), right = borders.find(x => x > center);
+        assert.ok(Number.isFinite(left) && Number.isFinite(right), `${label[1]} has both borders`);
+        cellWidths.push(right - left);
+      }
+    }
+    assert.equal(cellWidths.length, 7);
+    assert.ok(cellWidths.every(width => Math.abs(width - cellWidths[0]) < .001), 'all seven bordered weekday cells have equal widths');
+  }
+});
+
 test('holiday and personal markers remain visible together on a small monthly list', async () => {
   const h = loadPlanner(undefined, { language: 'ja', savedSettings: {
     sizeKey: 'micro5', startMonth: '2027-01', endMonth: '2027-01',

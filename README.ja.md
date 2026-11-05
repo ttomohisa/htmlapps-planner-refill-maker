@@ -135,6 +135,18 @@ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-
 
 `dist/` の生成済みHTMLは直接編集しません。
 
+## GitHub Releaseの公開
+
+リリース用PRをマージしたら、**Actions → Publish release → Run workflow** を開きます。ブランチは **main**、バージョンは `app.config.json` と同じ値を `v` なしで入力します（今回は `1.2.0`）。
+
+選択したコミットのビルド・検査後に `v1.2.0` タグを作成し、CHANGELOGの該当バージョンの説明と、次の3ファイルを添付したGitHub Releaseを公開します。
+
+- `planner-refill-maker-v1.2.0.html`：通常の単一HTML版。
+- `planner-refill-maker-v1.2.0.self-extract.html`：gzip圧縮した自己展開HTML版。
+- `SHA256SUMS.txt`：上記2ファイルのSHA-256チェックサム。
+
+PRの更新やマージだけでは自動公開しません。バージョン不一致、main以外のブランチ、既存タグがある場合は停止します。添付や公開に失敗した場合は、確認用の下書きReleaseが残ることがあります。既存Releaseは上書きしません。検査済みのファイルはActionsの成果物にも保存します。タグ・Releaseの作成権限があるアカウントで実行してください。
+
 ## プライバシーと通信防止
 
 手帳設定、カレンダー生成、プレビュー描画、PDF生成はブラウザー内で処理します。
