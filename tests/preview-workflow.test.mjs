@@ -223,3 +223,33 @@ test('mobile return leaves focus on its tab when the remembered field becomes hi
     assert.equal(h.context.document.activeElement, h.get('mobileSettings'), stale);
   }
 });
+
+
+test('preview fits controls, paper and note above the viewport edge or mobile dock', async () => {
+  for (const mobile of [false, true]) {
+    const h = await monthlySpread();
+    const rect = (width, height, top = 0) => ({ width, height, top, bottom: top + height });
+    h.context.innerWidth = mobile ? 390 : 1360;
+    h.context.innerHeight = mobile ? 844 : 720;
+    let scroll = 0;
+    h.context.scrollY = scroll;
+    h.context.document.querySelector('.workspace').getBoundingClientRect = () => rect(700, 900, 180 - scroll);
+    h.context.document.querySelector('.app-header').getBoundingClientRect = () => rect(700, 66);
+    for (const [selector, height] of [['.preview-head',64],['.preview-toolbar',79],['.preview-note',40]]) {
+      h.context.document.querySelector(selector).getBoundingClientRect = () => rect(700, height);
+    }
+    h.get('appMobileBottomBar').getBoundingClientRect = () => rect(390, 67);
+    const stage = h.get('previewStage');
+    stage.getBoundingClientRect = () => rect(mobile ? 360 : 700, 590);
+    await h.radio('orientation', 'portrait');
+    const portraitHeight = parseFloat(stage.style.height);
+    assert.ok(180 + 64 + 79 + 40 + portraitHeight + (mobile ? 67 : 0) < h.context.innerHeight);
+    scroll = 80; h.context.scrollY = scroll;
+    await h.windowEvent('resize'); await h.drain();
+    assert.equal(parseFloat(stage.style.height), portraitHeight, 'scroll position cannot inflate the preview');
+    await h.radio('orientation', 'landscape');
+    assert.ok(parseFloat(stage.style.height) < portraitHeight, 'wide paper does not leave a portrait-height empty stage');
+    const holder = h.get('previewPages').querySelector('.sheet-holder');
+    assert.ok(parseFloat(holder.style.height) < parseFloat(stage.style.height));
+  }
+});

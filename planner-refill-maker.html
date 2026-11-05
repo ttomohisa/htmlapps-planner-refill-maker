@@ -67,7 +67,7 @@
     .workspace { display:grid;grid-template-columns:minmax(340px,420px) minmax(0,1fr);gap:18px;align-items:start; }
     .settings-panel,.preview-panel { border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:var(--shadow-sm); }
     .settings-panel { padding:18px; }
-    .preview-panel { position:sticky;top:calc(var(--header-height) + 16px);overflow:hidden; }
+    .preview-panel { position:sticky;top:calc(var(--header-height) + 16px);overflow:hidden;container:preview / inline-size; }
     .panel-heading { display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px; }
     .panel-heading h2 { margin:0;font-size:17px;letter-spacing:-.02em; }
     .panel-heading p { margin:4px 0 0;color:var(--muted);font-size:12px; }
@@ -233,7 +233,7 @@
     .print-fit-error { padding:10px 12px;border:1px solid color-mix(in srgb,var(--danger) 28%,var(--line));border-radius:10px;background:#fff8f7;color:var(--danger);font-size:10px; }
     .test-action { width:100%; }
 
-    .preview-head { display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line); }
+    .preview-head { display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line); }
     .preview-title-row { display:flex;align-items:center;gap:8px;min-width:0; }
     .preview-head h2 { margin:0;font-size:16px;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
     .preview-meta { margin:2px 0 0;color:var(--muted);font-size:10px;overflow-wrap:anywhere; }
@@ -694,7 +694,7 @@
     .workspace>.preview-panel { grid-column:2;grid-row:1 / span 2; }
     .output-panel { grid-column:1; }
     .output-panel .setting-group { margin-top:0;padding-top:0;border-top:0; }
-    .preview-toolbar { display:flex;gap:8px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line); }
+    .preview-toolbar { display:flex;gap:8px;flex-wrap:wrap;padding:8px 12px;border-bottom:1px solid var(--line); }
     .preview-control { display:grid;gap:4px;flex:1;min-width:110px;color:var(--muted);font-size:10px; }
     .preview-control select,.margin-preset { min-height:44px;max-width:100%;min-width:0;padding:8px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--text);font-size:12px; }
     .preview-control.wide { flex-basis:100%; }
@@ -717,6 +717,14 @@
     #enlargedPreviewDialog::backdrop { background:rgba(20,26,22,.48); }
     .enlarged-preview-body { min-height:0;overflow:auto;padding:24px 24px calc(24px + env(safe-area-inset-bottom));overscroll-behavior:contain; }
     #enlargedPreviewPages { display:flex;align-items:flex-start;gap:20px;width:max-content;min-width:100%;justify-content:center;padding-bottom:25px; }
+    @container preview (min-width:560px) {
+      .page-nav { grid-column:auto;grid-template-columns:36px minmax(90px,120px) 36px;margin-top:0; }
+      .nav-button { width:36px; }
+      .preview-toolbar { display:grid;grid-template-columns:minmax(100px,1fr) minmax(100px,1fr) minmax(140px,1.2fr) auto;align-items:end; }
+      .preview-control { min-width:0; }
+      .preview-control.wide { grid-column:3;grid-row:1; }
+      .preview-toolbar .secondary-action { grid-column:4;grid-row:1; }
+    }
     .app-mobile-bottom-bar { display:none; }
     @media (max-width:900px) and (min-width:601px) { .workspace>.preview-panel { grid-column:1;grid-row:1; } .output-panel { grid-column:1; } }
     @media (max-width:600px) {
@@ -1161,7 +1169,6 @@
       <section class="preview-panel app-mobile-page" id="previewPage" aria-labelledby="previewTitle">
         <div class="preview-head">
           <div><div class="preview-title-row"><h2 id="previewTitle" data-i18n="previewTitle">リフィルプレビュー</h2><span class="preview-status" data-i18n="actualRatio">実寸比率</span></div><p class="preview-meta" id="previewMeta">A5 · 148 × 210 mm · 縦</p></div>
-          <div></div>
           <div class="page-nav" data-i18n-aria-label="previewNavigation" aria-label="プレビューナビゲーション">
             <button class="nav-button" id="prevPage" type="button" data-i18n-aria-label="previousItem" aria-label="前へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
             <div class="nav-current" aria-live="polite"><strong id="navMonthLabel">2027年1月</strong><span id="navPosition">1 / 12</span></div>
@@ -1248,7 +1255,7 @@
       'use strict';
 
       const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.2.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
-      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:26:14.4793415Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
+      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:33:29.1522826Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
       const assetBundle = {"schemaVersion":2,"dependencies":{}};
       const blobUrls = new Set();
       const assetByteCache = new Map();
@@ -2803,9 +2810,22 @@
         const holders = physical.length ? physical : [...previewPages.querySelectorAll('.sheet-holder')];
         if (!holders.length) return;
         const stage = previewStage.getBoundingClientRect(), mobile = window.innerWidth <= 600;
+        if (!stage.width) return; // A hidden mobile tab has no usable viewport yet.
         const gap = holders.length > 1 ? (mobile ? 7 : 14) : 0;
         const availableWidth = Math.max(100, stage.width - (mobile ? 38 : 62) - gap * (holders.length - 1));
-        const availableHeight = Math.max(120, stage.height - (physical.length ? 110 : mobile ? 58 : 70));
+        const verticalSpace = physical.length ? 110 : mobile ? 60 : 70;
+        const dimensions = holders.map(holder => physical.length ? { width:Number(holder.dataset.width), height:Number(holder.dataset.height) } : effectiveDimensions());
+        // Fit the full panel before the dock/screen edge, including controls and notes.
+        // Limit landscape stages to their artwork height instead of centering in a tall box.
+        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+        const chromeHeight = ['.preview-head','.preview-toolbar','.preview-note'].reduce((sum,selector) => sum + $(selector).getBoundingClientRect().height, 2);
+        const panelTop = Math.max($('.workspace').getBoundingClientRect().top + (window.scrollY || 0), $('.app-header').getBoundingClientRect().height + 12);
+        const dockHeight = mobile ? $('#appMobileBottomBar').getBoundingClientRect().height : 0;
+        const viewportBudget = Math.max(140, viewportHeight - panelTop - chromeHeight - dockHeight - 16);
+        const naturalHeight = Math.max(...dimensions.map(({width,height}) => availableWidth / holders.length / width * height)) + verticalSpace;
+        const stageHeight = Math.min(naturalHeight, viewportBudget);
+        if (Number.isFinite(stageHeight)) previewStage.style.height = `${Math.floor(stageHeight)}px`;
+        const availableHeight = Math.max(40, (Number.isFinite(stageHeight) ? Math.floor(stageHeight) : stage.height) - verticalSpace);
         for (const holder of holders) {
           const { width, height } = physical.length ? { width: Number(holder.dataset.width), height: Number(holder.dataset.height) } : effectiveDimensions();
           const scale = Math.min(availableWidth / holders.length / width, availableHeight / height);

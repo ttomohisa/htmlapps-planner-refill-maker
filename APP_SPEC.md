@@ -254,7 +254,7 @@ This rule avoids cutting off partial weeks. Migrated version-1 month ranges expa
 - Direct unit navigation, individual spread-side inspection, and an enlarged native dialog are available. The enlarged view supports scrolling, Escape/backdrop/close dismissal, and focus restoration.
 - Preview modes are Refill, Print sheets, and Bound. Display indexes and modes are presentation state, excluded from saved settings and the PDF freshness signature; changing only the view does not invalidate a PDF.
 - Left/Right arrow navigation is available when focus is not inside an input and the help dialog is closed.
-- Desktop: settings and preview are side by side and preview remains sticky.
+- Desktop: settings and preview are side by side and preview remains sticky. Preview controls share a compact row when the panel is wide enough. The preview stage fits the remaining viewport height, reserving room for controls, the explanatory note, and the mobile dock. Landscape paper uses its natural height without a tall empty stage; very short windows retain a usable minimum and can scroll.
 - Smartphone: the adapted canonical bottom bar switches between Settings, Preview, and PDF output at 600 px and below; only the active page is shown. Preserve entered values and make errors reachable across tabs. Bottom safe-area spacing prevents controls from being covered. No page-level horizontal scrolling is allowed.
 
 ## 19. Privacy and data
