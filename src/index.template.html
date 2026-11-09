@@ -2929,6 +2929,8 @@
         if (field) return field;
         if (state.sizeKey === 'custom' && (field = numeric('customWidth', 40, 300) || numeric('customHeight', 60, 400))) return field;
         if (state.printMode !== 'exact' && (field = numeric('printMarginMm', 0, 20))) return field;
+        if ((field = numeric('printShiftFrontX', -10, 10) || numeric('printShiftFrontY', -10, 10))) return field;
+        if (duplexEnabled() && (field = numeric('printShiftBackX', -10, 10) || numeric('printShiftBackY', -10, 10))) return field;
         if (state.ringMarginMode === 'manual' && (field = numeric('ringMarginValue', 4, 30))) return field;
         if (state.refillType === 'notes') return numeric('notesCount', 1, 100, true);
         if (isUndated()) { if ((field = numeric('undatedCount', 1, 100, true))) return field; }
@@ -2952,9 +2954,9 @@
       }
       function reviewInvalidSettings() {
         const field = activeInvalidField();
-        const margin = field?.id === 'printMarginMm';
+        const margin = field?.id === 'printMarginMm',shift=PRINT_SHIFT_KEYS.includes(field?.id);
         if (margin) { $('#printMarginPreset').value = 'custom'; $('#printMarginCustom').hidden = false; }
-        showMobilePage(margin ? 'outputPage' : 'settingsPage');
+        showMobilePage(margin||shift ? 'outputPage' : 'settingsPage');
         if (field) {
           for (let section = field.closest?.('details'); section; section = section.parentElement?.closest('details')) {
             section.open = true;
@@ -3220,12 +3222,12 @@
         settingsStorageBlocked=false;
         if(!settingsStorageBlocked)settingsStorageIssue='';
         syncControlsFromState();
-        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError','dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
+        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError',...PRINT_SHIFT_KEYS.map(key=>key+'Error'),'dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
         setRefillType(state.refillType);
       }
       function saveSettingsFile(){
         if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
-        const data={app:'planner-refill-maker',formatVersion:3,settings:settingsSnapshot()};
+        const data={app:'planner-refill-maker',formatVersion:4,settings:settingsSnapshot()};
         const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
         const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
         document.body.append(link);
@@ -3249,7 +3251,7 @@
           if(!current())return;
           if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
           const data=JSON.parse(text);
-          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3].includes(data.formatVersion))throw new Error('Unsupported settings format');
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4].includes(data.formatVersion))throw new Error('Unsupported settings format');
           const next=decodeSettings(data.settings,{formatVersion:data.formatVersion});
           const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
           if(!current())return;
@@ -3263,7 +3265,7 @@
         const checks={dateMode:state.dateMode,plannerSize:state.sizeKey,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),weekStart:state.weekStart,ringMarginMode:state.ringMarginMode,firstPageSide:state.firstPageSide,printMode:state.printMode,duplexMode:state.duplexMode,noteSpacing:String(state.noteSpacing),stylePreset:state.stylePreset,pageColor:state.pageColor,lineWeight:state.lineWeight};
         Object.entries(checks).forEach(([name,value])=>{$$(`input[name="${name}"]`).forEach(input=>{input.checked=input.value===value;});});
         for(const type of ['weekly','daily'])for(const edge of ['Start','End'])$('#'+type+edge+'Date').value=state[type+edge+'Date'];
-        $('#undatedCount').value=String(state.undatedCount);
+        for(const key of PRINT_SHIFT_KEYS)$('#'+key).value=formatMm(state[key]);$('#undatedCount').value=String(state.undatedCount);
         $$('input[name="dailyWeekday"]').forEach(input=>{input.checked=state.dailyWeekdays.includes(Number(input.value));});
         $('#ringMarginValue').value=formatMm(state.ringMarginManual);$('#printMarginMm').value=formatMm(state.printMarginMm);$('#printMarginPreset').value=[0,3,5].includes(state.printMarginMm)?String(state.printMarginMm):'custom';customWidth.value=String(state.customWidth);customHeight.value=String(state.customHeight);startMonthInput.value=state.startMonth;endMonthInput.value=state.endMonth;startHourInput.value=String(state.startHour);endHourInput.value=String(state.endHour);$('#notesCount').value=String(state.notesCount);$('#showAdjacent').checked=state.showAdjacent;$('#showHolidays').checked=state.showHolidays;$('#showHolidayNames').checked=state.showHolidayNames;$('#saturdayColor').value=state.saturdayColor;$('#sundayColor').value=state.sundayColor;$('#holidayColor').value=state.holidayColor;$('#showPunchGuides').checked=state.showPunchGuides;$('#showCropGuides').checked=state.showCropGuides;$('#showPageNumbers').checked=state.showPageNumbers;$('#showWeekNumbers').checked=state.showWeekNumbers;customFields.hidden=state.sizeKey!=='custom';
       }
@@ -3303,6 +3305,11 @@
       $('#showPunchGuides').addEventListener('change',event=>{state.showPunchGuides=event.currentTarget.checked;render();});
       $$('input[name="printMode"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.printMode=input.value;render();}}));
       for(const type of ['input','change','blur'])$('#printMarginMm').addEventListener(type,()=>{$('#printMarginPreset').value='custom';validatePrintMargin({normalize:type!=='input'});render();});
+      for(const key of PRINT_SHIFT_KEYS)for(const type of ['input','change','blur'])$('#'+key).addEventListener(type,()=>{validatePrintShift(key,{normalize:type!=='input'});render();});
+      $('#resetPrintShift').addEventListener('click',()=>{
+        PRINT_SHIFT_KEYS.forEach(key=>{state[key]=0;$('#'+key).value='0';$('#'+key+'Error').textContent='';});
+        render();AppToast.show({message:t('printShiftReset')});
+      });
       $('#showCropGuides').addEventListener('change',event=>{state.showCropGuides=event.currentTarget.checked;render();});
       $$('input[name="duplexMode"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.duplexMode=input.value;render();}}));
       $('#notesCount').addEventListener('input',()=>{validateNotesCount({normalize:false});render();});$('#notesCount').addEventListener('change',()=>{validateNotesCount({normalize:true});render();});$('#notesCount').addEventListener('blur',()=>{validateNotesCount({normalize:true});render();});
