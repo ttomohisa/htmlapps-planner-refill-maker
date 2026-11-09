@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented in this file.
 
+## [1.3.0] - 2026-11-09
+
+### Added
+- Calibrate print placement in 0.1 mm increments with independent front X/Y offsets and additional back-only X/Y offsets (each -10 to +10 mm).
+- Apply calibration to exact-size and A4/US Letter PDFs, the print-sheet preview, crop guides, and the refill outline / duplex registration test pages; keep the bound preview unshifted to represent trimmed refills.
+- Warn when the adjusted artwork reaches beyond the physical paper. Validate drafts, invalidate outdated PDFs, and provide one-click offset reset.
+- Save printer corrections in settings JSON format v4, while continuing to import versions 1–3 and restore older browser settings at zero corrections.
+
 ## [1.2.0]
 
 - Add a manual main-branch release workflow that verifies the version/build, creates its version tag, and publishes both standalone HTML variants with SHA-256 checksums.
