@@ -2535,9 +2535,9 @@
           else if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
       async function canvasJpeg(canvas,quality=.96){const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!blob)throw new Error(t('pdfPageRasterError'));return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height};}
       function drawPrintPageCanvas(ctx,pageCanvas,x,y,w,h,rotation=0){ctx.save();if(rotation===180){ctx.translate(x+w,y+h);ctx.rotate(Math.PI);ctx.drawImage(pageCanvas,0,0,w,h);}else ctx.drawImage(pageCanvas,x,y,w,h);ctx.restore();}
-      async function rasterizePageSpec(spec,widthMm,heightMm,rotation=0){const pageCanvas=renderPageSpecCanvas(spec,widthMm,heightMm,180);if(!rotation)return canvasJpeg(pageCanvas);const canvas=document.createElement('canvas');canvas.width=pageCanvas.width;canvas.height=pageCanvas.height;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));drawPrintPageCanvas(ctx,pageCanvas,0,0,canvas.width,canvas.height,rotation);return canvasJpeg(canvas);}
+      async function rasterizePageSpec(spec,widthMm,heightMm,rotation=0,shift={x:0,y:0}){const pageCanvas=renderPageSpecCanvas(spec,widthMm,heightMm,180);if(!rotation&&!shift.x&&!shift.y)return canvasJpeg(pageCanvas);const canvas=document.createElement('canvas');canvas.width=pageCanvas.width;canvas.height=pageCanvas.height;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.translate(shift.x*canvas.width/widthMm,shift.y*canvas.height/heightMm);drawPrintPageCanvas(ctx,pageCanvas,0,0,canvas.width,canvas.height,rotation);return canvasJpeg(canvas);}
       function drawCropGuide(ctx,x,y,w,h,dpi){if(!state.showCropGuides)return;const pxPerMm=dpi/25.4,mark=Math.max(5,3*pxPerMm),lw=Math.max(.7,.18*pxPerMm);ctx.save();ctx.strokeStyle='#737b77';ctx.lineWidth=lw;ctx.strokeRect(Math.round(x)+.5,Math.round(y)+.5,Math.max(1,Math.round(w)-1),Math.max(1,Math.round(h)-1));const corners=[[x,y,-1,-1],[x+w,y,1,-1],[x,y+h,-1,1],[x+w,y+h,1,1]];ctx.beginPath();for(const [cx,cy,sx,sy] of corners){ctx.moveTo(cx,cy);ctx.lineTo(cx+sx*mark,cy);ctx.moveTo(cx,cy);ctx.lineTo(cx,cy+sy*mark);}ctx.stroke();ctx.restore();}
-      async function rasterizeImposedSheet(specs, plan, widthMm, heightMm, onPage, rects = placementRects(plan), rotation = 0, check = () => {}) {
+      async function rasterizeImposedSheet(specs, plan, widthMm, heightMm, onPage, rects = placementRects(plan), rotation = 0, check = () => {}, shift = {x:0,y:0}) {
         check();
         const dpi = 180, pxPerMm = dpi / 25.4, canvas = document.createElement('canvas');
         canvas.width = Math.max(300, Math.round(plan.paperWidth * pxPerMm));
@@ -2545,6 +2545,7 @@
         const ctx = canvas.getContext('2d', { alpha: false });
         if (!ctx) throw new Error(t('pdfPageRasterError'));
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.save(); ctx.translate(shift.x * pxPerMm, shift.y * pxPerMm);
         for (let index = 0; index < specs.length; index += 1) {
           check();
           const spec = specs[index]; if (!spec) continue;
@@ -2555,7 +2556,7 @@
           drawCropGuide(ctx, x, y, w, h, dpi); ctx.restore();
           onPage?.(); await new Promise(resolve => requestAnimationFrame(resolve)); check();
         }
-        check();
+        ctx.restore();check();
         const image = await canvasJpeg(canvas, .96); check(); return image;
       }
       function drawSizeTestPage(ctx,w,h,paperWidth,paperHeight){const pxPerMm=w/paperWidth,mm=value=>value*pxPerMm;ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);text(ctx,t('sizeTestTitle'),mm(15),mm(18),Math.max(14,mm(5.2)),{weight:850});text(ctx,t('sizeTestInstruction'),mm(15),mm(28),Math.max(10,mm(3.4)),{weight:600,color:'#56605c',maxWidth:w-mm(30)});const y=mm(48),x=mm(15),len=mm(100);ctx.strokeStyle='#20211f';ctx.lineWidth=Math.max(1,mm(.35));ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+len,y);ctx.moveTo(x,y-mm(3));ctx.lineTo(x,y+mm(3));ctx.moveTo(x+len,y-mm(3));ctx.lineTo(x+len,y+mm(3));ctx.stroke();text(ctx,'100 mm',x+len/2,y-mm(4.5),Math.max(10,mm(3.4)),{weight:800,align:'center'});const box=mm(50),boxY=mm(66);ctx.strokeStyle='#59615d';ctx.lineWidth=Math.max(1,mm(.25));ctx.strokeRect(x,boxY,box,box);text(ctx,'50 × 50 mm',x+box/2,boxY+box/2,Math.max(9,mm(3)),{weight:700,color:'#59615d',align:'center',baseline:'middle'});text(ctx,t('sizeTestPrint'),mm(15),Math.min(h-mm(15),boxY+box+mm(12)),Math.max(10,mm(3.3)),{weight:800,color:'#16624f'});}
@@ -2575,14 +2576,16 @@
         const paperWidth = plan.valid ? plan.paperWidth : paper.width, paperHeight = plan.valid ? plan.paperHeight : paper.height;
         const dpi = 180, pxPerMm = dpi / 25.4, images = [], duplex = duplexEnabled();
         const job = beginGeneration(true), check = () => generationCheck(job);
-        const raster = async draw => {
+        const raster = async (draw,{applyShift=false,back=false}={}) => {
           check();
           const canvas = document.createElement('canvas');
           canvas.width = Math.round(paperWidth * pxPerMm); canvas.height = Math.round(paperHeight * pxPerMm);
           const ctx = canvas.getContext('2d', { alpha: false });
           if (!ctx) throw new Error(t('pdfPageRasterError'));
           ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-          draw?.(ctx, canvas.width, canvas.height);
+          const shift=applyShift?printShiftForFace(back):{x:0,y:0};
+          ctx.save();ctx.translate(shift.x*pxPerMm,shift.y*pxPerMm);
+          draw?.(ctx, canvas.width, canvas.height);ctx.restore();
           images.push(await canvasJpeg(canvas, .96));
           check();
           pdfProgressBar.value = 1; pdfProgressText.textContent = String(images.length);
@@ -2590,10 +2593,10 @@
         };
         try {
           await raster((ctx, w, h) => drawSizeTestPage(ctx, w, h, paperWidth, paperHeight));
-          if (plan.valid) await raster((ctx, w, h) => drawRefillOutlineTest(ctx, w, h, plan));
+          if (plan.valid) await raster((ctx, w, h) => drawRefillOutlineTest(ctx, w, h, plan),{applyShift:true});
           if (duplex) {
             if (images.length % 2) await raster();
-            for (const back of [false, true]) await raster((ctx, w, h) => drawDuplexAlignmentTest(ctx, w, h, { ...plan, paperWidth, paperHeight, orientation: paperWidth > paperHeight ? 'landscape' : 'portrait' }, back));
+            for (const back of [false, true]) await raster((ctx, w, h) => drawDuplexAlignmentTest(ctx, w, h, { ...plan, paperWidth, paperHeight, orientation: paperWidth > paperHeight ? 'landscape' : 'portrait' }, back),{applyShift:true,back});
           }
           check();
           const blob = buildImagePdf(images, paperWidth, paperHeight), url = URL.createObjectURL(blob), link = document.createElement('a');
@@ -2673,22 +2676,22 @@
           if (exact) {
             for (const [faceIndex, spec] of specs.entries()) {
               check();
-              images.push(await rasterizePageSpec(spec, width, height, faceIndex % 2 ? duplexBackRotation(plan) : 0));
+              images.push(await rasterizePageSpec(spec, width, height, faceIndex % 2 ? duplexBackRotation(plan) : 0, printShiftForFace(duplex && faceIndex % 2 === 1)));
               check(); if (spec) progress();
               await new Promise(resolve => requestAnimationFrame(resolve)); check();
             }
           } else if (!duplex) {
             for (let offset = 0; offset < specs.length; offset += plan.slots) {
               check();
-              images.push(await rasterizeImposedSheet(specs.slice(offset, offset + plan.slots), plan, width, height, progress, placementRects(plan), 0, check));
+              images.push(await rasterizeImposedSheet(specs.slice(offset, offset + plan.slots), plan, width, height, progress, placementRects(plan), 0, check, printShiftForFace()));
               check();
             }
           } else {
             for (const sheet of duplexGroups(specs, plan.slots)) {
               check();
-              images.push(await rasterizeImposedSheet(sheet.front, plan, width, height, progress, placementRects(plan), 0, check));
+              images.push(await rasterizeImposedSheet(sheet.front, plan, width, height, progress, placementRects(plan), 0, check, printShiftForFace()));
               check();
-              images.push(await rasterizeImposedSheet(sheet.back, plan, width, height, progress, backPlacementRects(plan), duplexBackRotation(plan), check));
+              images.push(await rasterizeImposedSheet(sheet.back, plan, width, height, progress, backPlacementRects(plan), duplexBackRotation(plan), check, printShiftForFace(true)));
               check();
             }
           }
@@ -2805,6 +2808,9 @@
         const ctx = canvas.getContext('2d', { alpha: false });
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         const rects = bound ? [{ x: 0, y: 0, width, height }] : face.back ? backPlacementRects(plan) : placementRects(plan);
+        // Sheet view shows printer-relative offsets; bound view shows the cut refill.
+        const shift=bound?{x:0,y:0}:printShiftForFace(face.back);
+        ctx.save();ctx.translate(shift.x*pxPerMm,shift.y*pxPerMm);
         const labels = rects.map((rect, index) => {
           const spec = face.specs[index] || null;
           if (spec) {
@@ -2814,6 +2820,7 @@
           }
           return printPageLabel(spec);
         });
+        ctx.restore();
         const figure = document.createElement('figure'); figure.className = 'print-face';
         const image = document.createElement('div'); image.className = 'print-face-image';
         image.dataset.width = String(width); image.dataset.height = String(height);
