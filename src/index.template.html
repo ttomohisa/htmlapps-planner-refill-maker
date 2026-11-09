@@ -217,6 +217,13 @@
     .refill-types { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
+    .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:10px; }
+    .print-shift-fields .text-field { min-width:0; }
+    .print-shift-fields input { width:100%;min-width:0; }
+    .print-shift-back { margin-top:12px; }
+    .print-shift-reset { margin-top:12px; }
+    .print-shift-hint { margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.5; }
+    .print-shift-warning[hidden],.print-shift-back[hidden] { display:none!important; }
     .duplex-note[hidden],.notes-options[hidden],.notes-count-group[hidden],.period-setting[hidden],.week-start-setting[hidden] { display:none!important; }
     .print-layout-card { display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--surface-soft); }
     .print-layout-card[hidden],.print-fit-error[hidden],.crop-guide-row[hidden] { display:none!important; }
@@ -1136,6 +1143,26 @@
               </div>
               <p class="duplex-note" id="printMarginWarning" data-i18n="printMarginWarning">0 mmはフチなし印刷が必要な場合があります。プリンターの印刷可能範囲を確認してください。</p>
             </div>
+            <details class="advanced-settings" id="printShiftDetails">
+              <summary data-i18n="printShiftTitle">印刷位置を補正</summary>
+              <div class="refill-fields">
+                <p class="print-shift-hint" data-i18n="printShiftHint">正の値はPDFの右・下方向です。裏面の値は表面の補正に加算します。</p>
+                <div class="print-shift-fields">
+                  <div class="text-field"><label class="field-label" for="printShiftFrontX" data-i18n="printShiftFrontX">表面・左右</label><div class="numeric-control"><input id="printShiftFrontX" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftFrontXError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftFrontXError" role="alert"></span></div>
+                  <div class="text-field"><label class="field-label" for="printShiftFrontY" data-i18n="printShiftFrontY">表面・上下</label><div class="numeric-control"><input id="printShiftFrontY" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftFrontYError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftFrontYError" role="alert"></span></div>
+                </div>
+                <div class="print-shift-back" id="printShiftBackFields" hidden>
+                  <p class="print-shift-hint" data-i18n="printShiftBackHint">両面印刷時に、裏面だけ追加でずらす量です。</p>
+                  <div class="print-shift-fields">
+                    <div class="text-field"><label class="field-label" for="printShiftBackX" data-i18n="printShiftBackX">裏面の追加・左右</label><div class="numeric-control"><input id="printShiftBackX" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftBackXError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftBackXError" role="alert"></span></div>
+                    <div class="text-field"><label class="field-label" for="printShiftBackY" data-i18n="printShiftBackY">裏面の追加・上下</label><div class="numeric-control"><input id="printShiftBackY" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftBackYError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftBackYError" role="alert"></span></div>
+                  </div>
+                </div>
+                <p class="print-shift-hint" data-i18n="printShiftRange">各 -10〜+10 mm。まずサイズ確認PDFを印刷し、少しずつ調整してください。</p>
+                <button type="button" class="secondary-action print-shift-reset" id="resetPrintShift" data-i18n="printShiftReset">補正を0 mmに戻す</button>
+              </div>
+            </details>
+            <p class="duplex-note print-shift-warning" id="printShiftWarning" role="status" data-i18n="printShiftClipping" hidden>補正によって用紙端で欠けることがあります。余白を増やすか補正量を減らしてください。</p>
             <div class="print-layout-card" id="printLayoutCard" hidden aria-live="polite">
               <div class="paper-mini-wrap"><div class="paper-mini-pair">
                 <div class="paper-mini-side"><span class="paper-mini-label" data-i18n="frontSide">表</span><div class="paper-mini" id="paperMini"><div id="paperMiniSlots"></div></div></div>
@@ -1235,6 +1262,7 @@
         <ul>
           <li data-i18n="helpDuplexBody">「PDF出力」の「両面印刷」で「長辺とじ」か「短辺とじ」を選ぶと、プレビューの「綴じた状態」が使えます。アプリとプリンターで同じとじ方向を選んでください。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。</li>
           <li data-i18n="helpScaleBody">寸法や表裏のずれが気になるときは「サイズ確認PDFを保存」から確認用の紙を印刷します。パンチ位置の印は穴を開ける際の目安です。</li>
+          <li data-i18n="helpPrintShiftBody">印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの位置合わせマークにも反映されます。用紙の端で欠けることがあるため、試し刷りで確認してください。</li>
           <li data-i18n="helpFitBody">A4やUS Letterに実寸で収まらない場合は、リフィルサイズか出力用紙を変更します。裁断線が用紙の端で欠ける場合は「プリンター余白」を広げて試してください。</li>
           <li data-i18n="helpInputBody">PDFを作れないときは「入力を確認」で空欄や範囲外の値を直し、もう一度「PDFを作成」を押します。</li>
         </ul>
@@ -1337,7 +1365,7 @@
         return result;
       }
 
-      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
+      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
       // File and local-storage boundaries share an allowlisted, canonical decoder.
       // Derived geometry is never trusted, including in legacy local records.
       const SETTINGS_MAX_BYTES=64*1024;
@@ -1355,19 +1383,22 @@
       const SETTINGS_V1_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
       const SETTINGS_V2_DEFAULTS={printMarginMm:0,...DATE_DEFAULTS};
       const SETTINGS_V2_NUMBERS={printMarginMm:[0,20],undatedCount:[1,100,true]};
-      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS)];
+      const SETTINGS_V4_DEFAULTS={printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0};
+      const SETTINGS_V4_NUMBERS=Object.fromEntries(Object.keys(SETTINGS_V4_DEFAULTS).map(key=>[key,[-10,10]]));
+      const PRINT_SHIFT_KEYS=Object.keys(SETTINGS_V4_DEFAULTS);
+      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS];
       let settingsStorageIssue='',settingsStorageBlocked=false;
       function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
       function decodeSettings(value,{legacy=false,formatVersion=3}={}){
         if(!settingsRecord(value))throw new Error('Invalid settings object');
         const decoded={};
         for(const key of SETTINGS_KEYS){
-          const extension=Object.hasOwn(SETTINGS_V2_DEFAULTS,key);
-          if(!legacy&&(!extension||formatVersion>=2)&&!Object.hasOwn(value,key))throw new Error('Missing setting');
-          decoded[key]=extension&&formatVersion===1?SETTINGS_V2_DEFAULTS[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
+          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:1;
+          if(!legacy&&formatVersion>=addedIn&&!Object.hasOwn(value,key))throw new Error('Missing setting');
+          decoded[key]=formatVersion<addedIn?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
         }
         for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
-        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS})){
+        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS})){
           const number=decoded[key];
           if(typeof number!=='number'||!Number.isFinite(number)||number<min||number>max||(integer&&!Number.isInteger(number)))throw new Error('Invalid setting number');
         }
@@ -1772,6 +1803,24 @@
         "helpOffline": "Settings and PDFs are processed in your browser. The standalone HTML also works offline."
       });
 
+      Object.assign(translations.ja,{
+        printShiftTitle:'印刷位置を補正',printShiftHint:'正の値はPDFの右・下方向です。表面の位置を調整し、必要に応じて裏面だけ追加で補正します。',
+        printShiftFrontX:'表面・左右',printShiftFrontY:'表面・上下',printShiftBackX:'裏面の追加・左右',printShiftBackY:'裏面の追加・上下',
+        printShiftBackHint:'両面印刷時、表面の補正に加える移動量です。',
+        printShiftRange:'各 -10〜+10 mm。まずサイズ確認PDFを印刷し、少しずつ調整してください。',
+        printShiftReset:'補正を0 mmに戻す',printShiftClipping:'補正によって印刷領域が用紙の外に出ます。端が欠ける場合は余白を増やすか補正量を減らしてください。',
+        printShiftInvalid:'-10〜+10 mmの数値を入力してください。',
+        helpPrintShiftBody:'印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの外形・位置合わせマークにも補正が反映されます。裁断ガイドを含め用紙の端で欠けることがあるため、試し刷りで確認してください。'
+      });
+      Object.assign(translations.en,{
+        printShiftTitle:'Correct print alignment',printShiftHint:'Positive values move artwork right or down in the PDF. Adjust the front first, then add a back-only correction if needed.',
+        printShiftFrontX:'Front · horizontal',printShiftFrontY:'Front · vertical',printShiftBackX:'Back extra · horizontal',printShiftBackY:'Back extra · vertical',
+        printShiftBackHint:'For duplex printing, these movements are added to the front offset.',
+        printShiftRange:'Each value: -10 to +10 mm. Print a size/alignment test first and adjust in small steps.',
+        printShiftReset:'Reset offsets to 0 mm',printShiftClipping:'Corrected artwork extends outside the paper. Increase margins or reduce the offset if an edge is cut off.',
+        printShiftInvalid:'Enter a number from -10 to +10 mm.',
+        helpPrintShiftBody:'If your printer shifts the page, open “Correct print alignment” and adjust the horizontal and vertical values. Positive values move content right and down in PDF coordinates. For a back-only adjustment, select duplex printing. The refill outline and alignment marks on the print-size test also use these offsets. Artwork and crop guides can be clipped at the edge, so check a trial print.'
+      });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
       Object.assign(translations.en,{"dated": "Dated", "undated": "Undated", "undatedCountLabel": "Units to generate", "invalidUndatedCount": "Enter a whole number from 1 to 100 units.", "startDate": "Start date", "endDate": "End date", "invalidDayRange": "Choose real dates from 1900-01-01 through 2100-12-31, with end on or after start and at most 60 calendar months.", "dailyWeekdaysLabel": "Days to include", "invalidWeekdays": "Select at least one weekday and make sure the range contains a selected day.", "allDays": "All days", "workdays": "Weekdays", "thisMonth": "This month", "nextMonth": "Next month", "thisYear": "This year", "nextYear": "Next year", "thisWeek": "This week", "nextWeek": "Next week", "fourWeeks": "Next 4 weeks", "today": "Today", "nextDay": "Next day", "sevenDays": "Next 7 days", "weekday0": "Sun", "weekday1": "Mon", "weekday2": "Tue", "weekday3": "Wed", "weekday4": "Thu", "weekday5": "Fri", "weekday6": "Sat"});
