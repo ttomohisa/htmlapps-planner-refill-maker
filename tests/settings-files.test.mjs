@@ -190,9 +190,10 @@ test('explicit replacement retries persistence after an initial storage-read fai
 
 
 test('v1 settings keep every original required field and migrate new fields to defaults',async()=>{
-  const data=await saved(); data.formatVersion=1; for(const key of ['printMarginMm','dateMode','undatedCount','weeklyStartDate','weeklyEndDate','dailyStartDate','dailyEndDate','dailyWeekdays','refillOptions'])delete data.settings[key];
+  const data=await saved(); data.formatVersion=1; for(const key of ['printMarginMm','dateMode','undatedCount','weeklyStartDate','weeklyEndDate','dailyStartDate','dailyEndDate','dailyWeekdays','refillOptions','printShiftFrontX','printShiftFrontY','printShiftBackX','printShiftBackY'])delete data.settings[key];
   const h=loadPlanner(); const pending=load(h,data); await confirm(h); await pending;
   assert.equal(h.app.state.printMarginMm,0);
+  for(const key of ['printShiftFrontX','printShiftFrontY','printShiftBackX','printShiftBackY']) assert.equal(h.app.state[key],0);
   for(const key of Object.keys(data.settings)){
     const incomplete=plain(data); delete incomplete.settings[key]; await load(h,incomplete);
     assert.notEqual(h.get('appConfirmDialog').open,true,key);
