@@ -37,7 +37,7 @@ test('exact-size PDF shifts front and back after page rotation, without changing
   near(shiftCall(pages[0])[2],-0.5*scaleY,'front Y');
   near(shiftCall(pages[1])[1],1.6*scaleX,'back X includes front X');
   near(shiftCall(pages[1])[2],0.9*scaleY,'back Y includes front Y');
-  assert.match(await h.app.generatedPdf.blob.text(),/\\/MediaBox \\[0 0 419\\.5276 595\\.2756\\]/);
+  assert.match(await h.app.generatedPdf.blob.text(),/\/MediaBox \[0 0 419\.5276 595\.2756\]/);
 });
 
 test('A4 imposition applies face corrections to artwork and crop guides without changing slots',async()=>{
