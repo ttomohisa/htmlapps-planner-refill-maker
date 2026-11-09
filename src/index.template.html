@@ -756,7 +756,7 @@
       <div class="brand">
         <img class="brand-icon" id="appBrandIcon" src="__APP_ICON_DATA_URI__" alt="">
         <div class="brand-copy">
-          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.2.0</span></p>
+          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.3.0</span></p>
           <p class="brand-meta" data-i18n="brandMeta">手帳サイズに合わせたリフィルPDF</p>
         </div>
       </div>
@@ -1395,7 +1395,7 @@
         for(const key of SETTINGS_KEYS){
           const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:1;
           if(!legacy&&formatVersion>=addedIn&&!Object.hasOwn(value,key))throw new Error('Missing setting');
-          decoded[key]=formatVersion<addedIn?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
+          decoded[key]=(!legacy&&formatVersion<addedIn)?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
         }
         for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
         for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS})){
