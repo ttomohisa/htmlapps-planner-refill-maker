@@ -92,7 +92,7 @@ Under **Appearance**, choose **Save settings (.settings.json)**. The download us
 Choose **Load settings (JSON)**, select a supported file up to **64 KiB**, review its size, layout, and period/page count, and confirm replacement. Cancel keeps the current setup and PDF. After replacement, create the PDF again. Settings and files stay in your browser.
 
 Settings saved by earlier versions remain readable.
-Settings JSON format v4 contains the four print correction values. Files saved in formats v1–v3 remain supported; missing corrections default to zero. Their weekly/daily month ranges expand to the same first and last calendar dates; new files also remember day ranges, weekday choices, undated counts, and paper-edge margin.
+Settings JSON format v5 includes the selected use-case layout and page count, as well as the four print-position correction values. Files saved in formats v1–v4 remain supported; missing print corrections default to zero, and older files default to one habit-tracker page. Legacy weekly/daily month ranges still expand to the same first and last calendar dates; newer files also remember day ranges, weekday choices, undated counts, and paper-edge margins.
 
 If saved browser settings cannot be read, the app shows defaults and preserves the original record. Automatic saving stays paused until a confirmed import or reset. If storage is unavailable, settings may work only for this session; save a JSON file to keep them.
 
