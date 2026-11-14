@@ -141,7 +141,11 @@ Do not edit generated files in `dist/` directly.
 
 ## Publish a GitHub Release
 
-After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.4.0`).
+Merging a version bump into `main` now runs **Publish release** automatically. The workflow compares the new `app.config.json` version with the previous `main` commit, and publishes only when the stable version increases and its `vX.Y.Z` tag does not already exist. Unrelated pushes do not create releases.
+
+When **PR #11** (v1.3.0) is merged before **PR #12**, PR #11 will still use the previous manual workflow. Once PR #12 (v1.4.0) is merged into `main`, the new automation creates the **v1.4.0** tag and GitHub Release after the repository checks pass. If a separate v1.3.0 release is wanted, publish it manually before merging PR #12.
+
+For manual publication or recovery, open **Actions → Publish release → Run workflow**, select **main**, and enter the version from `app.config.json` without `v` (for this release: `1.4.0`).
 
 The workflow builds and checks the selected commit, creates `v1.4.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
 
@@ -149,7 +153,7 @@ The workflow builds and checks the selected commit, creates `v1.4.0`, and publis
 - `planner-refill-maker-v1.4.0.self-extract.html` — gzip self-extracting standalone app.
 - `SHA256SUMS.txt` — SHA-256 checksums of both HTML files.
 
-PR updates and merges do not publish a release automatically. The workflow rejects a mismatched version, a branch other than `main`, or an existing tag. A failed upload or publication may leave a draft release for inspection; it does not overwrite an existing release. The checked files are also retained as an Actions artifact. Release publication requires repository permission to create tags/releases.
+Manual runs reject mismatched versions or existing tags. Automatic runs skip existing tags without overwriting them. Publishing only runs on `main`. A failed upload or publication may leave a draft release for inspection; it does not overwrite an existing release. The checked files are also retained as an Actions artifact. Release publication requires repository permission to create tags/releases.
 
 ## Privacy and runtime network protection
 
