@@ -3636,15 +3636,23 @@
       function changeEnlargedZoom(value, clientX, clientY) {
         const next = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(value * 100) / 100));
         if (next === enlargedZoom) return;
-        const before = zoomPages.getBoundingClientRect();
         const viewportRect = zoomViewport.getBoundingClientRect();
         const x = Number.isFinite(clientX) ? clientX : viewportRect.left + viewportRect.width / 2;
         const y = Number.isFinite(clientY) ? clientY : viewportRect.top + viewportRect.height / 2;
+        // Use the actual paper rect as anchor, not the centered flex row:
+        // this keeps the same area under the pointer when the row grows past the viewport.
+        const targets = enlargedZoomTargets();
+        const distance = (target) => {
+          const rect = target.getBoundingClientRect();
+          return Math.max(rect.left - x, 0, x - rect.right) + Math.max(rect.top - y, 0, y - rect.bottom);
+        };
+        const anchor = targets.reduce((best,target) => !best || distance(target) < distance(best) ? target : best, null) || zoomPages;
+        const before = anchor.getBoundingClientRect();
         const relativeX = (x - before.left) / enlargedZoom;
         const relativeY = (y - before.top) / enlargedZoom;
         enlargedZoom = next;
         applyEnlargedZoomSizing();
-        const after = zoomPages.getBoundingClientRect();
+        const after = anchor.getBoundingClientRect();
         zoomViewport.scrollLeft = (zoomViewport.scrollLeft || 0) + after.left + relativeX * next - x;
         zoomViewport.scrollTop = (zoomViewport.scrollTop || 0) + after.top + relativeY * next - y;
       }
