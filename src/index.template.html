@@ -234,10 +234,11 @@
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
     .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px;align-items:start;min-width:0; }
-    .print-shift-fields .text-field { display:grid;grid-template-rows:auto auto minmax(3.3em,auto);gap:5px;min-width:0;max-width:100%; }
+    .print-shift-fields .text-field { display:grid;grid-template-rows:auto auto;align-content:start;gap:5px;min-width:0;max-width:100%; }
     .print-shift-fields .numeric-control { width:100%;min-width:0; }
-    /* Keep the error row on both columns, even when only one input is invalid. */
-    .print-shift-fields .field-error,.print-shift-fields .field-error:empty { display:block;min-width:0;max-width:100%;min-height:3.3em;line-height:1.45;white-space:normal;overflow-wrap:anywhere;word-break:normal; }
+    /* Keep inputs top-aligned; show a message below the affected field only when needed. */
+    .print-shift-fields .field-error { display:block;min-width:0;max-width:100%;min-height:0;line-height:1.45;white-space:normal;overflow-wrap:anywhere;word-break:normal; }
+    .print-shift-fields .field-error:empty { display:none; }
     .print-shift-fields .numeric-control input { width:100%;min-width:0;min-height:42px;padding:8px 9px;border:0;border-radius:0;background:transparent;box-shadow:none; }
     .print-shift-fields .numeric-control input:focus { border:0;box-shadow:none; }
     .print-shift-fields .numeric-control:has(input[aria-invalid="true"]) { border-color:var(--danger); }
@@ -1189,7 +1190,7 @@
                     <div class="text-field"><label class="field-label" for="printShiftBackY" data-i18n="printShiftBackY">裏面の追加・上下</label><div class="numeric-control"><input id="printShiftBackY" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftBackYError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftBackYError" role="alert"></span></div>
                   </div>
                 </div>
-                <p class="print-shift-hint" data-i18n="printShiftRange">各 -10〜+10 mm。まずサイズ確認PDFを印刷し、少しずつ調整してください。</p>
+                <p class="print-shift-hint" data-i18n="printShiftRange">各 ±10 mm（0.1 mm刻み）</p>
                 <button type="button" class="secondary-action print-shift-reset" id="resetPrintShift" data-i18n="printShiftReset">補正を0 mmに戻す</button>
               </div>
             </details>
@@ -1838,7 +1839,7 @@
         printShiftTitle:'印刷位置を補正',printShiftHint:'正の値はPDFの右・下方向です。表面の位置を調整し、必要に応じて裏面だけ追加で補正します。',
         printShiftFrontX:'表面・左右',printShiftFrontY:'表面・上下',printShiftBackX:'裏面の追加・左右',printShiftBackY:'裏面の追加・上下',
         printShiftBackHint:'両面印刷時、表面の補正に加える移動量です。',
-        printShiftRange:'各 -10〜+10 mm。まずサイズ確認PDFを印刷し、少しずつ調整してください。',
+        printShiftRange:'各 ±10 mm（0.1 mm刻み）',
         printShiftReset:'補正を0 mmに戻す',printShiftClipping:'補正によって印刷領域が用紙の外に出ます。端が欠ける場合は余白を増やすか補正量を減らしてください。',
         printShiftInvalid:'-10〜+10 mmで入力してください。',
         helpPrintShiftBody:'印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの外形・位置合わせマークにも補正が反映されます。裁断ガイドを含め用紙の端で欠けることがあるため、試し刷りで確認してください。'
@@ -1847,7 +1848,7 @@
         printShiftTitle:'Correct print alignment',printShiftHint:'Positive values move artwork right or down in the PDF. Adjust the front first, then add a back-only correction if needed.',
         printShiftFrontX:'Front · horizontal',printShiftFrontY:'Front · vertical',printShiftBackX:'Back extra · horizontal',printShiftBackY:'Back extra · vertical',
         printShiftBackHint:'For duplex printing, these movements are added to the front offset.',
-        printShiftRange:'Each value: -10 to +10 mm. Print a size/alignment test first and adjust in small steps.',
+        printShiftRange:'Each ±10 mm (0.1 mm steps)',
         printShiftReset:'Reset offsets to 0 mm',printShiftClipping:'Corrected artwork extends outside the paper. Increase margins or reduce the offset if an edge is cut off.',
         printShiftInvalid:'Enter -10 to +10 mm.',
         helpPrintShiftBody:'If your printer shifts the page, open “Correct print alignment” and adjust the horizontal and vertical values. Positive values move content right and down in PDF coordinates. For a back-only adjustment, select duplex printing. The refill outline and alignment marks on the print-size test also use these offsets. Artwork and crop guides can be clipped at the edge, so check a trial print.'
