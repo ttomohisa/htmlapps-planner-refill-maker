@@ -48,7 +48,7 @@ Current scope:
 - Apply the front offset to the size-test refill outline and front duplex alignment targets, and front+back to the duplex back target. Leave the 100 mm size reference unshifted.
 - Show a warning when any occupied placement at the configured offsets would cross the PDF paper boundary. Exact-size paper is also subject to clipping. Users should print at 100% scale and check actual results; this is not automatic physical printer calibration.
 - Empty or out-of-range active correction drafts block PDF and size-test creation, prevent saving old output, and are focused in the Output tab. A back-only invalid draft does not block single-sided output. Leaving a numeric field normalizes it to a tenth within the allowed bounds.
-- Each correction input reserves its validation-message space within its own column, including when the draft is valid, so showing an error does not change the alignment of adjacent fields. Invalid inputs receive aria-invalid.
+- Correction inputs stay top-aligned across columns. Empty error messages occupy no space; invalid values show a wrapped message immediately beneath their own input without shifting the other input. Invalid inputs receive aria-invalid. The inline range note remains brief: ±10 mm for each correction, in 0.1 mm steps.
 - Daily weekday controls separate quick select actions from the seven individual weekday checkboxes. Quick actions reflect whether exactly all seven or exactly Monday–Friday are selected via aria-pressed; a custom subset leaves both unpressed. The current day count is exposed in Japanese and English.
 - Maintain defaults of 0 mm. Serialize all four values as settings format v4. Files of versions 1–3 migrate with zero corrections, and unreadable settings are not overwritten.
 
