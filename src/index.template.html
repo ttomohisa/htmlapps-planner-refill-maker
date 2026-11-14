@@ -760,6 +760,7 @@
     .enlarged-preview-body.is-panning { cursor:grabbing;user-select:none; }
     #enlargedPreviewPages { display:flex;align-items:flex-start;gap:20px;width:max-content;min-width:100%;justify-content:center;padding-bottom:25px; }
     #enlargedPreviewPages .sheet-holder,#enlargedPreviewPages .print-face-image { flex:0 0 auto; }
+    #enlargedPreviewDialog .sheet { transition:none; }
     @container preview (min-width:560px) {
       .page-nav { grid-column:auto;grid-template-columns:36px minmax(90px,120px) 36px;margin-top:0; }
       .nav-button { width:36px; }
@@ -1289,7 +1290,7 @@
       </div>
       <button class="enlarged-zoom-fit" id="enlargedZoomReset" type="button" data-i18n="enlargedZoomReset">100%</button>
       <button class="enlarged-zoom-fit" id="enlargedZoomFit" type="button" data-i18n="enlargedZoomFit">全体表示</button>
-      <span class="enlarged-zoom-hint" data-i18n="enlargedZoomHint">Ctrl＋ホイール / ピンチで拡大・縮小</span>
+      <span class="enlarged-zoom-hint" data-i18n="enlargedZoomHint">Ctrl＋ホイール / ピンチで拡大。ドラッグで移動</span>
     </div>
     <div class="enlarged-preview-body" id="enlargedPreviewViewport"><div id="enlargedPreviewPages"></div></div>
   </dialog>
@@ -1929,12 +1930,12 @@
       Object.assign(translations.ja,{
         enlargedZoomControls:'プレビューの拡大縮小',enlargedZoomIn:'拡大',enlargedZoomOut:'縮小',
         enlargedZoomReset:'100%',enlargedZoomFit:'全体表示',
-        enlargedZoomHint:'Ctrl＋ホイール / ピンチで拡大・縮小'
+        enlargedZoomHint:'Ctrl＋ホイール / ピンチで拡大。ドラッグで移動'
       });
       Object.assign(translations.en,{
         enlargedZoomControls:'Preview zoom',enlargedZoomIn:'Zoom in',enlargedZoomOut:'Zoom out',
         enlargedZoomReset:'100%',enlargedZoomFit:'Fit to view',
-        enlargedZoomHint:'Ctrl + wheel / pinch to zoom'
+        enlargedZoomHint:'Ctrl + wheel / pinch to zoom · Drag to pan'
       });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
