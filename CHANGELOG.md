@@ -11,7 +11,7 @@ All notable changes to this project are documented in this file.
 - Save printer corrections in settings JSON format v4, while continuing to import versions 1–3 and restore older browser settings at zero corrections.
 
 ### Fixed
-- Keep the print-calibration error text inside its own input column and reserve space for validation messages so adjacent fields do not shift.
+- Keep print-calibration inputs aligned at the top. Show each error below its own input without reserving blank height for valid fields; shorten the calibration range note for narrow screens.
 - Separate daily weekday quick actions from individual weekday checkboxes, show the active preset, and improve spacing and touch targets on narrow screens.
 
 ## [1.2.0]
