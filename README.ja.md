@@ -141,7 +141,11 @@ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-
 
 ## GitHub Releaseの公開
 
-リリース用PRをマージしたら、**Actions → Publish release → Run workflow** を開きます。ブランチは **main**、バージョンは `app.config.json` と同じ値を `v` なしで入力します（今回は `1.4.0`）。
+`main` にバージョン更新をマージすると、**Publish release** が自動実行されます。`app.config.json` のバージョンを更新前の `main` と比較し、安定版のバージョンが上がっていて、対応する `vX.Y.Z` タグがまだない場合だけ公開します。バージョンを変更しないコミットでは公開しません。
+
+**PR #11**（v1.3.0）を先にマージする時点では、従来の手動方式です。その後 **PR #12**（v1.4.0）を `main` にマージすると、検査成功後に **v1.4.0** のタグとGitHub Releaseが自動作成されます。v1.3.0も個別にリリースする場合は、PR #12のマージ前に手動で公開してください。
+
+手動公開や失敗時の再実行は、**Actions → Publish release → Run workflow** から行えます。ブランチは **main**、バージョンは `app.config.json` と同じ値を `v` なしで指定します（今回は `1.4.0`）。
 
 選択したコミットのビルド・検査後に `v1.4.0` タグを作成し、CHANGELOGの該当バージョンの説明と、次の3ファイルを添付したGitHub Releaseを公開します。
 
@@ -149,7 +153,7 @@ powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File .\scripts\check-
 - `planner-refill-maker-v1.4.0.self-extract.html`：gzip圧縮した自己展開HTML版。
 - `SHA256SUMS.txt`：上記2ファイルのSHA-256チェックサム。
 
-PRの更新やマージだけでは自動公開しません。バージョン不一致、main以外のブランチ、既存タグがある場合は停止します。添付や公開に失敗した場合は、確認用の下書きReleaseが残ることがあります。既存Releaseは上書きしません。検査済みのファイルはActionsの成果物にも保存します。タグ・Releaseの作成権限があるアカウントで実行してください。
+手動実行時のバージョン不一致や既存タグはエラーにし、自動実行では既存タグを上書きせずスキップします。公開対象はmainのみです。添付や公開に失敗した場合は、確認用の下書きReleaseが残ることがあります。既存Releaseは上書きしません。検査済みのファイルはActionsの成果物にも保存します。タグ・Releaseの作成権限があるアカウントで実行してください。
 
 ## プライバシーと通信防止
 
