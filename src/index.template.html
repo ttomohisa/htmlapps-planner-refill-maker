@@ -3722,7 +3722,7 @@
         if(type!=='lostpointercapture')zoomViewport.releasePointerCapture?.(event.pointerId);
       });
       enlargedDialog.addEventListener('keydown',event => {
-        if(event.altKey || event.target instanceof HTMLInputElement)return;
+        if(event.altKey || ['INPUT','TEXTAREA','SELECT'].includes(event.target?.tagName))return;
         if(event.key==='+' || event.key==='='){event.preventDefault();changeEnlargedZoom(enlargedZoom+ZOOM_STEP);}
         if(event.key==='-'){event.preventDefault();changeEnlargedZoom(enlargedZoom-ZOOM_STEP);}
         if(event.key==='0' && (event.ctrlKey || event.metaKey)){event.preventDefault();changeEnlargedZoom(1);}
