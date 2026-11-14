@@ -32,6 +32,14 @@ Current scope:
 - Japanese and English UI.
 - Fully local, single-HTML distribution with no runtime network requests.
 
+### v1.4.0 preview inspection and layout thumbnails
+
+- Every purpose-specific layout card uses a visually distinct inline SVG miniature of the printed paper: checkbox grid, expense ledger, reading list, or review sections. No external icons or fonts.
+- The enlarged preview has native zoom controls (minus / current percentage / plus), 100% reset and Fit to view. Default is 150%, range is 10–400%, with 25-percentage-point button increments. New windows reset to 150%; preview redraws retain the current zoom.
+- Inside the enlarged preview, Ctrl+mouse wheel (and Command+wheel on macOS trackpads) and a two-finger touch pinch zoom around the pointer/finger midpoint. Single-finger scrolling remains native; a mouse can drag the magnified preview. The ordinary wheel still scrolls.
+- Zoom changes the displayed paper boxes and the containing scroll range, not the underlying PDF scale, ring margins, generated file, current selected page, or settings backup. The same behavior applies to refill, imposed sheets, and bound previews.
+- Controls have 44 px tap targets and localized Japanese/English accessible labels. The dialog retains Escape/close/focus restoration.
+
 ### v1.4.0 purpose-specific forms
 
 - **Habit tracker**: numbered day rows, checkbox columns with writable blank habit headers, and an explicit printed day count. The number of rows and columns varies with physical paper size (up to 31 day rows on A5); no calendar date is inferred or printed.
