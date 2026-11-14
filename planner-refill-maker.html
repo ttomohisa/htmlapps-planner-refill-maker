@@ -230,7 +230,7 @@
     .pdf-error { padding:10px 12px;border:1px solid color-mix(in srgb,var(--danger) 28%,var(--line));border-radius:10px;background:#fff8f7;color:var(--danger);font-size:10px; }
     .export-note { color:var(--muted);font-size:9px;line-height:1.45; }
     .print-output-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
-    .refill-types { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
+    .refill-types { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
     .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px;align-items:start;min-width:0; }
@@ -779,7 +779,7 @@
       <div class="brand">
         <img class="brand-icon" id="appBrandIcon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iIzE2NjI0ZiI+PHJlY3QgeD0iMS42IiB5PSIxLjYiIHdpZHRoPSI2MC44IiBoZWlnaHQ9IjYwLjgiIHJ4PSIxNS4yIi8+PGcgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii43NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTQzLjQgMTMuNWw3LjIgMWEzIDMgMCAwIDEgMi42IDMuNGwtNC43IDM1LjhhMyAzIDAgMCAxLTMuNCAyLjZMMjYuNyA1My43aDEzLjFhNS42IDUuNiAwIDAgMCA1LjYtNS42VjEzLjh6Ii8+PHBhdGggZD0iTTE2IDkuNGgyNS43YTMgMyAwIDAgMSAzIDN2MzYuOGE1IDUgMCAwIDEtNSA1SDE2YTIuOSAyLjkgMCAwIDEtMi45LTIuOXYtMzlBMi45IDIuOSAwIDAgMSAxNiA5LjR6Ii8+PC9nPjxjaXJjbGUgaWQ9ImgiIGN4PSIxNi4xIiBjeT0iMTUiIHI9IjEuMzUiLz48dXNlIGhyZWY9IiNoIiB5PSI2LjciLz48dXNlIGhyZWY9IiNoIiB5PSIxMy40Ii8+PHVzZSBocmVmPSIjaCIgeT0iMjAuNiIvPjx1c2UgaHJlZj0iI2giIHk9IjI3LjciLz48dXNlIGhyZWY9IiNoIiB5PSIzNCIvPjx1c2UgaHJlZj0iI2giIHg9IjMzLjEiIHk9IjUuMSIvPjx1c2UgaHJlZj0iI2giIHg9IjMyLjEiIHk9IjExLjkiLz48dXNlIGhyZWY9IiNoIiB4PSIzMSIgeT0iMTguNyIvPjx1c2UgaHJlZj0iI2giIHg9IjMwLjIiIHk9IjI2Ii8+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii42NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjAuNCIgeT0iMTMuMiIgd2lkdGg9IjIxLjEiIGhlaWdodD0iMTQuMyIgcng9Ii4yIi8+PHBhdGggZD0iTTI1LjYgMTMuNHYxMy44bTUuMi0xMy44djEzLjhNMzYgMTMuNHYxMy44TTIwLjcgMTYuOGgyMC41TTIwLjcgMjAuN2gyMC41TTIwLjcgMjQuN2gyMC41Ii8+PHJlY3QgaWQ9ImIiIHg9IjIwLjQiIHk9IjI5LjMiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiIHJ4PSIuMiIvPjx1c2UgaHJlZj0iI2IiIHk9IjQuMSIvPjx1c2UgaHJlZj0iI2IiIHk9IjguMiIvPjxyZWN0IHg9IjIwIiB5PSI0Mi4xIiB3aWR0aD0iMjEuNCIgaGVpZ2h0PSI4LjQiIHJ4PSIxIi8+PC9nPjxwYXRoIGQ9Ik0yNS42IDMwLjhoMTUuNk0yNS42IDM0LjloMTUuNk0yNS42IDM5aDE1LjZNMjIuMiA0NS4yaDE3LjVNMjIuMiA0Ny45aDE3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2NjI0ZiIgc3Ryb2tlLXdpZHRoPSIuOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==" alt="">
         <div class="brand-copy">
-          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.3.0</span></p>
+          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.4.0</span></p>
           <p class="brand-meta" data-i18n="brandMeta">手帳サイズに合わせたリフィルPDF</p>
         </div>
       </div>
@@ -844,6 +844,7 @@
             <div class="segment"><input type="radio" name="refillType" id="typeWeekly" value="weekly"><label for="typeWeekly"><span data-i18n="typeWeekly">週間</span></label></div>
             <div class="segment"><input type="radio" name="refillType" id="typeDaily" value="daily"><label for="typeDaily"><span data-i18n="typeDaily">日間</span></label></div>
             <div class="segment"><input type="radio" name="refillType" id="typeNotes" value="notes"><label for="typeNotes"><span data-i18n="typeNotes">メモ</span></label></div>
+            <div class="segment"><input type="radio" name="refillType" id="typePurpose" value="purpose"><label for="typePurpose"><span data-i18n="typePurpose">用途別</span></label></div>
           </div>
         </div>
 
@@ -873,6 +874,10 @@
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesLined" value="notes-lined"><label for="layoutNotesLined"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><path d="M24 10h24 M24 14h24 M24 18h24 M24 22h24 M24 26h24 M24 30h24 M24 34h24 M24 38h24 M24 42h24"/></g></svg><span data-i18n="layoutNotesLined">横罫</span><span class="layout-description" data-i18n="layoutNotesLinedDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesGrid" value="notes-grid"><label for="layoutNotesGrid"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><path d="M24.00 10v32 M28.00 10v32 M32.00 10v32 M36.00 10v32 M40.00 10v32 M44.00 10v32 M48.00 10v32 M24 10.00h24 M24 14.00h24 M24 18.00h24 M24 22.00h24 M24 26.00h24 M24 30.00h24 M24 34.00h24 M24 38.00h24 M24 42.00h24"/></g></svg><span data-i18n="layoutNotesGrid">方眼</span><span class="layout-description" data-i18n="layoutNotesGridDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesDot" value="notes-dot"><label for="layoutNotesDot"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><circle cx="25" cy="10" r=".6"/><circle cx="25" cy="14" r=".6"/><circle cx="25" cy="18" r=".6"/><circle cx="25" cy="22" r=".6"/><circle cx="25" cy="26" r=".6"/><circle cx="25" cy="30" r=".6"/><circle cx="25" cy="34" r=".6"/><circle cx="25" cy="38" r=".6"/><circle cx="25" cy="42" r=".6"/><circle cx="29" cy="10" r=".6"/><circle cx="29" cy="14" r=".6"/><circle cx="29" cy="18" r=".6"/><circle cx="29" cy="22" r=".6"/><circle cx="29" cy="26" r=".6"/><circle cx="29" cy="30" r=".6"/><circle cx="29" cy="34" r=".6"/><circle cx="29" cy="38" r=".6"/><circle cx="29" cy="42" r=".6"/><circle cx="33" cy="10" r=".6"/><circle cx="33" cy="14" r=".6"/><circle cx="33" cy="18" r=".6"/><circle cx="33" cy="22" r=".6"/><circle cx="33" cy="26" r=".6"/><circle cx="33" cy="30" r=".6"/><circle cx="33" cy="34" r=".6"/><circle cx="33" cy="38" r=".6"/><circle cx="33" cy="42" r=".6"/><circle cx="37" cy="10" r=".6"/><circle cx="37" cy="14" r=".6"/><circle cx="37" cy="18" r=".6"/><circle cx="37" cy="22" r=".6"/><circle cx="37" cy="26" r=".6"/><circle cx="37" cy="30" r=".6"/><circle cx="37" cy="34" r=".6"/><circle cx="37" cy="38" r=".6"/><circle cx="37" cy="42" r=".6"/><circle cx="41" cy="10" r=".6"/><circle cx="41" cy="14" r=".6"/><circle cx="41" cy="18" r=".6"/><circle cx="41" cy="22" r=".6"/><circle cx="41" cy="26" r=".6"/><circle cx="41" cy="30" r=".6"/><circle cx="41" cy="34" r=".6"/><circle cx="41" cy="38" r=".6"/><circle cx="41" cy="42" r=".6"/><circle cx="45" cy="10" r=".6"/><circle cx="45" cy="14" r=".6"/><circle cx="45" cy="18" r=".6"/><circle cx="45" cy="22" r=".6"/><circle cx="45" cy="26" r=".6"/><circle cx="45" cy="30" r=".6"/><circle cx="45" cy="34" r=".6"/><circle cx="45" cy="38" r=".6"/><circle cx="45" cy="42" r=".6"/></g></svg><span data-i18n="layoutNotesDot">ドット</span><span class="layout-description" data-i18n="layoutNotesDotDescription"></span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutHabitTracker" value="habit-tracker"><label for="layoutHabitTracker"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h17 M24 16h24 M24 21h24 M24 26h24 M24 31h24 M24 36h24 M24 41h24 M31 16v25 M37 16v25 M43 16v25"/><path d="m33 19 2 2 3-4" stroke-width="1.6"/></svg><span data-i18n="layoutHabitTracker">習慣トラッカー</span><span class="layout-description" data-i18n="layoutHabitTrackerDescription">日ごとにチェック</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutExpenseTracker" value="expense-tracker"><label for="layoutExpenseTracker"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h18 M24 17h24 M24 23h24 M24 29h24 M24 35h24 M24 41h24 M31 17v24 M42 17v24"/></svg><span data-i18n="layoutExpenseTracker">支出管理</span><span class="layout-description" data-i18n="layoutExpenseTrackerDescription">金額と費目を記録</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutReadingLog" value="reading-log"><label for="layoutReadingLog"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h18 M24 17h24 M24 23h20 M24 29h24 M24 35h20 M24 41h24 M38 16v7 M38 28v7"/></svg><span data-i18n="layoutReadingLog">読書ログ</span><span class="layout-description" data-i18n="layoutReadingLogDescription">読了日と感想</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutWeeklyReview" value="weekly-review"><label for="layoutWeeklyReview"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h22 M24 15h14 M24 20h24 M24 25h22 M24 30h12 M24 35h24 M24 40h22"/></svg><span data-i18n="layoutWeeklyReview">週間レビュー</span><span class="layout-description" data-i18n="layoutWeeklyReviewDescription">振り返りと来週</span></label></div>
           </div>
           <div class="weekly-hours" id="weeklyHours" hidden>
             <div class="time-range">
@@ -975,6 +980,11 @@
           <div class="holiday-note" id="holidayDataNote"></div>
         </div>
 
+        <div class="setting-group" id="purposeOptions" hidden>
+          <div class="setting-label-row"><span class="setting-label" data-i18n="purposeSettingsLabel">用途別リフィル</span><span class="setting-help" data-i18n="purposeSettingsHelp">印刷する枚数</span></div>
+          <div class="numeric-field"><label for="purposeCount" data-i18n="purposeCountLabel">枚数</label><div class="numeric-control"><input id="purposeCount" type="number" min="1" max="100" step="1" value="1" inputmode="numeric" aria-describedby="purposeCountError"><span class="numeric-unit" data-i18n="sheetUnit">枚</span></div><span class="field-range">1–100</span><span class="field-error" id="purposeCountError" role="status"></span></div>
+          <p class="ring-note" data-i18n="purposeCountHelp">空欄は印刷後に書き込めます。</p>
+        </div>
         <div class="setting-group notes-options" id="notesOptions" hidden>
           <div class="setting-label-row"><span class="setting-label" data-i18n="notesSettingsLabel">メモ用紙設定</span><span class="setting-help" data-i18n="notesSettingsHelp">枚数と間隔</span></div>
           <div class="date-range">
@@ -1314,8 +1324,8 @@
     (() => {
       'use strict';
 
-      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.3.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
-      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:45:52.3348822Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.3.0"},"dependencies":[]};
+      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.4.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
+      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:45:52.3348822Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.4.0"},"dependencies":[]};
       const assetBundle = {"schemaVersion":2,"dependencies":{}};
       const blobUrls = new Set();
       const assetByteCache = new Map();
@@ -1339,6 +1349,7 @@
       let language=readStorage(storageKeys.language)||detectLanguage();
       const MONTHLY_SPREAD_RAIL=Object.freeze({monthTop:.038,yearTop:.185,minisTop:.38,miniHeight:.27,miniGap:.03,inset:.05,pdfRailOffsetX:-.085,yearOffsetX:-.05,pdfMonthScale:1.42,pdfYearScale:1.78});
       const PATTERNS = ['lined', 'grid', 'dot', 'blank'];
+      const PURPOSE_LAYOUTS = Object.freeze(['habit-tracker','expense-tracker','reading-log','weekly-review']);
       const SPACING_KEYS = ['spacingLined', 'spacingGrid', 'spacingDot'];
       const REFILL_CHOICES = {
         dailyBalance: ['time','equal','side'], dailyPattern: ['original', ...PATTERNS],
@@ -1397,13 +1408,13 @@
         return result;
       }
 
-      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
+      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined',purpose:'habit-tracker'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,purposeCount:1,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
       // File and local-storage boundaries share an allowlisted, canonical decoder.
       // Derived geometry is never trusted, including in legacy local records.
       const SETTINGS_MAX_BYTES=64*1024;
       const SETTINGS_ENUMS={
         sizeKey:[...Object.keys(PRESETS),'custom'],orientation:['portrait','landscape'],
-        refillType:['monthly','yearly','weekly','daily','notes'],weekStart:['monday','sunday'],
+        refillType:['monthly','yearly','weekly','daily','notes','purpose'],weekStart:['monday','sunday'],
         ringMarginMode:['auto','manual'],firstPageSide:['left','right'],printMode:['exact','a4','letter'],
         duplexMode:['off','long','short'],stylePreset:['minimal','classic','compact'],pageColor:['mono','accent'],
         fontSize:['small','standard','large','xlarge','xxlarge'],lineWeight:['light','standard']
@@ -1411,26 +1422,28 @@
       const SETTINGS_NUMBERS={customWidth:[40,300],customHeight:[60,400],startHour:[0,23,true],endHour:[1,24,true],notesCount:[1,100,true],noteSpacing:[4,5,true],ringMarginManual:[4,30]};
       const SETTINGS_BOOLEANS=['showAdjacent','showHolidays','showHolidayNames','showPunchGuides','showCropGuides','showPageNumbers','showWeekNumbers'];
       const SETTINGS_COLORS=['saturdayColor','sundayColor','holidayColor'];
-      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread','monthly-list','monthly-list-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical','weekly-vertical-spread'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot']};
+      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread','monthly-list','monthly-list-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical','weekly-vertical-spread'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot'],purpose:PURPOSE_LAYOUTS};
       const SETTINGS_V1_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
       const SETTINGS_V2_DEFAULTS={printMarginMm:0,...DATE_DEFAULTS};
       const SETTINGS_V2_NUMBERS={printMarginMm:[0,20],undatedCount:[1,100,true]};
       const SETTINGS_V4_DEFAULTS={printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0};
       const SETTINGS_V4_NUMBERS=Object.fromEntries(Object.keys(SETTINGS_V4_DEFAULTS).map(key=>[key,[-10,10]]));
       const PRINT_SHIFT_KEYS=Object.keys(SETTINGS_V4_DEFAULTS);
-      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS];
+      const SETTINGS_V5_DEFAULTS={purposeCount:1};
+      const SETTINGS_V5_NUMBERS={purposeCount:[1,100,true]};
+      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS,...Object.keys(SETTINGS_V5_DEFAULTS)];
       let settingsStorageIssue='',settingsStorageBlocked=false;
       function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
       function decodeSettings(value,{legacy=false,formatVersion=3}={}){
         if(!settingsRecord(value))throw new Error('Invalid settings object');
         const decoded={};
         for(const key of SETTINGS_KEYS){
-          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:1;
+          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:Object.hasOwn(SETTINGS_V5_DEFAULTS,key)?5:1;
           if(!legacy&&formatVersion>=addedIn&&!Object.hasOwn(value,key))throw new Error('Missing setting');
           decoded[key]=(!legacy&&formatVersion<addedIn)?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
         }
         for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
-        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS})){
+        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS,...SETTINGS_V5_NUMBERS})){
           const number=decoded[key];
           if(typeof number!=='number'||!Number.isFinite(number)||number<min||number>max||(integer&&!Number.isInteger(number)))throw new Error('Invalid setting number');
         }
@@ -1441,7 +1454,7 @@
         if(!settingsRecord(decoded.layoutByType))throw new Error('Invalid layouts');
         const layouts={};
         for(const [type,choices] of Object.entries(SETTINGS_LAYOUTS)){
-          const layout=Object.hasOwn(decoded.layoutByType,type)?decoded.layoutByType[type]:(legacy?DEFAULT_STATE.layoutByType[type]:null);
+          const layout=Object.hasOwn(decoded.layoutByType,type)?decoded.layoutByType[type]:((legacy||formatVersion<5)?DEFAULT_STATE.layoutByType[type]:null);
           if(!choices.includes(layout))throw new Error('Invalid layout');
           layouts[type]=layout;
         }
@@ -1861,6 +1874,30 @@
         weekdayQuickLabel:'Quick select',weekdayPresetAll:'Select all',weekdayPresetWorkdays:'Weekdays only',
         weekdaySelectedCount:'{count} days selected'
       });
+      Object.assign(translations.ja,{
+        typePurpose:'用途別',purposeSettingsLabel:'用途別リフィル',purposeSettingsHelp:'印刷する枚数',
+        purposeCountLabel:'枚数',purposeCountHelp:'空欄には印刷後に書き込めます。',
+        purposePageLabel:'{name} {page}',purposePrintHint:'日付や項目は自分で記入する形式です。',
+        layoutHabitTracker:'習慣トラッカー',layoutHabitTrackerDescription:'日ごとにチェック',
+        layoutExpenseTracker:'支出管理',layoutExpenseTrackerDescription:'日付・費目・金額',
+        layoutReadingLog:'読書ログ',layoutReadingLogDescription:'読了日・感想',
+        layoutWeeklyReview:'週間レビュー',layoutWeeklyReviewDescription:'振り返りと来週',
+        habitDays:'{count}日分',habitLabel:'習慣',expenseDate:'日付',expenseItem:'内容',expenseCategory:'費目',
+        expenseAmount:'金額',expenseMemo:'メモ',expenseTotal:'合計',readingTitle:'書名',readingFinished:'読了日',
+        readingThoughts:'感想',reviewWins:'できたこと',reviewChallenges:'課題・気づき',reviewNext:'来週やること',reviewNotes:'メモ'
+      });
+      Object.assign(translations.en,{
+        typePurpose:'Trackers',purposeSettingsLabel:'Tracker pages',purposeSettingsHelp:'Number to print',
+        purposeCountLabel:'Pages',purposeCountHelp:'Fill in dates and entries after printing.',
+        purposePageLabel:'{name} {page}',purposePrintHint:'Undated templates to fill out on paper.',
+        layoutHabitTracker:'Habit tracker',layoutHabitTrackerDescription:'Check off each day',
+        layoutExpenseTracker:'Expense log',layoutExpenseTrackerDescription:'Date, item, amount',
+        layoutReadingLog:'Reading log',layoutReadingLogDescription:'Books and notes',
+        layoutWeeklyReview:'Weekly review',layoutWeeklyReviewDescription:'Reflect and plan',
+        habitDays:'{count} days',habitLabel:'Habit',expenseDate:'Date',expenseItem:'Item',expenseCategory:'Category',
+        expenseAmount:'Amount',expenseMemo:'Notes',expenseTotal:'Total',readingTitle:'Book',readingFinished:'Finished',
+        readingThoughts:'Thoughts',reviewWins:'Wins',reviewChallenges:'Challenges',reviewNext:'Next week',reviewNotes:'Notes'
+      });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
       Object.assign(translations.en,{"dated": "Dated", "undated": "Undated", "undatedCountLabel": "Units to generate", "invalidUndatedCount": "Enter a whole number from 1 to 100 units.", "startDate": "Start date", "endDate": "End date", "invalidDayRange": "Choose real dates from 1900-01-01 through 2100-12-31, with end on or after start and at most 60 calendar months.", "dailyWeekdaysLabel": "Days to include", "invalidWeekdays": "Select at least one weekday and make sure the range contains a selected day.", "allDays": "All days", "workdays": "Weekdays", "thisMonth": "This month", "nextMonth": "Next month", "thisYear": "This year", "nextYear": "Next year", "thisWeek": "This week", "nextWeek": "Next week", "fourWeeks": "Next 4 weeks", "today": "Today", "nextDay": "Next day", "sevenDays": "Next 7 days", "weekday0": "Sun", "weekday1": "Mon", "weekday2": "Tue", "weekday3": "Wed", "weekday4": "Thu", "weekday5": "Fri", "weekday6": "Sat"});
@@ -2012,11 +2049,12 @@
       function calendarCells(year,month){const first=new Date(Date.UTC(year,month-1,1));const jsDay=first.getUTCDay();const offset=state.weekStart==='monday'?(jsDay+6)%7:jsDay;const cells=[];for(let i=0;i<42;i+=1){const date=new Date(Date.UTC(year,month-1,1-offset+i));cells.push({day:date.getUTCDate(),current:date.getUTCMonth()===month-1,date});}return cells;}
       function dailyItems(startValue=state.dailyStartDate,endValue=state.dailyEndDate,weekdays=state.dailyWeekdays){const start=parseDay(startValue),end=parseDay(endValue);if(!start||!end)return[];const out=[];for(let cursor=start;cursor<=end;cursor=addDays(cursor,1))if(weekdays.includes(cursor.getUTCDay()))out.push(cursor);return out;}
       function notesItems(){return Array.from({length:state.notesCount},(_,i)=>i+1);}
+      function purposeItems(){return Array.from({length:state.purposeCount},(_,i)=>i+1);}
       function yearItems(){const start=monthSerial(state.startMonth),end=monthSerial(state.endMonth);if(start==null||end==null)return[];const a=monthFromSerial(start).year,b=monthFromSerial(end).year;const out=[];for(let y=a;y<=b;y+=1)out.push(y);return out;}
       function weekItems(){const start=parseDay(state.weeklyStartDate),end=parseDay(state.weeklyEndDate);if(!start||!end)return[];const out=[];for(let cursor=startOfWeek(start),last=startOfWeek(end);cursor<=last;cursor=addDays(cursor,7))out.push({start:cursor,days:Array.from({length:7},(_,i)=>addDays(cursor,i))});return out;}
-      function viewItems(){if(isUndated())return Array.from({length:state.undatedCount},(_,index)=>({undated:true,unit:index+1}));if(state.refillType==='monthly'){const start=monthSerial(state.startMonth),count=monthCount();return Array.from({length:count},(_,i)=>monthFromSerial(start+i));}if(state.refillType==='yearly')return yearItems();if(state.refillType==='weekly')return weekItems();if(state.refillType==='daily')return dailyItems();return notesItems();}
+      function viewItems(){if(isUndated())return Array.from({length:state.undatedCount},(_,index)=>({undated:true,unit:index+1}));if(state.refillType==='monthly'){const start=monthSerial(state.startMonth),count=monthCount();return Array.from({length:count},(_,i)=>monthFromSerial(start+i));}if(state.refillType==='yearly')return yearItems();if(state.refillType==='weekly')return weekItems();if(state.refillType==='daily')return dailyItems();if(state.refillType==='purpose')return purposeItems();return notesItems();}
       function pageCount(){const count=viewItems().length,layout=currentLayout();if(fixedSpreadLayout())return count*2;return count;}
-      function layoutSummary(){const key={ 'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'}[currentLayout()];return t(key);}
+      function layoutSummary(){const key={ 'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot','habit-tracker':'layoutHabitTracker','expense-tracker':'layoutExpenseTracker','reading-log':'layoutReadingLog','weekly-review':'layoutWeeklyReview'}[currentLayout()];return t(key);}
       function autoRingMargin(){const values={a5:15,bible:12,mini6:10,'davinci-pocket':10,micro5:8,hbwa5:15,custom:12};return values[state.sizeKey]??12;}
       function effectiveRingMargin(){const {width}=effectiveDimensions();const raw=state.ringMarginMode==='auto'?autoRingMargin():state.ringMarginManual;return Math.min(raw,Math.max(4,width*.35));}
       function fixedSpreadLayout(){const layout=currentLayout();return ['monthly-spread','monthly-list-spread','year-spread','weekly-notes','weekly-vertical-spread'].includes(layout);}
@@ -2067,7 +2105,7 @@
         if(dimensionsOnly)return true;
         if(activeRefillInvalidField())return false;
         if(state.ringMarginMode==='manual'&&!numberValid($('#ringMarginValue'),4,30))return false;
-        if(state.refillType==='notes')return numberValid($('#notesCount'),1,100,true);
+        if(state.refillType==='notes')return numberValid($('#notesCount'),1,100,true);if(state.refillType==='purpose')return numberValid($('#purposeCount'),1,100,true);
         if(isUndated()){
           if(!numberValid($('#undatedCount'),1,100,true))return false;
         }else if(['weekly','daily'].includes(state.refillType)){
@@ -2084,6 +2122,14 @@
       function setPreset(key){state.sizeKey=key;if(key==='custom'){state.baseWidth=state.customWidth;state.baseHeight=state.customHeight;customFields.hidden=false;}else{state.baseWidth=PRESETS[key].width;state.baseHeight=PRESETS[key].height;customFields.hidden=true;}render();}
       function validateDateRange(){const start=monthSerial(startMonthInput.value),end=monthSerial(endMonthInput.value);dateRangeError.textContent='';if(start==null||end==null){dateRangeError.textContent=t('invalidMonth');return false;}if(end<start){dateRangeError.textContent=t('invalidDateRange');return false;}if(end-start+1>60){dateRangeError.textContent=t('rangeTooLong');return false;}state.startMonth=startMonthInput.value;state.endMonth=endMonthInput.value;state.viewIndex=0;return true;}
       function validateTimeRange({normalize=false}={}){if(startHourInput.value.trim()===''||endHourInput.value.trim()===''){timeRangeError.textContent=t('invalidTimeRange');return false;}let start=Number(startHourInput.value),end=Number(endHourInput.value);timeRangeError.textContent='';if(normalize){start=Math.min(23,Math.max(0,Number.isFinite(start)?Math.round(start):6));end=Math.min(24,Math.max(1,Number.isFinite(end)?Math.round(end):24));if(end<=start)end=Math.min(24,start+1);startHourInput.value=String(start);endHourInput.value=String(end);}if(!Number.isInteger(start)||!Number.isInteger(end)||start<0||start>23||end<1||end>24||end<=start){timeRangeError.textContent=t('invalidTimeRange');return false;}state.startHour=start;state.endHour=end;return true;}
+      function validatePurposeCount({normalize=false}={}){
+        const input=$('#purposeCount'),error=$('#purposeCountError');
+        if(input.value.trim()===''){error.textContent=t('invalidNotesCount');return false;}
+        let value=Number(input.value);
+        if(normalize){value=Math.min(100,Math.max(1,Number.isFinite(value)?Math.round(value):1));input.value=String(value);}
+        if(!Number.isInteger(value)||value<1||value>100){error.textContent=t('invalidNotesCount');return false;}
+        error.textContent='';state.purposeCount=value;return true;
+      }
       function validateNotesCount({normalize=false}={}){const input=$('#notesCount'),error=$('#notesCountError');if(input.value.trim()===''){error.textContent=t('invalidNotesCount');return false;}let value=Number(input.value);if(normalize){value=Math.min(100,Math.max(1,Number.isFinite(value)?Math.round(value):10));input.value=String(value);}if(!Number.isFinite(value)||value<1||value>100||!Number.isInteger(value)){error.textContent=t('invalidNotesCount');return false;}error.textContent='';state.notesCount=value;return true;}
       function validateDayControls(){
         const type=state.refillType;if(!['weekly','daily'].includes(type))return true;
@@ -2119,9 +2165,9 @@
         for(const kind of ['weekly','daily'])$('#'+kind+'RangeControls').hidden=type!==kind||undated;
         $('#dailyWeekdaysGroup').hidden=type!=='daily'||undated;
         syncWeekdayQuickSelection();
-        $('#dateShortcuts').hidden=type==='notes'||undated;
+        $('#dateShortcuts').hidden=['notes','purpose'].includes(type)||undated;
         $$('[data-shortcut]').forEach(button=>{button.hidden=button.dataset.shortcutType!==(calendar?'month':type);});
-        $('#holidaySettingGroup').hidden=type==='notes'||undated;
+        $('#holidaySettingGroup').hidden=['notes','purpose'].includes(type)||undated;
         $('#adjacentRow').hidden=type!=='monthly'||undated;
         $('#dailyWeekdaysError').textContent=type==='daily'&&!undated&&(!selectedDailyWeekdays().length||!dailyItems($('#dailyStartDate').value,$('#dailyEndDate').value,selectedDailyWeekdays()).length)?t('invalidWeekdays'):'';
       }
@@ -2142,7 +2188,7 @@
         }
         state.viewIndex=0;render();
       }
-      function setRefillType(type){state.refillType=type;state.viewIndex=0;$$('.layout-option').forEach(el=>{el.hidden=el.dataset.refill!==type;});const layout=state.layoutByType[type];const input=$(`input[name="layout"][value="${layout}"]`);if(input)input.checked=true;$('#adjacentRow').hidden=type!=='monthly';$('#periodSettingGroup').hidden=type==='notes';$('#weekStartSettingGroup').hidden=type==='daily'||type==='notes';$('#holidaySettingGroup').hidden=type==='notes';$('#notesOptions').hidden=type!=='notes';render();}
+      function setRefillType(type){state.refillType=type;state.viewIndex=0;$$('.layout-option').forEach(el=>{el.hidden=el.dataset.refill!==type;});const layout=state.layoutByType[type];const input=$(`input[name="layout"][value="${layout}"]`);if(input)input.checked=true;$('#adjacentRow').hidden=type!=='monthly';$('#periodSettingGroup').hidden=['notes','purpose'].includes(type);$('#weekStartSettingGroup').hidden=type==='daily'||['notes','purpose'].includes(type);$('#holidaySettingGroup').hidden=['notes','purpose'].includes(type);$('#notesOptions').hidden=type!=='notes';$('#purposeOptions').hidden=type!=='purpose';render();}
 
       function makeSheet(pageLabel,gutterClass='',side='right'){const {width,height}=effectiveDimensions();const holder=document.createElement('div');holder.className='sheet-holder';const sheet=document.createElement('div');sheet.className=`sheet ${gutterClass}`;sheet.dataset.pageLabel=pageLabel;sheet.dataset.pageWidth=String(width);sheet.dataset.pageHeight=String(height);decorateSheetForRing(sheet,side);const chip=document.createElement('span');chip.className='page-size-chip';chip.textContent=`${formatMm(width)} × ${formatMm(height)} mm`;holder.append(sheet,chip);return{holder,sheet};}
       function createCalendarPage(year,month,columnIndexes,pageLabel,gutterClass='',side='right'){const {holder,sheet}=makeSheet(pageLabel,gutterClass,side);const page=document.createElement('div');page.className='calendar-page';const title=document.createElement('div');title.className='calendar-title';const monthTitle=document.createElement('div');monthTitle.className='month-title';monthTitle.textContent=language==='ja'?`${month}月`:new Intl.DateTimeFormat('en',{month:'long',timeZone:'UTC'}).format(new Date(Date.UTC(year,month-1,1)));const yearTitle=document.createElement('div');yearTitle.className='year-title';yearTitle.textContent=String(year);title.append(monthTitle,yearTitle);const weekdays=weekdayNames();const weekdayRow=document.createElement('div');weekdayRow.className='weekday-row';weekdayRow.style.gridTemplateColumns=`repeat(${columnIndexes.length},minmax(0,1fr))`;columnIndexes.forEach(index=>{const el=document.createElement('div');const kind=weekdayKindAtColumn(index);el.className=`weekday${kind!=='weekday'?` ${kind}`:''}`;el.textContent=weekdays[index];weekdayRow.append(el);});const grid=document.createElement('div');grid.className='calendar-grid';grid.style.gridTemplateColumns=`repeat(${columnIndexes.length},minmax(0,1fr))`;const cells=calendarCells(year,month);for(let week=0;week<6;week+=1){columnIndexes.forEach(columnIndex=>{const cellData=cells[week*7+columnIndex];const cell=document.createElement('div');const holiday=holidayInfo(cellData.date);const kind=dayKind(cellData.date);cell.className=`day-cell${cellData.current?'':' outside'}${kind!=='weekday'?` ${kind}`:''}${holiday?' holiday':''}${!state.showAdjacent&&!cellData.current?' empty-adjacent':''}`;if(holiday)cell.title=holiday.name;const number=document.createElement('span');number.className='day-number';number.textContent=String(cellData.day);cell.append(number);if(holiday){if(state.showHolidayNames&&cellData.current){const holidayName=document.createElement('span');holidayName.className='holiday-name';holidayName.textContent=holiday.name;cell.append(holidayName);}const mark=document.createElement('span');mark.className='holiday-mark';mark.setAttribute('aria-hidden','true');cell.append(mark);}grid.append(cell);});}page.append(title,weekdayRow,grid);sheet.append(page);return holder;}
@@ -2178,7 +2224,7 @@
       function pageHoldersForItem(item,itemIndex=state.viewIndex){return appendPreviewPageNumbers(pageHoldersForItemRaw(item,itemIndex),itemIndex);}
       function settingsSignature(){return JSON.stringify({refillOptions:state.refillOptions,...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,printShiftFrontX:state.printShiftFrontX,printShiftFrontY:state.printShiftFrontY,printShiftBackX:state.printShiftBackX,printShiftBackY:state.printShiftBackY,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
       function safeFilename(value){let name=String(value||'').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'-').replace(/\s+/g,' ').slice(0,120);if(!name)name='planner-refill.pdf';if(!/\.pdf$/i.test(name))name+='.pdf';return name;}
-      function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes'}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
+      function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes',purpose:currentLayout()}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=state.refillType==='purpose'?'blank':isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
       function formatBytes(bytes){if(bytes<1024)return `${bytes} B`;if(bytes<1024*1024)return `${(bytes/1024).toFixed(bytes<10240?1:0)} KB`;return `${(bytes/(1024*1024)).toFixed(1)} MB`;}
       function formatTemplate(text,values){return String(text).replace(/\{(\w+)\}/g,(_,key)=>values[key]??'');}
       function outputPaperLabel(mode=state.printMode){if(mode==='exact')return t('printExact');return PRINT_PAPERS[mode]?.label||mode;}
@@ -2240,7 +2286,7 @@
       function clearGeneratedPdf({outdated=false}={}){delete pdfError.dataset.i18n;if(generatedPdf.url){URL.revokeObjectURL(generatedPdf.url);generatedPdf.url=null;}generatedPdf.blob=null;generatedPdf.signature='';generatedPdf.pageCount=0;generatedPdf.scope='full';generatedPdf.scopeLabel='';generatedPdf.filenameSuffix='';savePdfButton.disabled=true;pdfResult.hidden=true;if(outdated&&!pdfBusy){pdfError.dataset.i18n='pdfOutdated';pdfError.textContent=t('pdfOutdated');pdfError.hidden=false;}else if(!pdfBusy){pdfError.hidden=true;}}
       // A monotonic revision rejects A -> B -> A edits during async rendering.
       // Raw applicable drafts participate even when committed preview state stays valid.
-      function outputDraftSignature(){const values=[];values.push($('#printShiftFrontX').value,$('#printShiftFrontY').value);if(duplexEnabled())values.push($('#printShiftBackX').value,$('#printShiftBackY').value);if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(hoursActive())values.push(startHourInput.value,endHourInput.value);}const invalidRefill=activeRefillInvalidField();if(invalidRefill)values.push(invalidRefill.id,invalidRefill.value);return JSON.stringify([settingsSignature(),values]);}
+      function outputDraftSignature(){const values=[];values.push($('#printShiftFrontX').value,$('#printShiftFrontY').value);if(duplexEnabled())values.push($('#printShiftBackX').value,$('#printShiftBackY').value);if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else if(state.refillType==='purpose')values.push($('#purposeCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(hoursActive())values.push(startHourInput.value,endHourInput.value);}const invalidRefill=activeRefillInvalidField();if(invalidRefill)values.push(invalidRefill.id,invalidRefill.value);return JSON.stringify([settingsSignature(),values]);}
       function syncPdfFreshness(){const draft=outputDraftSignature();if(draft!==lastOutputDraft){lastOutputDraft=draft;outputRevision+=1;}if(generatedPdf.blob&&(!draftInputsValid()||generatedPdf.signature!==settingsSignature()))clearGeneratedPdf({outdated:true});savePdfButton.disabled=pdfBusy||!generatedPdf.blob||!draftInputsValid();if(!filenameTouched)outputFilename.value=defaultPdfFilename();}
       function undatedPageSpecs(itemIndex){
         const layout=currentLayout(),side=pageSideAt(itemIndex),spec=(kind,pageSide)=>({kind,undated:true,side:pageSide,pageLabel:pageSideText(pageSide)});
@@ -2574,15 +2620,100 @@
         const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
         drawPatternBox(ctx,x,y,width,height,spec.kind.slice('notes-'.length),w / widthMm,h / heightMm);
       }
+
+      // These are intentionally blank, printable forms. Adapt columns and writing
+      // space to the physical paper; do not rasterize a fixed A5 grid for Micro5.
+      function drawPurposeCanvas(ctx,w,h,spec,widthMm,heightMm){
+        const {x,y,width,height}=paperContentBox(w,h,spec,widthMm);
+        const unit=w/widthMm,small=width/unit<82;
+        const font=Math.max(9,Math.min(17,width*.028));
+        const light='#d8dfdb',ink='#394a42';
+        const names={'habit-tracker':'layoutHabitTracker','expense-tracker':'layoutExpenseTracker','reading-log':'layoutReadingLog','weekly-review':'layoutWeeklyReview'};
+        const titleHeight=Math.min(height*.12,12*unit);
+        text(ctx,t(names[spec.kind]),x,y+Math.max(1,unit*1.2),Math.min(font*1.16,titleHeight*.6),{weight:850,baseline:'top',maxWidth:width*.85});
+        line(ctx,x,y+titleHeight,x+width,y+titleHeight,'#28493f',Math.max(1.2,w*.0022));
+        const top=y+titleHeight+Math.min(unit*2,height*.02),bottom=y+height,contentHeight=bottom-top;
+        const label=(value,px,py,limit,center=false)=>{
+          text(ctx,value,px,py,Math.min(font*.84,Math.max(7,unit*1.6)),{weight:750,color:ink,align:center?'center':'left',baseline:'middle',maxWidth:limit});
+        };
+        const ruled=(left,topY,right,bottomY,rows=3)=>{
+          const step=(bottomY-topY)/rows;
+          for(let i=1;i<=rows;i++)line(ctx,left,topY+i*step,right,topY+i*step,light,Math.max(.55,w*.0008));
+        };
+        if(spec.kind==='habit-tracker'){
+          const headH=Math.max(unit*6,contentHeight*.045);
+          const days=Math.min(31,Math.max(10,Math.floor((contentHeight-headH)/(unit*5.4))));
+          const cols=small?3:width/unit<118?4:6,dayWidth=Math.max(unit*5.5,width*.135);
+          const colWidth=(width-dayWidth)/cols,rowH=(contentHeight-headH)/days;
+          label(t('habitDays').replace('{count}',String(days)),x+dayWidth*.08,top+headH*.48,dayWidth*.9);
+          label(t('habitLabel'),x+dayWidth+colWidth*.5,top+headH*.48,colWidth*.91,true);
+          for(let c=0;c<=cols;c++)line(ctx,x+dayWidth+c*colWidth,top,x+dayWidth+c*colWidth,bottom,light,Math.max(.65,w*.0009));
+          line(ctx,x,top+headH,x+width,top+headH,light,.9);
+          for(let row=0;row<days;row++){
+            const cy=top+headH+(row+.5)*rowH;
+            label(String(row+1),x+dayWidth*.5,cy,dayWidth*.8,true);
+            const size=Math.min(rowH*.43,colWidth*.36,unit*3.1);
+            ctx.strokeStyle='#aab3ae';ctx.lineWidth=Math.max(.65,w*.0008);
+            for(let c=0;c<cols;c++)ctx.strokeRect(x+dayWidth+(c+.5)*colWidth-size/2,cy-size/2,size,size);
+            line(ctx,x,top+headH+(row+1)*rowH,x+width,top+headH+(row+1)*rowH,light,.65);
+          }
+          return;
+        }
+        if(spec.kind==='expense-tracker'){
+          const headerH=Math.max(unit*7,contentHeight*.07),totalH=Math.max(unit*7,contentHeight*.065);
+          const rows=Math.min(24,Math.max(7,Math.floor((contentHeight-headerH-totalH)/(unit*6.7))));
+          const tableBottom=bottom-totalH,rowH=(tableBottom-top-headerH)/rows;
+          const weights=small?[.22,.48,.30]:[.16,.26,.34,.24];
+          const keys=small?['expenseDate','expenseItem','expenseAmount']:['expenseDate','expenseCategory','expenseItem','expenseAmount'];
+          let tx=x;const positions=[x];
+          for(const weight of weights){tx+=width*weight;positions.push(tx);}
+          for(let i=0;i<keys.length;i++)label(t(keys[i]),positions[i]+unit*.6,top+headerH*.52,(positions[i+1]-positions[i])-unit*1.2);
+          for(let col=0;col<positions.length;col++)line(ctx,positions[col],top,positions[col],tableBottom,light,.75);
+          line(ctx,x,top+headerH,x+width,top+headerH,light,.85);
+          for(let row=1;row<=rows;row++)line(ctx,x,top+headerH+row*rowH,x+width,top+headerH+row*rowH,light,.7);
+          label(t('expenseTotal'),x+unit*.7,tableBottom+totalH*.52,width*.42);
+          line(ctx,x+width*(small?.7:.76),tableBottom,x+width*(small?.7:.76),bottom,light,.7);
+          line(ctx,x,bottom,x+width,bottom,light,.7);
+          return;
+        }
+        if(spec.kind==='reading-log'){
+          const count=Math.min(8,Math.max(2,Math.floor(contentHeight/(unit*(small?24:26)))));
+          const blockH=contentHeight/count,mainH=Math.min(blockH*.40,unit*10);
+          for(let i=0;i<count;i++){
+            const by=top+i*blockH,split=x+width*(small?.64:.72);
+            label(t('readingTitle'),x+unit*.6,by+mainH*.4,width*.23);
+            line(ctx,x+width*.29,by+mainH*.64,split-unit,by+mainH*.64,light,.7);
+            label(t('readingFinished'),split+unit*.4,by+mainH*.4,width*.26);
+            line(ctx,split+unit*.4,by+mainH*.73,x+width-unit*.4,by+mainH*.73,light,.7);
+            label(t('readingThoughts'),x+unit*.6,by+mainH+unit*.8,width*.5);
+            ruled(x+unit*.6,by+mainH+unit*3.1,x+width-unit*.6,by+blockH-unit*.9,small?2:3);
+            line(ctx,x,by+blockH,x+width,by+blockH,'#b5beb9',.95);
+          }
+          return;
+        }
+        if(spec.kind==='weekly-review'){
+          const sections=[['reviewWins',.23],['reviewChallenges',.23],['reviewNext',.32],['reviewNotes',.22]];
+          let sy=top;
+          for(const [key,weight] of sections){
+            const sh=contentHeight*weight;
+            label(t(key),x,sy+Math.max(unit*2,sh*.17),width*.95);
+            const start=sy+Math.max(unit*6,sh*.29);
+            const lines=Math.min(6,Math.max(2,Math.floor((sy+sh-start)/(unit*6.5))));
+            ruled(x,start,x+width,sy+sh,lines);
+            sy+=sh;
+          }
+        }
+      }
       function drawPunchGuidesCanvas(ctx,w,h,side,widthMm){if(!state.showPunchGuides)return;const edgeMm=Math.min(9,widthMm*.08),x=edgeMm/widthMm*w;ctx.save();ctx.strokeStyle='rgba(22,98,79,.5)';ctx.fillStyle='#fff';ctx.lineWidth=Math.max(1,w*.0012);[.24,.32,.40,.60,.68,.76].forEach(pos=>{const cx=side==='right'?x:w-x,cy=h*pos,r=Math.max(2,w*.006);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();ctx.stroke();});ctx.restore();}
       function withRingTransform(ctx,w,widthMm,side,draw){const base=w*pageMarginRatio(),ring=Math.max(base,effectiveRingMargin()/widthMm*w);const left=side==='right'?ring:base,right=side==='left'?ring:base;const source=w-base*2,target=w-left-right,scale=target/source,tx=left-scale*base;ctx.save();ctx.setTransform(scale,0,0,1,tx,0);draw();ctx.restore();}
       function renderPageSpecCanvas(spec,widthMm,heightMm,dpi=180){const pxWidth=Math.max(240,Math.round(widthMm/25.4*dpi)),pxHeight=Math.max(320,Math.round(heightMm/25.4*dpi));const canvas=document.createElement('canvas');canvas.width=pxWidth;canvas.height=pxHeight;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,pxWidth,pxHeight);if(!spec)return canvas;const options=state.refillOptions;
         const customWeeklyNotes=spec.kind==='notes'&&(options.weeklyNotesPattern!=='original'||options.spacingLined!==null);
         const customVertical=verticalLayout(spec.kind)&&(spec.kind.endsWith('spread')||options.verticalWidth!=='equal'||options.verticalStep!=='60'||options.verticalExtra!=='none'||spec.week?.days.some(date=>personalEntriesFor(date).length));
-        const direct=monthlyListLayout(spec.kind)||customWeeklyNotes||customVertical||spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{
+        const direct=monthlyListLayout(spec.kind)||customWeeklyNotes||customVertical||PURPOSE_LAYOUTS.includes(spec.kind)||spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{
           if(monthlyListLayout(spec.kind))drawMonthlyList(ctx,pxWidth,pxHeight,spec,widthMm);
           else if(customVertical)drawCustomVertical(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
           else if(customWeeklyNotes)drawWeeklyNotesPattern(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
+          else if(PURPOSE_LAYOUTS.includes(spec.kind))drawPurposeCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
           else if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
       async function canvasJpeg(canvas,quality=.96){const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!blob)throw new Error(t('pdfPageRasterError'));return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height};}
       function drawPrintPageCanvas(ctx,pageCanvas,x,y,w,h,rotation=0){ctx.save();if(rotation===180){ctx.translate(x+w,y+h);ctx.rotate(Math.PI);ctx.drawImage(pageCanvas,0,0,w,h);}else ctx.drawImage(pageCanvas,x,y,w,h);ctx.restore();}
@@ -2983,7 +3114,7 @@
         if ((field = numeric('printShiftFrontX', -10, 10) || numeric('printShiftFrontY', -10, 10))) return field;
         if (duplexEnabled() && (field = numeric('printShiftBackX', -10, 10) || numeric('printShiftBackY', -10, 10))) return field;
         if (state.ringMarginMode === 'manual' && (field = numeric('ringMarginValue', 4, 30))) return field;
-        if (state.refillType === 'notes') return numeric('notesCount', 1, 100, true);
+        if (state.refillType === 'notes') return numeric('notesCount', 1, 100, true);if (state.refillType === 'purpose') return numeric('purposeCount', 1, 100, true);
         if (isUndated()) { if ((field = numeric('undatedCount', 1, 100, true))) return field; }
         else if (['weekly', 'daily'].includes(state.refillType)) {
           const start = $('#' + state.refillType + 'StartDate'), end = $('#' + state.refillType + 'EndDate');
@@ -3015,11 +3146,11 @@
           field.focus(); field.scrollIntoView?.({ block: 'center', behavior: 'auto' });
         }
       }
-      function navigationLabel(item){if(item?.undated)return `${t('undated')} · ${item.unit}`;if(state.refillType==='monthly')return formatMonthLabel(item.year,item.month);if(state.refillType==='yearly')return String(item);if(state.refillType==='weekly')return formatWeekLabel(item);if(state.refillType==='daily'){const p=formatDailyTitle(item);return `${p.main} · ${p.weekday}`;}return formatTemplate(t('notePageLabel'),{page:item});}
+      function navigationLabel(item){if(item?.undated)return `${t('undated')} · ${item.unit}`;if(state.refillType==='monthly')return formatMonthLabel(item.year,item.month);if(state.refillType==='yearly')return String(item);if(state.refillType==='weekly')return formatWeekLabel(item);if(state.refillType==='daily'){const p=formatDailyTitle(item);return `${p.main} · ${p.weekday}`;}if(state.refillType==='purpose')return formatTemplate(t('purposePageLabel'),{name:layoutSummary(),page:item});return formatTemplate(t('notePageLabel'),{page:item});}
       function countText(count,unitKey){let unit=t(unitKey);if(language==='en'&&count===1)unit=unit.replace(/s$/,'');return `${count} ${unit}`;}
       function unitCountText(items){if(state.refillType==='monthly')return countText(items.length,'monthUnit');if(state.refillType==='yearly')return countText(items.length,'yearUnit');if(state.refillType==='weekly')return countText(items.length,'weekUnit');if(state.refillType==='daily')return countText(items.length,'dayUnit');return countText(items.length,'pageUnit');}
-      function previewNote(){if(isUndated())return t('undatedPreviewNote');if(state.refillType==='monthly'&&currentLayout()==='monthly-spread')return t('previewNoteMonthly');if(state.refillType==='yearly'&&currentLayout()==='year-spread')return t('previewNoteYearly');if(state.refillType==='weekly'&&currentLayout()==='weekly-notes')return t('previewNoteWeekly');return t('previewNote');}
-      function render(){syncDateControls();renderRefillControls();const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays||isUndated()||state.refillType==='notes';holidayNameRow.hidden=!state.showHolidays||isUndated();holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();renderWorkflowControls();persistSettings();$('#saveSettingsButton').disabled=!draftInputsValid();$('#settingsFileStatus').textContent=settingsFileMessage?t(settingsFileMessage):'';}
+      function previewNote(){if(isUndated())return t('undatedPreviewNote');if(state.refillType==='monthly'&&currentLayout()==='monthly-spread')return t('previewNoteMonthly');if(state.refillType==='yearly'&&currentLayout()==='year-spread')return t('previewNoteYearly');if(state.refillType==='weekly'&&currentLayout()==='weekly-notes')return t('previewNoteWeekly');if(state.refillType==='purpose')return t('purposePrintHint');return t('previewNote');}
+      function render(){syncDateControls();renderRefillControls();const items=viewItems();state.viewIndex=Math.min(state.viewIndex,Math.max(0,items.length-1));applyPageStyle();const {width,height}=effectiveDimensions(),name=selectedName(),orientationLabel=state.orientation==='portrait'?t('orientationPortrait'):t('orientationLandscape');$('#selectedSizeName').textContent=name;$('#effectiveSizeText').textContent=`${formatMm(width)} × ${formatMm(height)} mm`;syncRingControls();const ringSuffix=state.ringMarginMode==='auto'?` · ${t('ringAutoSuffix')}`:'';const sideSummary=fixedSpreadLayout()?`${t('leftPageLong')} / ${t('rightPageLong')}`:`${pageSideText(state.firstPageSide)}${language==='ja'?'から':' first'}`;$('#ringMarginSummaryText').textContent=`${formatMm(effectiveRingMargin())} mm${ringSuffix} · ${sideSummary}`;$('#selectedLayoutText').textContent=layoutSummary();$('#pageCountText').textContent=countText(pageCount(),'pageUnit');$('#periodHelp').textContent=unitCountText(items);$('#previewMeta').textContent=`${name} · ${formatMm(width)} × ${formatMm(height)} mm · ${orientationLabel}`;$('#previewNoteText').textContent=previewNote();const item=items[state.viewIndex];$('#navMonthLabel').textContent=item==null?'—':navigationLabel(item);$('#navPosition').textContent=items.length?`${state.viewIndex+1} / ${items.length}`:'0 / 0';$('#prevPage').disabled=state.viewIndex<=0;$('#nextPage').disabled=!items.length||state.viewIndex>=items.length-1;const holidayNote=$('#holidayDataNote');const holidayNameRow=$('#holidayNameRow');holidayNote.hidden=!state.showHolidays||isUndated()||['notes','purpose'].includes(state.refillType);holidayNameRow.hidden=!state.showHolidays||isUndated();holidayNote.textContent=holidayRangeFullyCovered()?t('holidayDataAvailable'):t('holidayDataPartial');const fontSlider=$('#fontSizeSlider');if(fontSlider){fontSlider.value=String(fontSizeStep(state.fontSize));fontSlider.setAttribute('aria-valuetext',t(fontSizeLabelKey(state.fontSize)));}const fontCurrentLabel=$('#fontSizeCurrentLabel');if(fontCurrentLabel)fontCurrentLabel.textContent=t(fontSizeLabelKey(state.fontSize));renderPrintLayout();syncPdfFreshness();renderPreview();renderWorkflowControls();persistSettings();$('#saveSettingsButton').disabled=!draftInputsValid();$('#settingsFileStatus').textContent=settingsFileMessage?t(settingsFileMessage):'';}
       function applyLanguage(){document.documentElement.lang=language;document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});document.querySelectorAll('[data-i18n-title]').forEach(el=>{el.title=t(el.dataset.i18nTitle);});document.querySelectorAll('[data-i18n-aria-label]').forEach(el=>{el.setAttribute('aria-label',t(el.dataset.i18nAriaLabel));});$('#languageButton').textContent=language==='ja'?'EN':'JA';$('#languageButton').setAttribute('aria-label',language==='ja'?'英語に切り替え':'Switch to Japanese');$('#languageButton').title=language==='ja'?'英語に切り替え':'Switch to Japanese';document.title=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#brandName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;$('#footerName').textContent=language==='ja'?APP_CONFIG.nameJa:APP_CONFIG.name;render();}
 
       function showSettingsFileStatus(key){settingsFileMessage=key;$('#settingsFileStatus').textContent=key?t(key):'';}
@@ -3077,7 +3208,7 @@
         $('#adjacentRow').hidden = state.refillType !== 'monthly' || monthlyListLayout() || isUndated();
         const layout = currentLayout(), options = state.refillOptions;
         const visible = (id, show) => { $('#' + id).hidden = !show; };
-        visible('refillDetails', state.refillType !== 'yearly' && (state.refillType !== 'monthly' || monthlyListLayout()));
+        visible('refillDetails', !['yearly','purpose'].includes(state.refillType) && (state.refillType !== 'monthly' || monthlyListLayout()));
         visible('dailySections', layout === 'daily');
         visible('dailyTimeLabelRow', options.dailyTime);
         visible('dailyTodoLabelRow', options.dailyTodo);
@@ -3111,8 +3242,8 @@
           options.verticalStep === '30' && height * .7 / (2 * (state.endHour - state.startHour)) < 3.5);
         const columnsPerSide = layout.endsWith('spread') ? Math.ceil(options.listCount / 2) : options.listCount;
         visible('densePaper', tightWeek || monthlyListLayout() && (writingWidth / (columnsPerSide + 1) < 11 || height * .8 / 31 < 3));
-        visible('personalDetails', state.refillType !== 'notes');
-        visible('personalPrintNote', state.refillType !== 'notes' && !isUndated() && options.personalDates.some(entry => entry.enabled));
+        visible('personalDetails', !['notes','purpose'].includes(state.refillType));
+        visible('personalPrintNote', !['notes','purpose'].includes(state.refillType) && !isUndated() && options.personalDates.some(entry => entry.enabled));
         renderPersonalEditor();
       }
       function bindRefillControls() {
@@ -3273,13 +3404,13 @@
         settingsStorageBlocked=false;
         if(!settingsStorageBlocked)settingsStorageIssue='';
         syncControlsFromState();
-        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError',...PRINT_SHIFT_KEYS.map(key=>key+'Error'),'dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
+        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','purposeCountError','ringMarginError','printMarginError',...PRINT_SHIFT_KEYS.map(key=>key+'Error'),'dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
         for(const key of PRINT_SHIFT_KEYS)$('#'+key).setAttribute('aria-invalid','false');
         setRefillType(state.refillType);
       }
       function saveSettingsFile(){
         if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
-        const data={app:'planner-refill-maker',formatVersion:4,settings:settingsSnapshot()};
+        const data={app:'planner-refill-maker',formatVersion:5,settings:settingsSnapshot()};
         const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
         const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
         document.body.append(link);
@@ -3287,8 +3418,8 @@
       }
       function settingsImportSummary(next){
         const landscape=next.orientation==='landscape',width=landscape?next.baseHeight:next.baseWidth,height=landscape?next.baseWidth:next.baseHeight;
-        const layoutKeys={'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot'};
-        return formatTemplate(t('settingsFileSummary'),{size:next.sizeKey==='custom'?t('customName'):PRESETS[next.sizeKey][language],width:formatMm(width),height:formatMm(height),orientation:t(landscape?'orientationLandscape':'orientationPortrait'),layout:t(layoutKeys[next.layoutByType[next.refillType]]),period:['monthly','weekly','daily'].includes(next.refillType)&&next.dateMode==='undated'?`${t('undated')} · ${next.undatedCount}`:['weekly','daily'].includes(next.refillType)?formatTemplate(t('settingsFilePeriod'),{start:next[next.refillType+'StartDate'],end:next[next.refillType+'EndDate']}):next.refillType==='notes'?formatTemplate(t('settingsFileCount'),{count:next.notesCount}):formatTemplate(t('settingsFilePeriod'),{start:next.startMonth,end:next.endMonth})});
+        const layoutKeys={'monthly-list':'layoutMonthlyList','monthly-list-spread':'layoutMonthlyListSpread','weekly-vertical-spread':'layoutWeeklyVerticalSpread','monthly-single':'layoutMonthlySingle','monthly-spread':'layoutMonthlySpread','year-single':'layoutYearSingle','year-spread':'layoutYearSpread','weekly-block':'layoutWeeklyBlock','weekly-notes':'layoutWeeklyNotes','weekly-vertical':'layoutWeeklyVertical','daily':'layoutDaily','notes-lined':'layoutNotesLined','notes-grid':'layoutNotesGrid','notes-dot':'layoutNotesDot','habit-tracker':'layoutHabitTracker','expense-tracker':'layoutExpenseTracker','reading-log':'layoutReadingLog','weekly-review':'layoutWeeklyReview'};
+        return formatTemplate(t('settingsFileSummary'),{size:next.sizeKey==='custom'?t('customName'):PRESETS[next.sizeKey][language],width:formatMm(width),height:formatMm(height),orientation:t(landscape?'orientationLandscape':'orientationPortrait'),layout:t(layoutKeys[next.layoutByType[next.refillType]]),period:['monthly','weekly','daily'].includes(next.refillType)&&next.dateMode==='undated'?`${t('undated')} · ${next.undatedCount}`:['weekly','daily'].includes(next.refillType)?formatTemplate(t('settingsFilePeriod'),{start:next[next.refillType+'StartDate'],end:next[next.refillType+'EndDate']}):['notes','purpose'].includes(next.refillType)?formatTemplate(t('settingsFileCount'),{count:next.refillType==='purpose'?next.purposeCount:next.notesCount}):formatTemplate(t('settingsFilePeriod'),{start:next.startMonth,end:next.endMonth})});
       }
       async function loadSettingsFile(event){
         const input=event.currentTarget,file=input.files?.[0];input.value='';
@@ -3303,7 +3434,7 @@
           if(!current())return;
           if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
           const data=JSON.parse(text);
-          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4].includes(data.formatVersion))throw new Error('Unsupported settings format');
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4,5].includes(data.formatVersion))throw new Error('Unsupported settings format');
           const next=decodeSettings(data.settings,{formatVersion:data.formatVersion});
           const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
           if(!current())return;
@@ -3319,7 +3450,7 @@
         for(const type of ['weekly','daily'])for(const edge of ['Start','End'])$('#'+type+edge+'Date').value=state[type+edge+'Date'];
         for(const key of PRINT_SHIFT_KEYS)$('#'+key).value=formatMm(state[key]);$('#undatedCount').value=String(state.undatedCount);
         $$('input[name="dailyWeekday"]').forEach(input=>{input.checked=state.dailyWeekdays.includes(Number(input.value));});
-        $('#ringMarginValue').value=formatMm(state.ringMarginManual);$('#printMarginMm').value=formatMm(state.printMarginMm);$('#printMarginPreset').value=[0,3,5].includes(state.printMarginMm)?String(state.printMarginMm):'custom';customWidth.value=String(state.customWidth);customHeight.value=String(state.customHeight);startMonthInput.value=state.startMonth;endMonthInput.value=state.endMonth;startHourInput.value=String(state.startHour);endHourInput.value=String(state.endHour);$('#notesCount').value=String(state.notesCount);$('#showAdjacent').checked=state.showAdjacent;$('#showHolidays').checked=state.showHolidays;$('#showHolidayNames').checked=state.showHolidayNames;$('#saturdayColor').value=state.saturdayColor;$('#sundayColor').value=state.sundayColor;$('#holidayColor').value=state.holidayColor;$('#showPunchGuides').checked=state.showPunchGuides;$('#showCropGuides').checked=state.showCropGuides;$('#showPageNumbers').checked=state.showPageNumbers;$('#showWeekNumbers').checked=state.showWeekNumbers;customFields.hidden=state.sizeKey!=='custom';
+        $('#ringMarginValue').value=formatMm(state.ringMarginManual);$('#printMarginMm').value=formatMm(state.printMarginMm);$('#printMarginPreset').value=[0,3,5].includes(state.printMarginMm)?String(state.printMarginMm):'custom';customWidth.value=String(state.customWidth);customHeight.value=String(state.customHeight);startMonthInput.value=state.startMonth;endMonthInput.value=state.endMonth;startHourInput.value=String(state.startHour);endHourInput.value=String(state.endHour);$('#notesCount').value=String(state.notesCount);$('#purposeCount').value=String(state.purposeCount);$('#showAdjacent').checked=state.showAdjacent;$('#showHolidays').checked=state.showHolidays;$('#showHolidayNames').checked=state.showHolidayNames;$('#saturdayColor').value=state.saturdayColor;$('#sundayColor').value=state.sundayColor;$('#holidayColor').value=state.holidayColor;$('#showPunchGuides').checked=state.showPunchGuides;$('#showCropGuides').checked=state.showCropGuides;$('#showPageNumbers').checked=state.showPageNumbers;$('#showWeekNumbers').checked=state.showWeekNumbers;customFields.hidden=state.sizeKey!=='custom';
       }
       async function resetSettings(){
         cancelSettingsImport();const token=settingsImportToken,revision=settingsEditRevision;
@@ -3364,6 +3495,7 @@
       });
       $('#showCropGuides').addEventListener('change',event=>{state.showCropGuides=event.currentTarget.checked;render();});
       $$('input[name="duplexMode"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.duplexMode=input.value;render();}}));
+      $('#purposeCount').addEventListener('input',()=>{validatePurposeCount({normalize:false});render();});$('#purposeCount').addEventListener('change',()=>{validatePurposeCount({normalize:true});render();});$('#purposeCount').addEventListener('blur',()=>{validatePurposeCount({normalize:true});render();});
       $('#notesCount').addEventListener('input',()=>{validateNotesCount({normalize:false});render();});$('#notesCount').addEventListener('change',()=>{validateNotesCount({normalize:true});render();});$('#notesCount').addEventListener('blur',()=>{validateNotesCount({normalize:true});render();});
       $$('input[name="noteSpacing"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.noteSpacing=Number(input.value);render();}}));
       $('#showAdjacent').addEventListener('change',event=>{state.showAdjacent=event.currentTarget.checked;render();});
