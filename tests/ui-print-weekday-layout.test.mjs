@@ -5,10 +5,15 @@ import { loadPlanner } from './helpers/planner-harness.mjs';
 
 const source = fs.readFileSync(new URL('../src/index.template.html', import.meta.url), 'utf8');
 
-test('print calibration errors are constrained to their own field and reserve stable space', async () => {
-  assert.match(source, /\.print-shift-fields \.text-field \{[^}]*grid-template-rows:auto auto minmax\(3\.3em,auto\)/);
-  assert.match(source, /\.print-shift-fields \.field-error,\.print-shift-fields \.field-error:empty \{[^}]*overflow-wrap:anywhere/);
+test('print calibration errors stay below their own input without blank reserved rows', async () => {
+  assert.match(source, /\.print-shift-fields \{[^}]*align-items:start/);
+  assert.match(source, /\.print-shift-fields \.text-field \{[^}]*grid-template-rows:auto auto;align-content:start/);
+  assert.match(source, /\.print-shift-fields \.field-error \{[^}]*overflow-wrap:anywhere/);
+  assert.match(source, /\.print-shift-fields \.field-error:empty \{ display:none; \}/);
+  assert.doesNotMatch(source, /\.print-shift-fields[^}]*3\.3em/);
   assert.match(source, /\.print-shift-fields \.numeric-control input \{[^}]*border:0/);
+  assert.match(source, /printShiftRange:'各 ±10 mm（0\.1 mm刻み）'/);
+  assert.match(source, /printShiftRange:'Each ±10 mm \(0\.1 mm steps\)'/);
   const h=loadPlanner();
   await h.input('printShiftFrontX', '');
   assert.match(h.get('printShiftFrontXError').textContent, /-10.*\+10/);
