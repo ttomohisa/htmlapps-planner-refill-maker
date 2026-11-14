@@ -51,7 +51,7 @@ Current scope:
 - The optional ruling override is shared by notes paper and matching sections. Each pattern accepts 3–12 mm in 0.5 mm steps. Existing settings retain their prior spacing when no override is specified.
 - Monthly lists support one or two pages, 1–4 named writing columns, and aligned date rows on spreads. An undated month list uses generic day numbers 1–31.
 - Personal dates support one-time dates, weekly weekdays, and annual month/day values, with up to 100 enabled or disabled entries. February 29 repeats only in leap years. Date annotations distinguish days off and events, retain official holiday labels where possible, and indicate additional entries when space is limited. Yearly pages show marks. Undated pages omit personal dates.
-- Settings JSON v4 retains the validated customization record and adds print correction fields. Versions 1, 2, and 3 remain accepted with legacy defaults. Personal dates are included in settings backups and processed locally.
+- The current settings JSON is v5, retaining the validated customization and print-correction fields while adding use-case page count and layout. Versions 1–4 remain accepted with legacy defaults. Personal dates remain included in settings backups and processed locally.
 - These layouts use the shared preview/PDF drawing path and the existing actual-size and duplex planners.
 
 ### v1.3.0 printing calibration acceptance criteria
