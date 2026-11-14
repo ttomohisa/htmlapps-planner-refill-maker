@@ -230,7 +230,7 @@
     .pdf-error { padding:10px 12px;border:1px solid color-mix(in srgb,var(--danger) 28%,var(--line));border-radius:10px;background:#fff8f7;color:var(--danger);font-size:10px; }
     .export-note { color:var(--muted);font-size:9px;line-height:1.45; }
     .print-output-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
-    .refill-types { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
+    .refill-types { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
     .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px;align-items:start;min-width:0; }
@@ -844,6 +844,7 @@
             <div class="segment"><input type="radio" name="refillType" id="typeWeekly" value="weekly"><label for="typeWeekly"><span data-i18n="typeWeekly">週間</span></label></div>
             <div class="segment"><input type="radio" name="refillType" id="typeDaily" value="daily"><label for="typeDaily"><span data-i18n="typeDaily">日間</span></label></div>
             <div class="segment"><input type="radio" name="refillType" id="typeNotes" value="notes"><label for="typeNotes"><span data-i18n="typeNotes">メモ</span></label></div>
+            <div class="segment"><input type="radio" name="refillType" id="typePurpose" value="purpose"><label for="typePurpose"><span data-i18n="typePurpose">用途別</span></label></div>
           </div>
         </div>
 
@@ -873,6 +874,10 @@
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesLined" value="notes-lined"><label for="layoutNotesLined"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><path d="M24 10h24 M24 14h24 M24 18h24 M24 22h24 M24 26h24 M24 30h24 M24 34h24 M24 38h24 M24 42h24"/></g></svg><span data-i18n="layoutNotesLined">横罫</span><span class="layout-description" data-i18n="layoutNotesLinedDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesGrid" value="notes-grid"><label for="layoutNotesGrid"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><path d="M24.00 10v32 M28.00 10v32 M32.00 10v32 M36.00 10v32 M40.00 10v32 M44.00 10v32 M48.00 10v32 M24 10.00h24 M24 14.00h24 M24 18.00h24 M24 22.00h24 M24 26.00h24 M24 30.00h24 M24 34.00h24 M24 38.00h24 M24 42.00h24"/></g></svg><span data-i18n="layoutNotesGrid">方眼</span><span class="layout-description" data-i18n="layoutNotesGridDescription"></span></label></div>
             <div class="segment layout-option" data-refill="notes" hidden><input type="radio" name="layout" id="layoutNotesDot" value="notes-dot"><label for="layoutNotesDot"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><g opacity=".82"><circle cx="25" cy="10" r=".6"/><circle cx="25" cy="14" r=".6"/><circle cx="25" cy="18" r=".6"/><circle cx="25" cy="22" r=".6"/><circle cx="25" cy="26" r=".6"/><circle cx="25" cy="30" r=".6"/><circle cx="25" cy="34" r=".6"/><circle cx="25" cy="38" r=".6"/><circle cx="25" cy="42" r=".6"/><circle cx="29" cy="10" r=".6"/><circle cx="29" cy="14" r=".6"/><circle cx="29" cy="18" r=".6"/><circle cx="29" cy="22" r=".6"/><circle cx="29" cy="26" r=".6"/><circle cx="29" cy="30" r=".6"/><circle cx="29" cy="34" r=".6"/><circle cx="29" cy="38" r=".6"/><circle cx="29" cy="42" r=".6"/><circle cx="33" cy="10" r=".6"/><circle cx="33" cy="14" r=".6"/><circle cx="33" cy="18" r=".6"/><circle cx="33" cy="22" r=".6"/><circle cx="33" cy="26" r=".6"/><circle cx="33" cy="30" r=".6"/><circle cx="33" cy="34" r=".6"/><circle cx="33" cy="38" r=".6"/><circle cx="33" cy="42" r=".6"/><circle cx="37" cy="10" r=".6"/><circle cx="37" cy="14" r=".6"/><circle cx="37" cy="18" r=".6"/><circle cx="37" cy="22" r=".6"/><circle cx="37" cy="26" r=".6"/><circle cx="37" cy="30" r=".6"/><circle cx="37" cy="34" r=".6"/><circle cx="37" cy="38" r=".6"/><circle cx="37" cy="42" r=".6"/><circle cx="41" cy="10" r=".6"/><circle cx="41" cy="14" r=".6"/><circle cx="41" cy="18" r=".6"/><circle cx="41" cy="22" r=".6"/><circle cx="41" cy="26" r=".6"/><circle cx="41" cy="30" r=".6"/><circle cx="41" cy="34" r=".6"/><circle cx="41" cy="38" r=".6"/><circle cx="41" cy="42" r=".6"/><circle cx="45" cy="10" r=".6"/><circle cx="45" cy="14" r=".6"/><circle cx="45" cy="18" r=".6"/><circle cx="45" cy="22" r=".6"/><circle cx="45" cy="26" r=".6"/><circle cx="45" cy="30" r=".6"/><circle cx="45" cy="34" r=".6"/><circle cx="45" cy="38" r=".6"/><circle cx="45" cy="42" r=".6"/></g></svg><span data-i18n="layoutNotesDot">ドット</span><span class="layout-description" data-i18n="layoutNotesDotDescription"></span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutHabitTracker" value="habit-tracker"><label for="layoutHabitTracker"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h17 M24 16h24 M24 21h24 M24 26h24 M24 31h24 M24 36h24 M24 41h24 M31 16v25 M37 16v25 M43 16v25"/><path d="m33 19 2 2 3-4" stroke-width="1.6"/></svg><span data-i18n="layoutHabitTracker">習慣トラッカー</span><span class="layout-description" data-i18n="layoutHabitTrackerDescription">日ごとにチェック</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutExpenseTracker" value="expense-tracker"><label for="layoutExpenseTracker"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h18 M24 17h24 M24 23h24 M24 29h24 M24 35h24 M24 41h24 M31 17v24 M42 17v24"/></svg><span data-i18n="layoutExpenseTracker">支出管理</span><span class="layout-description" data-i18n="layoutExpenseTrackerDescription">金額と費目を記録</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutReadingLog" value="reading-log"><label for="layoutReadingLog"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h18 M24 17h24 M24 23h20 M24 29h24 M24 35h20 M24 41h24 M38 16v7 M38 28v7"/></svg><span data-i18n="layoutReadingLog">読書ログ</span><span class="layout-description" data-i18n="layoutReadingLogDescription">読了日と感想</span></label></div>
+            <div class="segment layout-option" data-refill="purpose" hidden><input type="radio" name="layout" id="layoutWeeklyReview" value="weekly-review"><label for="layoutWeeklyReview"><svg class="layout-thumbnail" viewBox="0 0 72 52" fill="none" stroke="currentColor" stroke-width=".85" stroke-linejoin="round" aria-hidden="true"><rect x="20" y="4" width="32" height="44" rx="2"/><path d="M24 10h22 M24 15h14 M24 20h24 M24 25h22 M24 30h12 M24 35h24 M24 40h22"/></svg><span data-i18n="layoutWeeklyReview">週間レビュー</span><span class="layout-description" data-i18n="layoutWeeklyReviewDescription">振り返りと来週</span></label></div>
           </div>
           <div class="weekly-hours" id="weeklyHours" hidden>
             <div class="time-range">
@@ -975,6 +980,11 @@
           <div class="holiday-note" id="holidayDataNote"></div>
         </div>
 
+        <div class="setting-group" id="purposeOptions" hidden>
+          <div class="setting-label-row"><span class="setting-label" data-i18n="purposeSettingsLabel">用途別リフィル</span><span class="setting-help" data-i18n="purposeSettingsHelp">印刷する枚数</span></div>
+          <div class="numeric-field"><label for="purposeCount" data-i18n="purposeCountLabel">枚数</label><div class="numeric-control"><input id="purposeCount" type="number" min="1" max="100" step="1" value="1" inputmode="numeric" aria-describedby="purposeCountError"><span class="numeric-unit" data-i18n="sheetUnit">枚</span></div><span class="field-range">1–100</span><span class="field-error" id="purposeCountError" role="status"></span></div>
+          <p class="ring-note" data-i18n="purposeCountHelp">空欄は印刷後に書き込めます。</p>
+        </div>
         <div class="setting-group notes-options" id="notesOptions" hidden>
           <div class="setting-label-row"><span class="setting-label" data-i18n="notesSettingsLabel">メモ用紙設定</span><span class="setting-help" data-i18n="notesSettingsHelp">枚数と間隔</span></div>
           <div class="date-range">
@@ -1339,6 +1349,7 @@
       let language=readStorage(storageKeys.language)||detectLanguage();
       const MONTHLY_SPREAD_RAIL=Object.freeze({monthTop:.038,yearTop:.185,minisTop:.38,miniHeight:.27,miniGap:.03,inset:.05,pdfRailOffsetX:-.085,yearOffsetX:-.05,pdfMonthScale:1.42,pdfYearScale:1.78});
       const PATTERNS = ['lined', 'grid', 'dot', 'blank'];
+      const PURPOSE_LAYOUTS = Object.freeze(['habit-tracker','expense-tracker','reading-log','weekly-review']);
       const SPACING_KEYS = ['spacingLined', 'spacingGrid', 'spacingDot'];
       const REFILL_CHOICES = {
         dailyBalance: ['time','equal','side'], dailyPattern: ['original', ...PATTERNS],
@@ -1397,13 +1408,13 @@
         return result;
       }
 
-      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
+      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined',purpose:'habit-tracker'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,purposeCount:1,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
       // File and local-storage boundaries share an allowlisted, canonical decoder.
       // Derived geometry is never trusted, including in legacy local records.
       const SETTINGS_MAX_BYTES=64*1024;
       const SETTINGS_ENUMS={
         sizeKey:[...Object.keys(PRESETS),'custom'],orientation:['portrait','landscape'],
-        refillType:['monthly','yearly','weekly','daily','notes'],weekStart:['monday','sunday'],
+        refillType:['monthly','yearly','weekly','daily','notes','purpose'],weekStart:['monday','sunday'],
         ringMarginMode:['auto','manual'],firstPageSide:['left','right'],printMode:['exact','a4','letter'],
         duplexMode:['off','long','short'],stylePreset:['minimal','classic','compact'],pageColor:['mono','accent'],
         fontSize:['small','standard','large','xlarge','xxlarge'],lineWeight:['light','standard']
@@ -1411,26 +1422,28 @@
       const SETTINGS_NUMBERS={customWidth:[40,300],customHeight:[60,400],startHour:[0,23,true],endHour:[1,24,true],notesCount:[1,100,true],noteSpacing:[4,5,true],ringMarginManual:[4,30]};
       const SETTINGS_BOOLEANS=['showAdjacent','showHolidays','showHolidayNames','showPunchGuides','showCropGuides','showPageNumbers','showWeekNumbers'];
       const SETTINGS_COLORS=['saturdayColor','sundayColor','holidayColor'];
-      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread','monthly-list','monthly-list-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical','weekly-vertical-spread'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot']};
+      const SETTINGS_LAYOUTS={monthly:['monthly-single','monthly-spread','monthly-list','monthly-list-spread'],yearly:['year-single','year-spread'],weekly:['weekly-block','weekly-notes','weekly-vertical','weekly-vertical-spread'],daily:['daily'],notes:['notes-lined','notes-grid','notes-dot'],purpose:PURPOSE_LAYOUTS};
       const SETTINGS_V1_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
       const SETTINGS_V2_DEFAULTS={printMarginMm:0,...DATE_DEFAULTS};
       const SETTINGS_V2_NUMBERS={printMarginMm:[0,20],undatedCount:[1,100,true]};
       const SETTINGS_V4_DEFAULTS={printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0};
       const SETTINGS_V4_NUMBERS=Object.fromEntries(Object.keys(SETTINGS_V4_DEFAULTS).map(key=>[key,[-10,10]]));
       const PRINT_SHIFT_KEYS=Object.keys(SETTINGS_V4_DEFAULTS);
-      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS];
+      const SETTINGS_V5_DEFAULTS={purposeCount:1};
+      const SETTINGS_V5_NUMBERS={purposeCount:[1,100,true]};
+      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS,...Object.keys(SETTINGS_V5_DEFAULTS)];
       let settingsStorageIssue='',settingsStorageBlocked=false;
       function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
       function decodeSettings(value,{legacy=false,formatVersion=3}={}){
         if(!settingsRecord(value))throw new Error('Invalid settings object');
         const decoded={};
         for(const key of SETTINGS_KEYS){
-          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:1;
+          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:Object.hasOwn(SETTINGS_V5_DEFAULTS,key)?5:1;
           if(!legacy&&formatVersion>=addedIn&&!Object.hasOwn(value,key))throw new Error('Missing setting');
           decoded[key]=(!legacy&&formatVersion<addedIn)?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
         }
         for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
-        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS})){
+        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS,...SETTINGS_V5_NUMBERS})){
           const number=decoded[key];
           if(typeof number!=='number'||!Number.isFinite(number)||number<min||number>max||(integer&&!Number.isInteger(number)))throw new Error('Invalid setting number');
         }
@@ -1441,7 +1454,7 @@
         if(!settingsRecord(decoded.layoutByType))throw new Error('Invalid layouts');
         const layouts={};
         for(const [type,choices] of Object.entries(SETTINGS_LAYOUTS)){
-          const layout=Object.hasOwn(decoded.layoutByType,type)?decoded.layoutByType[type]:(legacy?DEFAULT_STATE.layoutByType[type]:null);
+          const layout=Object.hasOwn(decoded.layoutByType,type)?decoded.layoutByType[type]:((legacy||formatVersion<5)?DEFAULT_STATE.layoutByType[type]:null);
           if(!choices.includes(layout))throw new Error('Invalid layout');
           layouts[type]=layout;
         }
@@ -1861,6 +1874,30 @@
         weekdayQuickLabel:'Quick select',weekdayPresetAll:'Select all',weekdayPresetWorkdays:'Weekdays only',
         weekdaySelectedCount:'{count} days selected'
       });
+      Object.assign(translations.ja,{
+        typePurpose:'用途別',purposeSettingsLabel:'用途別リフィル',purposeSettingsHelp:'印刷する枚数',
+        purposeCountLabel:'枚数',purposeCountHelp:'空欄には印刷後に書き込めます。',
+        purposePageLabel:'{name} {page}',purposePrintHint:'日付や項目は自分で記入する形式です。',
+        layoutHabitTracker:'習慣トラッカー',layoutHabitTrackerDescription:'日ごとにチェック',
+        layoutExpenseTracker:'支出管理',layoutExpenseTrackerDescription:'日付・費目・金額',
+        layoutReadingLog:'読書ログ',layoutReadingLogDescription:'読了日・感想',
+        layoutWeeklyReview:'週間レビュー',layoutWeeklyReviewDescription:'振り返りと来週',
+        habitDays:'{count}日分',habitLabel:'習慣',expenseDate:'日付',expenseItem:'内容',expenseCategory:'費目',
+        expenseAmount:'金額',expenseMemo:'メモ',expenseTotal:'合計',readingTitle:'書名',readingFinished:'読了日',
+        readingThoughts:'感想',reviewWins:'できたこと',reviewChallenges:'課題・気づき',reviewNext:'来週やること',reviewNotes:'メモ'
+      });
+      Object.assign(translations.en,{
+        typePurpose:'Trackers',purposeSettingsLabel:'Tracker pages',purposeSettingsHelp:'Number to print',
+        purposeCountLabel:'Pages',purposeCountHelp:'Fill in dates and entries after printing.',
+        purposePageLabel:'{name} {page}',purposePrintHint:'Undated templates to fill out on paper.',
+        layoutHabitTracker:'Habit tracker',layoutHabitTrackerDescription:'Check off each day',
+        layoutExpenseTracker:'Expense log',layoutExpenseTrackerDescription:'Date, item, amount',
+        layoutReadingLog:'Reading log',layoutReadingLogDescription:'Books and notes',
+        layoutWeeklyReview:'Weekly review',layoutWeeklyReviewDescription:'Reflect and plan',
+        habitDays:'{count} days',habitLabel:'Habit',expenseDate:'Date',expenseItem:'Item',expenseCategory:'Category',
+        expenseAmount:'Amount',expenseMemo:'Notes',expenseTotal:'Total',readingTitle:'Book',readingFinished:'Finished',
+        readingThoughts:'Thoughts',reviewWins:'Wins',reviewChallenges:'Challenges',reviewNext:'Next week',reviewNotes:'Notes'
+      });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
       Object.assign(translations.en,{"dated": "Dated", "undated": "Undated", "undatedCountLabel": "Units to generate", "invalidUndatedCount": "Enter a whole number from 1 to 100 units.", "startDate": "Start date", "endDate": "End date", "invalidDayRange": "Choose real dates from 1900-01-01 through 2100-12-31, with end on or after start and at most 60 calendar months.", "dailyWeekdaysLabel": "Days to include", "invalidWeekdays": "Select at least one weekday and make sure the range contains a selected day.", "allDays": "All days", "workdays": "Weekdays", "thisMonth": "This month", "nextMonth": "Next month", "thisYear": "This year", "nextYear": "Next year", "thisWeek": "This week", "nextWeek": "Next week", "fourWeeks": "Next 4 weeks", "today": "Today", "nextDay": "Next day", "sevenDays": "Next 7 days", "weekday0": "Sun", "weekday1": "Mon", "weekday2": "Tue", "weekday3": "Wed", "weekday4": "Thu", "weekday5": "Fri", "weekday6": "Sat"});
@@ -2178,7 +2215,7 @@
       function pageHoldersForItem(item,itemIndex=state.viewIndex){return appendPreviewPageNumbers(pageHoldersForItemRaw(item,itemIndex),itemIndex);}
       function settingsSignature(){return JSON.stringify({refillOptions:state.refillOptions,...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,printShiftFrontX:state.printShiftFrontX,printShiftFrontY:state.printShiftFrontY,printShiftBackX:state.printShiftBackX,printShiftBackY:state.printShiftBackY,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
       function safeFilename(value){let name=String(value||'').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'-').replace(/\s+/g,' ').slice(0,120);if(!name)name='planner-refill.pdf';if(!/\.pdf$/i.test(name))name+='.pdf';return name;}
-      function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes'}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
+      function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes',purpose:currentLayout()}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
       function formatBytes(bytes){if(bytes<1024)return `${bytes} B`;if(bytes<1024*1024)return `${(bytes/1024).toFixed(bytes<10240?1:0)} KB`;return `${(bytes/(1024*1024)).toFixed(1)} MB`;}
       function formatTemplate(text,values){return String(text).replace(/\{(\w+)\}/g,(_,key)=>values[key]??'');}
       function outputPaperLabel(mode=state.printMode){if(mode==='exact')return t('printExact');return PRINT_PAPERS[mode]?.label||mode;}
@@ -3279,7 +3316,7 @@
       }
       function saveSettingsFile(){
         if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
-        const data={app:'planner-refill-maker',formatVersion:4,settings:settingsSnapshot()};
+        const data={app:'planner-refill-maker',formatVersion:5,settings:settingsSnapshot()};
         const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
         const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
         document.body.append(link);
@@ -3303,7 +3340,7 @@
           if(!current())return;
           if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
           const data=JSON.parse(text);
-          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4].includes(data.formatVersion))throw new Error('Unsupported settings format');
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4,5].includes(data.formatVersion))throw new Error('Unsupported settings format');
           const next=decodeSettings(data.settings,{formatVersion:data.formatVersion});
           const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
           if(!current())return;
