@@ -2620,15 +2620,100 @@
         const {x,y,width,height} = paperContentBox(w,h,spec,widthMm);
         drawPatternBox(ctx,x,y,width,height,spec.kind.slice('notes-'.length),w / widthMm,h / heightMm);
       }
+
+      // These are intentionally blank, printable forms. Adapt columns and writing
+      // space to the physical paper; do not rasterize a fixed A5 grid for Micro5.
+      function drawPurposeCanvas(ctx,w,h,spec,widthMm,heightMm){
+        const {x,y,width,height}=paperContentBox(w,h,spec,widthMm);
+        const unit=w/widthMm,small=width/unit<82;
+        const font=Math.max(9,Math.min(17,width*.028));
+        const light='#d8dfdb',ink='#394a42';
+        const names={'habit-tracker':'layoutHabitTracker','expense-tracker':'layoutExpenseTracker','reading-log':'layoutReadingLog','weekly-review':'layoutWeeklyReview'};
+        const titleHeight=Math.min(height*.12,12*unit);
+        text(ctx,t(names[spec.kind]),x,y+Math.max(1,unit*1.2),Math.min(font*1.16,titleHeight*.6),{weight:850,baseline:'top',maxWidth:width*.85});
+        line(ctx,x,y+titleHeight,x+width,y+titleHeight,'#28493f',Math.max(1.2,w*.0022));
+        const top=y+titleHeight+Math.min(unit*2,height*.02),bottom=y+height,contentHeight=bottom-top;
+        const label=(value,px,py,limit,center=false)=>{
+          text(ctx,value,px,py,Math.min(font*.84,Math.max(7,unit*1.6)),{weight:750,color:ink,align:center?'center':'left',baseline:'middle',maxWidth:limit});
+        };
+        const ruled=(left,topY,right,bottomY,rows=3)=>{
+          const step=(bottomY-topY)/rows;
+          for(let i=1;i<=rows;i++)line(ctx,left,topY+i*step,right,topY+i*step,light,Math.max(.55,w*.0008));
+        };
+        if(spec.kind==='habit-tracker'){
+          const headH=Math.max(unit*6,contentHeight*.045);
+          const days=Math.min(31,Math.max(10,Math.floor((contentHeight-headH)/(unit*5.4))));
+          const cols=small?3:width/unit<118?4:6,dayWidth=Math.max(unit*5.5,width*.135);
+          const colWidth=(width-dayWidth)/cols,rowH=(contentHeight-headH)/days;
+          label(t('habitDays').replace('{count}',String(days)),x+dayWidth*.08,top+headH*.48,dayWidth*.9);
+          label(t('habitLabel'),x+dayWidth+colWidth*.5,top+headH*.48,colWidth*.91,true);
+          for(let c=0;c<=cols;c++)line(ctx,x+dayWidth+c*colWidth,top,x+dayWidth+c*colWidth,bottom,light,Math.max(.65,w*.0009));
+          line(ctx,x,top+headH,x+width,top+headH,light,.9);
+          for(let row=0;row<days;row++){
+            const cy=top+headH+(row+.5)*rowH;
+            label(String(row+1),x+dayWidth*.5,cy,dayWidth*.8,true);
+            const size=Math.min(rowH*.43,colWidth*.36,unit*3.1);
+            ctx.strokeStyle='#aab3ae';ctx.lineWidth=Math.max(.65,w*.0008);
+            for(let c=0;c<cols;c++)ctx.strokeRect(x+dayWidth+(c+.5)*colWidth-size/2,cy-size/2,size,size);
+            line(ctx,x,top+headH+(row+1)*rowH,x+width,top+headH+(row+1)*rowH,light,.65);
+          }
+          return;
+        }
+        if(spec.kind==='expense-tracker'){
+          const headerH=Math.max(unit*7,contentHeight*.07),totalH=Math.max(unit*7,contentHeight*.065);
+          const rows=Math.min(24,Math.max(7,Math.floor((contentHeight-headerH-totalH)/(unit*6.7))));
+          const tableBottom=bottom-totalH,rowH=(tableBottom-top-headerH)/rows;
+          const weights=small?[.22,.48,.30]:[.16,.26,.34,.24];
+          const keys=small?['expenseDate','expenseItem','expenseAmount']:['expenseDate','expenseCategory','expenseItem','expenseAmount'];
+          let tx=x;const positions=[x];
+          for(const weight of weights){tx+=width*weight;positions.push(tx);}
+          for(let i=0;i<keys.length;i++)label(t(keys[i]),positions[i]+unit*.6,top+headerH*.52,(positions[i+1]-positions[i])-unit*1.2);
+          for(let col=0;col<positions.length;col++)line(ctx,positions[col],top,positions[col],tableBottom,light,.75);
+          line(ctx,x,top+headerH,x+width,top+headerH,light,.85);
+          for(let row=1;row<=rows;row++)line(ctx,x,top+headerH+row*rowH,x+width,top+headerH+row*rowH,light,.7);
+          label(t('expenseTotal'),x+unit*.7,tableBottom+totalH*.52,width*.42);
+          line(ctx,x+width*(small?.7:.76),tableBottom,x+width*(small?.7:.76),bottom,light,.7);
+          line(ctx,x,bottom,x+width,bottom,light,.7);
+          return;
+        }
+        if(spec.kind==='reading-log'){
+          const count=Math.min(8,Math.max(2,Math.floor(contentHeight/(unit*(small?24:26)))));
+          const blockH=contentHeight/count,mainH=Math.min(blockH*.40,unit*10);
+          for(let i=0;i<count;i++){
+            const by=top+i*blockH,split=x+width*(small?.64:.72);
+            label(t('readingTitle'),x+unit*.6,by+mainH*.4,width*.23);
+            line(ctx,x+width*.29,by+mainH*.64,split-unit,by+mainH*.64,light,.7);
+            label(t('readingFinished'),split+unit*.4,by+mainH*.4,width*.26);
+            line(ctx,split+unit*.4,by+mainH*.73,x+width-unit*.4,by+mainH*.73,light,.7);
+            label(t('readingThoughts'),x+unit*.6,by+mainH+unit*.8,width*.5);
+            ruled(x+unit*.6,by+mainH+unit*3.1,x+width-unit*.6,by+blockH-unit*.9,small?2:3);
+            line(ctx,x,by+blockH,x+width,by+blockH,'#b5beb9',.95);
+          }
+          return;
+        }
+        if(spec.kind==='weekly-review'){
+          const sections=[['reviewWins',.23],['reviewChallenges',.23],['reviewNext',.32],['reviewNotes',.22]];
+          let sy=top;
+          for(const [key,weight] of sections){
+            const sh=contentHeight*weight;
+            label(t(key),x,sy+Math.max(unit*2,sh*.17),width*.95);
+            const start=sy+Math.max(unit*6,sh*.29);
+            const lines=Math.min(6,Math.max(2,Math.floor((sy+sh-start)/(unit*6.5))));
+            ruled(x,start,x+width,sy+sh,lines);
+            sy+=sh;
+          }
+        }
+      }
       function drawPunchGuidesCanvas(ctx,w,h,side,widthMm){if(!state.showPunchGuides)return;const edgeMm=Math.min(9,widthMm*.08),x=edgeMm/widthMm*w;ctx.save();ctx.strokeStyle='rgba(22,98,79,.5)';ctx.fillStyle='#fff';ctx.lineWidth=Math.max(1,w*.0012);[.24,.32,.40,.60,.68,.76].forEach(pos=>{const cx=side==='right'?x:w-x,cy=h*pos,r=Math.max(2,w*.006);ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();ctx.stroke();});ctx.restore();}
       function withRingTransform(ctx,w,widthMm,side,draw){const base=w*pageMarginRatio(),ring=Math.max(base,effectiveRingMargin()/widthMm*w);const left=side==='right'?ring:base,right=side==='left'?ring:base;const source=w-base*2,target=w-left-right,scale=target/source,tx=left-scale*base;ctx.save();ctx.setTransform(scale,0,0,1,tx,0);draw();ctx.restore();}
       function renderPageSpecCanvas(spec,widthMm,heightMm,dpi=180){const pxWidth=Math.max(240,Math.round(widthMm/25.4*dpi)),pxHeight=Math.max(320,Math.round(heightMm/25.4*dpi));const canvas=document.createElement('canvas');canvas.width=pxWidth;canvas.height=pxHeight;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,pxWidth,pxHeight);if(!spec)return canvas;const options=state.refillOptions;
         const customWeeklyNotes=spec.kind==='notes'&&(options.weeklyNotesPattern!=='original'||options.spacingLined!==null);
         const customVertical=verticalLayout(spec.kind)&&(spec.kind.endsWith('spread')||options.verticalWidth!=='equal'||options.verticalStep!=='60'||options.verticalExtra!=='none'||spec.week?.days.some(date=>personalEntriesFor(date).length));
-        const direct=monthlyListLayout(spec.kind)||customWeeklyNotes||customVertical||spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{
+        const direct=monthlyListLayout(spec.kind)||customWeeklyNotes||customVertical||PURPOSE_LAYOUTS.includes(spec.kind)||spec.kind==='daily'||spec.kind==='notes-lined'||spec.kind==='notes-grid'||spec.kind==='notes-dot';renderingRefillPage=true;const draw=()=>{
           if(monthlyListLayout(spec.kind))drawMonthlyList(ctx,pxWidth,pxHeight,spec,widthMm);
           else if(customVertical)drawCustomVertical(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
           else if(customWeeklyNotes)drawWeeklyNotesPattern(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
+          else if(PURPOSE_LAYOUTS.includes(spec.kind))drawPurposeCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);
           else if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
       async function canvasJpeg(canvas,quality=.96){const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!blob)throw new Error(t('pdfPageRasterError'));return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height};}
       function drawPrintPageCanvas(ctx,pageCanvas,x,y,w,h,rotation=0){ctx.save();if(rotation===180){ctx.translate(x+w,y+h);ctx.rotate(Math.PI);ctx.drawImage(pageCanvas,0,0,w,h);}else ctx.drawImage(pageCanvas,x,y,w,h);ctx.restore();}
