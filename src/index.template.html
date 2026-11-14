@@ -1992,7 +1992,7 @@
       function dateAccentColor(date,holiday=holidayInfo(date),entries=personalEntriesFor(date)){if(!date)return null;if(holiday||hasPersonalDayOff(entries))return state.holidayColor;const kind=dayKind(date);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function weekdayAccentColor(index){const kind=weekdayKindAtColumn(index);return kind==='saturday'?state.saturdayColor:kind==='sunday'?state.sundayColor:null;}
       function holidayRangeFullyCovered(){
-        if(isUndated()||state.refillType==='notes')return true;
+        if(isUndated()||['notes','purpose'].includes(state.refillType))return true;
         const covered=date=>date.getUTCFullYear()>=2026&&date.getUTCFullYear()<=2027;
         return viewItems().every(item=>{
           if(state.refillType==='weekly')return item.days.every(covered);
