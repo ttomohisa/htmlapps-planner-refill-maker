@@ -23,7 +23,8 @@ GitHub Pages delivers the initial HTML. After it loads, calendar generation, pre
 - Empty or invalid active inputs keep the last valid preview visible, but block PDF creation and saving until corrected. Note-paper previews use the same physical spacing as exported PDFs.
 
 - **Planner sizes that match real paper** — A5, Bible, Mini 6, Davinci Pocket, Micro5, HB×WA5, portrait / landscape, and custom dimensions.
-- **Monthly, yearly, weekly, daily, and notes** — Monthly one-page / spread, yearly one-page / spread, weekly block / weekly + notes / vertical, daily, ruled, grid, and dot-grid refills.
+- **Monthly, yearly, weekly, daily, notes, and trackers** — Monthly one-page / spread, yearly one-page / spread, weekly block / weekly + notes / vertical, daily, ruled, grid, and dot-grid refills.
+- **Use-case refills** — Habit tracker (dated rows for checks), expense log (date, item, category, amount, and total), reading log (books, finish dates, thoughts), and weekly review (wins, challenges, next week, notes). Print 1–100 blank pages without entering private records.
 - **Choose only the dates you need** — Day-level ranges for weekly and daily refills, period shortcuts, and daily weekday selection. Weekly and daily ranges are remembered separately.
 - **Undated refills** — Create 1–100 monthly, weekly, or daily units with blank date fields. A spread counts as one unit and produces two refill pages.
 - **Monthly spread built for facing pages** — Equal-size day cells across both pages, with month/year and previous/next mini calendars on the left page.
@@ -65,8 +66,8 @@ Open the [GitHub Pages demo](https://ttomohisa.github.io/htmlapps-planner-refill
 ## Usage
 
 1. Choose the physical planner size and portrait / landscape orientation.
-2. Select Monthly, Yearly, Weekly, Daily, or Notes, then choose its layout.
-3. Set a month range for Monthly / Yearly or a start and end date for Weekly / Daily. Weekly output includes each complete week touching the range. Daily can include all days, weekdays, or your selected weekdays. For Monthly / Weekly / Daily, choose Undated and a unit count when you want blank dates. Notes uses a page count. Weekly Vertical and Daily also let you set the time range.
+2. Select Monthly, Yearly, Weekly, Daily, Notes, or Trackers, then choose its layout.
+3. Set a month range for Monthly / Yearly or a start and end date for Weekly / Daily. Weekly output includes each complete week touching the range. Daily can include all days, weekdays, or your selected weekdays. For Monthly / Weekly / Daily, choose Undated and a unit count when you want blank dates. Notes and Trackers each have an independent 1–100 page count. Weekly Vertical and Daily also let you set the time range.
 4. Choose Monday / Sunday week start and optionally show adjacent-month dates.
 5. Enable bundled Japanese holidays if needed. Adjust colors, style, text size, rules, page numbers, or week numbers under **Appearance**.
 6. Keep the automatic ring-side margin or set a manual 4–30 mm margin. For one-page layouts, choose the first page side.
@@ -140,12 +141,12 @@ Do not edit generated files in `dist/` directly.
 
 ## Publish a GitHub Release
 
-After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.3.0`).
+After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.4.0`).
 
-The workflow builds and checks the selected commit, creates `v1.3.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
+The workflow builds and checks the selected commit, creates `v1.4.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
 
-- `planner-refill-maker-v1.3.0.html` — readable standalone app.
-- `planner-refill-maker-v1.3.0.self-extract.html` — gzip self-extracting standalone app.
+- `planner-refill-maker-v1.4.0.html` — readable standalone app.
+- `planner-refill-maker-v1.4.0.self-extract.html` — gzip self-extracting standalone app.
 - `SHA256SUMS.txt` — SHA-256 checksums of both HTML files.
 
 PR updates and merges do not publish a release automatically. The workflow rejects a mismatched version, a branch other than `main`, or an existing tag. A failed upload or publication may leave a draft release for inspection; it does not overwrite an existing release. The checked files are also retained as an Actions artifact. Release publication requires repository permission to create tags/releases.
@@ -159,6 +160,8 @@ The generated app includes a Content Security Policy with `connect-src 'none'`. 
 The GitHub Pages version still requires the initial HTML request. For use with the network disconnected, open `dist/index.html` locally.
 
 ## Limitations
+
+- Use-case refills are **blank printable forms**, not electronic expense, habit, or reading trackers. The habit grid adapts its day and habit-column count to the chosen paper size (up to 31 days per page), and the other forms adapt writing rows; dates and values are handwritten after printing.
 
 - Bundled Japanese holiday data covers **2026 and 2027 only**. Coverage includes dates shown in full weeks and adjacent-month cells; dates outside bundled coverage are intentionally not guessed. Undated refills do not show holidays.
 - Punch-position guides are alignment references and do not guarantee a binder manufacturer's exact hole positions.
