@@ -107,7 +107,7 @@ test('holiday and personal markers remain visible together on a small monthly li
   assert.ok(text.some(label => label.startsWith('◆') && label.endsWith('+1')));
   await h.get('saveSettingsButton').click();
   const data = JSON.parse(await h.urls.get(h.downloads.at(-1).url).text());
-  assert.equal(data.formatVersion, 3);
+  assert.equal(data.formatVersion, 4);
   assert.equal(data.settings.refillOptions.personalDates.length, 2);
   const restored = loadPlanner(undefined, { savedSettings:data.settings });
   assert.equal(restored.app.state.refillOptions.personalDates[0].name, '会社休日');

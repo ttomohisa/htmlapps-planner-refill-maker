@@ -106,9 +106,25 @@
     .segment input:checked+label svg { color:var(--accent); }
     .segment.three-grid { grid-column:auto; }
 
-    .weekday-filters { display:flex;flex-wrap:wrap;gap:6px;margin-top:8px; }
-    .weekday-filters label { display:flex;align-items:center;gap:6px;min-height:44px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;cursor:pointer; }
-    .weekday-filters input { accent-color:var(--accent); }
+    /* Quick actions choose a weekday set; checkboxes below select individual days. */
+    #dailyWeekdaysGroup { min-width:0;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);container:weekday-selector / inline-size; }
+    #dailyWeekdaysGroup[hidden] { display:none!important; }
+    .weekday-picker-head { display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 10px; }
+    .weekday-selected-count { font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums; }
+    .weekday-quick-select { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px 12px;margin-top:12px;padding:10px 11px;border-radius:10px;background:var(--surface-muted); }
+    .weekday-quick-label { flex:0 0 auto;font-size:10px;font-weight:750;color:var(--muted); }
+    .weekday-quick-actions { display:flex;flex-wrap:wrap;gap:7px; }
+    .weekday-quick-action { min-width:80px;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:11px;font-weight:750;cursor:pointer; }
+    .weekday-quick-action:hover { border-color:var(--accent); }
+    .weekday-quick-action[aria-pressed="true"] { border-color:var(--accent);background:var(--accent-soft);color:var(--accent); }
+    .weekday-quick-action:focus-visible { outline:3px solid color-mix(in srgb,var(--focus) 45%,transparent);outline-offset:2px; }
+    .weekday-filters { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:13px; }
+    .weekday-filters label { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:56px;padding:7px 3px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:12px;font-weight:750;cursor:pointer; }
+    .weekday-filters label:has(input:checked) { border-color:color-mix(in srgb,var(--accent) 65%,var(--line));background:var(--accent-soft);color:var(--accent); }
+    .weekday-filters label:has(input:focus-visible) { outline:3px solid color-mix(in srgb,var(--focus) 45%,transparent);outline-offset:2px; }
+    .weekday-filters input { flex:0 0 auto;width:17px;height:17px;margin:0;accent-color:var(--accent); }
+    .weekday-filters span { line-height:1.1; }
+    @container weekday-selector (max-width:360px) { .weekday-filters { grid-template-columns:repeat(4,minmax(0,1fr)); } }
     #dateShortcuts { display:flex;gap:6px;margin-top:10px;padding-top:0;border-top:0; }
     #dateShortcuts .secondary-action { width:auto;min-width:0;flex:1 1 0;min-height:34px;padding:5px 7px;font-size:12px; }
     #dateShortcuts[hidden],#dateShortcuts [hidden] { display:none!important; }
@@ -217,6 +233,20 @@
     .refill-types { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
+    .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px;align-items:start;min-width:0; }
+    .print-shift-fields .text-field { display:grid;grid-template-rows:auto auto;align-content:start;gap:5px;min-width:0;max-width:100%; }
+    .print-shift-fields .numeric-control { width:100%;min-width:0; }
+    /* Keep inputs top-aligned; show a message below the affected field only when needed. */
+    .print-shift-fields .field-error { display:block;min-width:0;max-width:100%;min-height:0;line-height:1.45;white-space:normal;overflow-wrap:anywhere;word-break:normal; }
+    .print-shift-fields .field-error:empty { display:none; }
+    .print-shift-fields .numeric-control input { width:100%;min-width:0;min-height:42px;padding:8px 9px;border:0;border-radius:0;background:transparent;box-shadow:none; }
+    .print-shift-fields .numeric-control input:focus { border:0;box-shadow:none; }
+    .print-shift-fields .numeric-control:has(input[aria-invalid="true"]) { border-color:var(--danger); }
+    .print-shift-fields input[aria-invalid="true"] { color:var(--danger); }
+    .print-shift-back { margin-top:12px; }
+    .print-shift-reset { margin-top:12px; }
+    .print-shift-hint { margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.5; }
+    .print-shift-warning[hidden],.print-shift-back[hidden] { display:none!important; }
     .duplex-note[hidden],.notes-options[hidden],.notes-count-group[hidden],.period-setting[hidden],.week-start-setting[hidden] { display:none!important; }
     .print-layout-card { display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:11px;background:var(--surface-soft); }
     .print-layout-card[hidden],.print-fit-error[hidden],.crop-guide-row[hidden] { display:none!important; }
@@ -749,7 +779,7 @@
       <div class="brand">
         <img class="brand-icon" id="appBrandIcon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0iIzE2NjI0ZiI+PHJlY3QgeD0iMS42IiB5PSIxLjYiIHdpZHRoPSI2MC44IiBoZWlnaHQ9IjYwLjgiIHJ4PSIxNS4yIi8+PGcgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii43NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTQzLjQgMTMuNWw3LjIgMWEzIDMgMCAwIDEgMi42IDMuNGwtNC43IDM1LjhhMyAzIDAgMCAxLTMuNCAyLjZMMjYuNyA1My43aDEzLjFhNS42IDUuNiAwIDAgMCA1LjYtNS42VjEzLjh6Ii8+PHBhdGggZD0iTTE2IDkuNGgyNS43YTMgMyAwIDAgMSAzIDN2MzYuOGE1IDUgMCAwIDEtNSA1SDE2YTIuOSAyLjkgMCAwIDEtMi45LTIuOXYtMzlBMi45IDIuOSAwIDAgMSAxNiA5LjR6Ii8+PC9nPjxjaXJjbGUgaWQ9ImgiIGN4PSIxNi4xIiBjeT0iMTUiIHI9IjEuMzUiLz48dXNlIGhyZWY9IiNoIiB5PSI2LjciLz48dXNlIGhyZWY9IiNoIiB5PSIxMy40Ii8+PHVzZSBocmVmPSIjaCIgeT0iMjAuNiIvPjx1c2UgaHJlZj0iI2giIHk9IjI3LjciLz48dXNlIGhyZWY9IiNoIiB5PSIzNCIvPjx1c2UgaHJlZj0iI2giIHg9IjMzLjEiIHk9IjUuMSIvPjx1c2UgaHJlZj0iI2giIHg9IjMyLjEiIHk9IjExLjkiLz48dXNlIGhyZWY9IiNoIiB4PSIzMSIgeT0iMTguNyIvPjx1c2UgaHJlZj0iI2giIHg9IjMwLjIiIHk9IjI2Ii8+PGcgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMTY2MjRmIiBzdHJva2Utd2lkdGg9Ii42NSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHJlY3QgeD0iMjAuNCIgeT0iMTMuMiIgd2lkdGg9IjIxLjEiIGhlaWdodD0iMTQuMyIgcng9Ii4yIi8+PHBhdGggZD0iTTI1LjYgMTMuNHYxMy44bTUuMi0xMy44djEzLjhNMzYgMTMuNHYxMy44TTIwLjcgMTYuOGgyMC41TTIwLjcgMjAuN2gyMC41TTIwLjcgMjQuN2gyMC41Ii8+PHJlY3QgaWQ9ImIiIHg9IjIwLjQiIHk9IjI5LjMiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiIHJ4PSIuMiIvPjx1c2UgaHJlZj0iI2IiIHk9IjQuMSIvPjx1c2UgaHJlZj0iI2IiIHk9IjguMiIvPjxyZWN0IHg9IjIwIiB5PSI0Mi4xIiB3aWR0aD0iMjEuNCIgaGVpZ2h0PSI4LjQiIHJ4PSIxIi8+PC9nPjxwYXRoIGQ9Ik0yNS42IDMwLjhoMTUuNk0yNS42IDM0LjloMTUuNk0yNS42IDM5aDE1LjZNMjIuMiA0NS4yaDE3LjVNMjIuMiA0Ny45aDE3LjUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzE2NjI0ZiIgc3Ryb2tlLXdpZHRoPSIuOSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+Cg==" alt="">
         <div class="brand-copy">
-          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.2.0</span></p>
+          <p class="brand-name"><span id="brandName">システム手帳リフィルメーカー</span><span class="version-badge" id="versionBadge">v1.3.0</span></p>
           <p class="brand-meta" data-i18n="brandMeta">手帳サイズに合わせたリフィルPDF</p>
         </div>
       </div>
@@ -899,9 +929,18 @@
           <button class="secondary-action" type="button" id="shortcutSevenDays" data-shortcut="sevenDays" data-shortcut-type="daily" data-i18n="sevenDays">期間</button>
         </div>
         <div class="setting-group" id="dailyWeekdaysGroup" hidden>
-          <span class="field-label" data-i18n="dailyWeekdaysLabel">出力する曜日</span>
-          <button class="secondary-action" id="dailyAllDays" type="button" data-i18n="allDays">毎日</button><button class="secondary-action" id="dailyWorkdays" type="button" data-i18n="workdays">平日</button>
-          <div class="weekday-filters">
+          <div class="weekday-picker-head">
+            <span class="setting-label" id="dailyWeekdaysLabel" data-i18n="dailyWeekdaysLabel">出力する曜日</span>
+            <span class="weekday-selected-count" id="dailyWeekdayCount" aria-live="polite">7日選択中</span>
+          </div>
+          <div class="weekday-quick-select" role="group" aria-labelledby="dailyWeekdayQuickLabel">
+            <span class="weekday-quick-label" id="dailyWeekdayQuickLabel" data-i18n="weekdayQuickLabel">まとめて選択</span>
+            <div class="weekday-quick-actions">
+              <button class="weekday-quick-action" id="dailyAllDays" type="button" data-i18n="weekdayPresetAll" aria-pressed="true">すべて選択</button>
+              <button class="weekday-quick-action" id="dailyWorkdays" type="button" data-i18n="weekdayPresetWorkdays" aria-pressed="false">平日のみ</button>
+            </div>
+          </div>
+          <div class="weekday-filters" role="group" aria-labelledby="dailyWeekdaysLabel">
             <label><input type="checkbox" id="dailyWeekday0" name="dailyWeekday" value="0" checked><span data-i18n="weekday0">曜日</span></label>
             <label><input type="checkbox" id="dailyWeekday1" name="dailyWeekday" value="1" checked><span data-i18n="weekday1">曜日</span></label>
             <label><input type="checkbox" id="dailyWeekday2" name="dailyWeekday" value="2" checked><span data-i18n="weekday2">曜日</span></label>
@@ -1136,6 +1175,26 @@
               </div>
               <p class="duplex-note" id="printMarginWarning" data-i18n="printMarginWarning">0 mmはフチなし印刷が必要な場合があります。プリンターの印刷可能範囲を確認してください。</p>
             </div>
+            <details class="advanced-settings" id="printShiftDetails">
+              <summary data-i18n="printShiftTitle">印刷位置を補正</summary>
+              <div class="refill-fields">
+                <p class="print-shift-hint" data-i18n="printShiftHint">正の値はPDFの右・下方向です。裏面の値は表面の補正に加算します。</p>
+                <div class="print-shift-fields">
+                  <div class="text-field"><label class="field-label" for="printShiftFrontX" data-i18n="printShiftFrontX">表面・左右</label><div class="numeric-control"><input id="printShiftFrontX" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftFrontXError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftFrontXError" role="alert"></span></div>
+                  <div class="text-field"><label class="field-label" for="printShiftFrontY" data-i18n="printShiftFrontY">表面・上下</label><div class="numeric-control"><input id="printShiftFrontY" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftFrontYError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftFrontYError" role="alert"></span></div>
+                </div>
+                <div class="print-shift-back" id="printShiftBackFields" hidden>
+                  <p class="print-shift-hint" data-i18n="printShiftBackHint">両面印刷時に、裏面だけ追加でずらす量です。</p>
+                  <div class="print-shift-fields">
+                    <div class="text-field"><label class="field-label" for="printShiftBackX" data-i18n="printShiftBackX">裏面の追加・左右</label><div class="numeric-control"><input id="printShiftBackX" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftBackXError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftBackXError" role="alert"></span></div>
+                    <div class="text-field"><label class="field-label" for="printShiftBackY" data-i18n="printShiftBackY">裏面の追加・上下</label><div class="numeric-control"><input id="printShiftBackY" type="number" min="-10" max="10" step="0.1" value="0" inputmode="decimal" aria-describedby="printShiftBackYError"><span class="numeric-unit">mm</span></div><span class="field-error" id="printShiftBackYError" role="alert"></span></div>
+                  </div>
+                </div>
+                <p class="print-shift-hint" data-i18n="printShiftRange">各 ±10 mm（0.1 mm刻み）</p>
+                <button type="button" class="secondary-action print-shift-reset" id="resetPrintShift" data-i18n="printShiftReset">補正を0 mmに戻す</button>
+              </div>
+            </details>
+            <p class="duplex-note print-shift-warning" id="printShiftWarning" role="status" data-i18n="printShiftClipping" hidden>補正によって用紙端で欠けることがあります。余白を増やすか補正量を減らしてください。</p>
             <div class="print-layout-card" id="printLayoutCard" hidden aria-live="polite">
               <div class="paper-mini-wrap"><div class="paper-mini-pair">
                 <div class="paper-mini-side"><span class="paper-mini-label" data-i18n="frontSide">表</span><div class="paper-mini" id="paperMini"><div id="paperMiniSlots"></div></div></div>
@@ -1235,6 +1294,7 @@
         <ul>
           <li data-i18n="helpDuplexBody">「PDF出力」の「両面印刷」で「長辺とじ」か「短辺とじ」を選ぶと、プレビューの「綴じた状態」が使えます。アプリとプリンターで同じとじ方向を選んでください。見開きを綴じたときに左右が向かい合うよう、PDFに白紙が入ることがあります。</li>
           <li data-i18n="helpScaleBody">寸法や表裏のずれが気になるときは「サイズ確認PDFを保存」から確認用の紙を印刷します。パンチ位置の印は穴を開ける際の目安です。</li>
+          <li data-i18n="helpPrintShiftBody">印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの位置合わせマークにも反映されます。用紙の端で欠けることがあるため、試し刷りで確認してください。</li>
           <li data-i18n="helpFitBody">A4やUS Letterに実寸で収まらない場合は、リフィルサイズか出力用紙を変更します。裁断線が用紙の端で欠ける場合は「プリンター余白」を広げて試してください。</li>
           <li data-i18n="helpInputBody">PDFを作れないときは「入力を確認」で空欄や範囲外の値を直し、もう一度「PDFを作成」を押します。</li>
         </ul>
@@ -1254,8 +1314,8 @@
     (() => {
       'use strict';
 
-      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.2.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
-      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:45:52.3348822Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.2.0"},"dependencies":[]};
+      const APP_CONFIG = {"$schema":"./schemas/app-config.schema.json","name":"Planner Refill Maker","nameJa":"システム手帳リフィルメーカー","slug":"planner-refill-maker","version":"1.3.0","description":"Create dated, undated, and note-paper planner refills with day-level ranges, visual previews, ring-side and printer margins, and exact-size or duplex imposed PDF export entirely in the browser.","descriptionJa":"日付入り・日付なし・メモの手帳リフィルを、日単位の期間指定、プレビュー、リング側・用紙端の余白、実寸・両面面付けPDFに対応してブラウザー内だけで作成できます。","defaultLanguage":"auto","repository":{"owner":"ttomohisa","name":"htmlapps-planner-refill-maker"},"build":{"output":"dist/index.html","blockRuntimeNetwork":true,"selfExtract":{"enabled":true,"output":"dist/index.self-extract.html"},"sizeBudget":{"readableWarningMb":25,"selfExtractWarningMb":12}}};
+      const BUILD_MANIFEST = {"schemaVersion":2,"builder":"single-html-app-template/1.3","generatedAtUtc":"2026-11-05T19:45:52.3348822Z","app":{"name":"Planner Refill Maker","slug":"planner-refill-maker","version":"1.3.0"},"dependencies":[]};
       const assetBundle = {"schemaVersion":2,"dependencies":{}};
       const blobUrls = new Set();
       const assetByteCache = new Map();
@@ -1337,7 +1397,7 @@
         return result;
       }
 
-      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
+      const DEFAULT_STATE=Object.freeze({...DATE_DEFAULTS,refillOptions:REFILL_DEFAULTS,sizeKey:'a5',baseWidth:148,baseHeight:210,customWidth:95,customHeight:170,orientation:'portrait',refillType:'monthly',layoutByType:{monthly:'monthly-single',yearly:'year-single',weekly:'weekly-block',daily:'daily',notes:'notes-lined'},startMonth:`${defaultYear}-01`,endMonth:`${defaultYear}-12`,weekStart:'monday',showAdjacent:true,showHolidays:language==='ja',showHolidayNames:true,saturdayColor:'#315e51',sundayColor:'#315e51',holidayColor:'#16624f',startHour:6,endHour:24,notesCount:10,noteSpacing:5,ringMarginMode:'auto',ringMarginManual:12,firstPageSide:'right',showPunchGuides:false,printMode:'exact',printMarginMm:0,printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0,showCropGuides:true,duplexMode:'off',stylePreset:'classic',pageColor:'mono',fontSize:'standard',lineWeight:'standard',showPageNumbers:false,showWeekNumbers:false,viewIndex:0});
       // File and local-storage boundaries share an allowlisted, canonical decoder.
       // Derived geometry is never trusted, including in legacy local records.
       const SETTINGS_MAX_BYTES=64*1024;
@@ -1355,19 +1415,22 @@
       const SETTINGS_V1_KEYS=[...Object.keys(SETTINGS_ENUMS),...Object.keys(SETTINGS_NUMBERS),...SETTINGS_BOOLEANS,...SETTINGS_COLORS,'startMonth','endMonth','layoutByType'];
       const SETTINGS_V2_DEFAULTS={printMarginMm:0,...DATE_DEFAULTS};
       const SETTINGS_V2_NUMBERS={printMarginMm:[0,20],undatedCount:[1,100,true]};
-      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS)];
+      const SETTINGS_V4_DEFAULTS={printShiftFrontX:0,printShiftFrontY:0,printShiftBackX:0,printShiftBackY:0};
+      const SETTINGS_V4_NUMBERS=Object.fromEntries(Object.keys(SETTINGS_V4_DEFAULTS).map(key=>[key,[-10,10]]));
+      const PRINT_SHIFT_KEYS=Object.keys(SETTINGS_V4_DEFAULTS);
+      const SETTINGS_KEYS=[...SETTINGS_V1_KEYS,...Object.keys(SETTINGS_V2_DEFAULTS),...PRINT_SHIFT_KEYS];
       let settingsStorageIssue='',settingsStorageBlocked=false;
       function settingsRecord(value){return value!==null&&typeof value==='object'&&!Array.isArray(value);}
       function decodeSettings(value,{legacy=false,formatVersion=3}={}){
         if(!settingsRecord(value))throw new Error('Invalid settings object');
         const decoded={};
         for(const key of SETTINGS_KEYS){
-          const extension=Object.hasOwn(SETTINGS_V2_DEFAULTS,key);
-          if(!legacy&&(!extension||formatVersion>=2)&&!Object.hasOwn(value,key))throw new Error('Missing setting');
-          decoded[key]=extension&&formatVersion===1?SETTINGS_V2_DEFAULTS[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
+          const addedIn=Object.hasOwn(SETTINGS_V2_DEFAULTS,key)?2:Object.hasOwn(SETTINGS_V4_DEFAULTS,key)?4:1;
+          if(!legacy&&formatVersion>=addedIn&&!Object.hasOwn(value,key))throw new Error('Missing setting');
+          decoded[key]=(!legacy&&formatVersion<addedIn)?DEFAULT_STATE[key]:(Object.hasOwn(value,key)?value[key]:DEFAULT_STATE[key]);
         }
         for(const [key,values] of Object.entries(SETTINGS_ENUMS))if(!values.includes(decoded[key]))throw new Error('Invalid setting choice');
-        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS})){
+        for(const [key,[min,max,integer]] of Object.entries({...SETTINGS_NUMBERS,...SETTINGS_V2_NUMBERS,...SETTINGS_V4_NUMBERS})){
           const number=decoded[key];
           if(typeof number!=='number'||!Number.isFinite(number)||number<min||number>max||(integer&&!Number.isInteger(number)))throw new Error('Invalid setting number');
         }
@@ -1772,6 +1835,32 @@
         "helpOffline": "Settings and PDFs are processed in your browser. The standalone HTML also works offline."
       });
 
+      Object.assign(translations.ja,{
+        printShiftTitle:'印刷位置を補正',printShiftHint:'正の値はPDFの右・下方向です。表面の位置を調整し、必要に応じて裏面だけ追加で補正します。',
+        printShiftFrontX:'表面・左右',printShiftFrontY:'表面・上下',printShiftBackX:'裏面の追加・左右',printShiftBackY:'裏面の追加・上下',
+        printShiftBackHint:'両面印刷時、表面の補正に加える移動量です。',
+        printShiftRange:'各 ±10 mm（0.1 mm刻み）',
+        printShiftReset:'補正を0 mmに戻す',printShiftClipping:'補正によって印刷領域が用紙の外に出ます。端が欠ける場合は余白を増やすか補正量を減らしてください。',
+        printShiftInvalid:'-10〜+10 mmで入力してください。',
+        helpPrintShiftBody:'印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの外形・位置合わせマークにも補正が反映されます。裁断ガイドを含め用紙の端で欠けることがあるため、試し刷りで確認してください。'
+      });
+      Object.assign(translations.en,{
+        printShiftTitle:'Correct print alignment',printShiftHint:'Positive values move artwork right or down in the PDF. Adjust the front first, then add a back-only correction if needed.',
+        printShiftFrontX:'Front · horizontal',printShiftFrontY:'Front · vertical',printShiftBackX:'Back extra · horizontal',printShiftBackY:'Back extra · vertical',
+        printShiftBackHint:'For duplex printing, these movements are added to the front offset.',
+        printShiftRange:'Each ±10 mm (0.1 mm steps)',
+        printShiftReset:'Reset offsets to 0 mm',printShiftClipping:'Corrected artwork extends outside the paper. Increase margins or reduce the offset if an edge is cut off.',
+        printShiftInvalid:'Enter -10 to +10 mm.',
+        helpPrintShiftBody:'If your printer shifts the page, open “Correct print alignment” and adjust the horizontal and vertical values. Positive values move content right and down in PDF coordinates. For a back-only adjustment, select duplex printing. The refill outline and alignment marks on the print-size test also use these offsets. Artwork and crop guides can be clipped at the edge, so check a trial print.'
+      });
+      Object.assign(translations.ja,{
+        weekdayQuickLabel:'まとめて選択',weekdayPresetAll:'すべて選択',weekdayPresetWorkdays:'平日のみ',
+        weekdaySelectedCount:'{count}日選択中'
+      });
+      Object.assign(translations.en,{
+        weekdayQuickLabel:'Quick select',weekdayPresetAll:'Select all',weekdayPresetWorkdays:'Weekdays only',
+        weekdaySelectedCount:'{count} days selected'
+      });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
       Object.assign(translations.en,{"dated": "Dated", "undated": "Undated", "undatedCountLabel": "Units to generate", "invalidUndatedCount": "Enter a whole number from 1 to 100 units.", "startDate": "Start date", "endDate": "End date", "invalidDayRange": "Choose real dates from 1900-01-01 through 2100-12-31, with end on or after start and at most 60 calendar months.", "dailyWeekdaysLabel": "Days to include", "invalidWeekdays": "Select at least one weekday and make sure the range contains a selected day.", "allDays": "All days", "workdays": "Weekdays", "thisMonth": "This month", "nextMonth": "Next month", "thisYear": "This year", "nextYear": "Next year", "thisWeek": "This week", "nextWeek": "Next week", "fourWeeks": "Next 4 weeks", "today": "Today", "nextDay": "Next day", "sevenDays": "Next 7 days", "weekday0": "Sun", "weekday1": "Mon", "weekday2": "Tue", "weekday3": "Wed", "weekday4": "Thu", "weekday5": "Fri", "weekday6": "Sat"});
@@ -1943,6 +2032,28 @@
       const AppToast=(()=>{const root=$('#appToast'),message=$('#appToastMessage'),action=$('#appToastAction');let timer=0,actionHandler=null;function dismiss(){clearTimeout(timer);root.classList.remove('show');actionHandler=null;}function show({message:text='',actionLabel='',onAction=null,duration=3200}={}){clearTimeout(timer);message.textContent=String(text);actionHandler=typeof onAction==='function'?onAction:null;action.textContent=actionLabel||'';action.hidden=!actionHandler||!actionLabel;root.classList.add('show');if(duration>0)timer=window.setTimeout(dismiss,duration);return Object.freeze({dismiss});}action.addEventListener('click',()=>{const handler=actionHandler;dismiss();if(handler)handler();});return Object.freeze({show,dismiss});})();window.AppToast=AppToast;
 
       function validatePrintMargin({normalize=false}={}){const input=$('#printMarginMm'),error=$('#printMarginError');if(input.value.trim()===''){error.textContent=t('invalidPrintMargin');return false;}let value=Number(input.value);if(!Number.isFinite(value)){error.textContent=t('invalidPrintMargin');return false;}if(normalize){value=Math.round(Math.min(20,Math.max(0,value))*2)/2;input.value=formatMm(value);}if(value<0||value>20){error.textContent=t('invalidPrintMargin');return false;}error.textContent='';state.printMarginMm=value;return true;}
+      function validatePrintShift(key,{normalize=false}={}){
+        const input=$('#'+key),error=$('#'+key+'Error');
+        const showError=()=>{error.textContent=t('printShiftInvalid');input.setAttribute('aria-invalid','true');return false;};
+        if(!input.value.trim())return showError();
+        let value=Number(input.value);
+        if(!Number.isFinite(value))return showError();
+        if(normalize){value=Math.round(Math.max(-10,Math.min(10,value))*10)/10;input.value=formatMm(value);}
+        if(value < -10 || value > 10)return showError();
+        error.textContent='';input.setAttribute('aria-invalid','false');state[key]=value;return true;
+      }
+      // A PDF face is shifted after its optional 180° duplex rotation.
+      // Back values are additional to the front offset.
+      function printShiftForFace(back=false){
+        return {x:state.printShiftFrontX+(back?state.printShiftBackX:0),y:state.printShiftFrontY+(back?state.printShiftBackY:0)};
+      }
+      function printShiftWouldClip(plan){
+        if(!plan.valid)return false;
+        const out=(rect,shift)=>rect.x+shift.x < -1e-6 || rect.y+shift.y < -1e-6 ||
+          rect.x+rect.width+shift.x > plan.paperWidth+1e-6 || rect.y+rect.height+shift.y > plan.paperHeight+1e-6;
+        return placementRects(plan).some(rect=>out(rect,printShiftForFace())) ||
+          (duplexEnabled()&&backPlacementRects(plan).some(rect=>out(rect,printShiftForFace(true))));
+      }
       function validateNumber(input,min,max,errorElement,messageKey,normalize=false){if(input.value.trim()===''){errorElement.textContent=t(messageKey);return null;}let value=Number(input.value);if(!Number.isFinite(value)){errorElement.textContent=t(messageKey);return null;}if(normalize){value=Math.min(max,Math.max(min,value));value=Math.round(value*10)/10;input.value=formatMm(value);}else if(value<min||value>max){errorElement.textContent=t(messageKey);return null;}errorElement.textContent='';return value;}
       function updateCustomFromInputs({normalize=false}={}){const width=validateNumber(customWidth,40,300,widthError,'invalidWidth',normalize);const height=validateNumber(customHeight,60,400,heightError,'invalidHeight',normalize);if(width==null||height==null){render();return false;}state.customWidth=width;state.customHeight=height;if(state.sizeKey==='custom'){state.baseWidth=width;state.baseHeight=height;render();}return true;}
       // Invalid drafts preserve the last valid preview, but cannot be exported.
@@ -1951,6 +2062,8 @@
         const numberValid=(input,min,max,integer=false)=>input.value.trim()!==''&&Number.isFinite(Number(input.value))&&Number(input.value)>=min&&Number(input.value)<=max&&(!integer||Number.isInteger(Number(input.value)));
         if(state.sizeKey==='custom'&&(!numberValid(customWidth,40,300)||!numberValid(customHeight,60,400)))return false;
         if(state.printMode!=='exact'&&!numberValid($('#printMarginMm'),0,20))return false;
+        if(!PRINT_SHIFT_KEYS.slice(0,2).every(key=>numberValid($('#'+key),-10,10)))return false;
+        if(duplexEnabled()&&!PRINT_SHIFT_KEYS.slice(2).every(key=>numberValid($('#'+key),-10,10)))return false;
         if(dimensionsOnly)return true;
         if(activeRefillInvalidField())return false;
         if(state.ringMarginMode==='manual'&&!numberValid($('#ringMarginValue'),4,30))return false;
@@ -1988,6 +2101,15 @@
         return true;
       }
       function selectedDailyWeekdays(){return $$('input[name="dailyWeekday"]').filter(input=>input.checked).map(input=>Number(input.value));}
+      function syncWeekdayQuickSelection(){
+        const selected=selectedDailyWeekdays();
+        const summary=formatTemplate(t('weekdaySelectedCount'),{count:selected.length});
+        if($('#dailyWeekdayCount').textContent!==summary)$('#dailyWeekdayCount').textContent=summary;
+        const all=selected.length===7;
+        const workdays=selected.length===5&&[1,2,3,4,5].every(day=>selected.includes(day));
+        $('#dailyAllDays').setAttribute('aria-pressed',String(all));
+        $('#dailyWorkdays').setAttribute('aria-pressed',String(workdays));
+      }
       function syncDateControls(){
         const type=state.refillType,undated=isUndated(),dayType=['weekly','daily'].includes(type),calendar=['monthly','yearly'].includes(type);
         $('#dateModeGroup').hidden=!['monthly','weekly','daily'].includes(type);
@@ -1996,6 +2118,7 @@
         $('#dayRangeControls').hidden=!dayType||undated;
         for(const kind of ['weekly','daily'])$('#'+kind+'RangeControls').hidden=type!==kind||undated;
         $('#dailyWeekdaysGroup').hidden=type!=='daily'||undated;
+        syncWeekdayQuickSelection();
         $('#dateShortcuts').hidden=type==='notes'||undated;
         $$('[data-shortcut]').forEach(button=>{button.hidden=button.dataset.shortcutType!==(calendar?'month':type);});
         $('#holidaySettingGroup').hidden=type==='notes'||undated;
@@ -2053,7 +2176,7 @@
         return pageSpecsForItem(item, itemIndex).map(spec => createPdfParityPreviewPage(spec, navigationLabel(item)));
       }
       function pageHoldersForItem(item,itemIndex=state.viewIndex){return appendPreviewPageNumbers(pageHoldersForItemRaw(item,itemIndex),itemIndex);}
-      function settingsSignature(){return JSON.stringify({refillOptions:state.refillOptions,...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
+      function settingsSignature(){return JSON.stringify({refillOptions:state.refillOptions,...Object.fromEntries(Object.keys(DATE_DEFAULTS).map(key=>[key,state[key]])),language,sizeKey:state.sizeKey,baseWidth:state.baseWidth,baseHeight:state.baseHeight,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),startMonth:state.startMonth,endMonth:state.endMonth,weekStart:state.weekStart,showAdjacent:state.showAdjacent,startHour:state.startHour,endHour:state.endHour,ringMarginMode:state.ringMarginMode,ringMarginManual:state.ringMarginManual,firstPageSide:state.firstPageSide,showPunchGuides:state.showPunchGuides,printMode:state.printMode,printMarginMm:state.printMarginMm,printShiftFrontX:state.printShiftFrontX,printShiftFrontY:state.printShiftFrontY,printShiftBackX:state.printShiftBackX,printShiftBackY:state.printShiftBackY,showCropGuides:state.showCropGuides,duplexMode:state.duplexMode,notesCount:state.notesCount,noteSpacing:state.noteSpacing,showHolidays:state.showHolidays,showHolidayNames:state.showHolidayNames,saturdayColor:state.saturdayColor,sundayColor:state.sundayColor,holidayColor:state.holidayColor,stylePreset:state.stylePreset,pageColor:state.pageColor,fontSize:state.fontSize,lineWeight:state.lineWeight,showPageNumbers:state.showPageNumbers,showWeekNumbers:state.showWeekNumbers});}
       function safeFilename(value){let name=String(value||'').trim().replace(/[\\/:*?"<>|\x00-\x1f]/g,'-').replace(/\s+/g,' ').slice(0,120);if(!name)name='planner-refill.pdf';if(!/\.pdf$/i.test(name))name+='.pdf';return name;}
       function defaultPdfFilename(){const first=monthFromSerial(monthSerial(state.startMonth));const type={monthly:'monthly',yearly:'yearly',weekly:'weekly',daily:'daily',notes:'notes'}[state.refillType];const size=state.sizeKey==='custom'?`${formatMm(state.baseWidth)}x${formatMm(state.baseHeight)}mm`:state.sizeKey.replace(/[^a-z0-9-]/gi,'-');const period=isUndated()?'undated':state.refillType==='daily'?state.dailyStartDate:state.refillType==='weekly'?state.weeklyStartDate:String(first.year);const output=state.printMode==='exact'?'':`-${state.printMode}`;return `planner-refill-${period}-${type}-${size}${output}.pdf`;}
       function formatBytes(bytes){if(bytes<1024)return `${bytes} B`;if(bytes<1024*1024)return `${(bytes/1024).toFixed(bytes<10240?1:0)} KB`;return `${(bytes/(1024*1024)).toFixed(1)} MB`;}
@@ -2086,11 +2209,13 @@
       function formatPerSheet(count){return language==='en'?`${count} ${count===1?'refill':'refills'} per sheet`:`1枚に${count}ページ`;}
       function formatGridPlan(cols,rows){return language==='en'?`${cols} ${cols===1?'column':'columns'} × ${rows} ${rows===1?'row':'rows'}`:`${cols}列 × ${rows}行`; }
       function placementRects(plan){if(!plan.valid)return[];return Array.from({length:plan.slots},(_,index)=>{const col=index%plan.cols,row=Math.floor(index/plan.cols);return{x:(plan.margin||0)+plan.gapX+col*(plan.refillWidth+plan.gapX),y:(plan.margin||0)+plan.gapY+row*(plan.refillHeight+plan.gapY),width:plan.refillWidth,height:plan.refillHeight};});}
-      function renderMiniPaper(paper,slotsRoot,plan,rects,specs=[]){const maxW=92,maxH=122,scale=Math.min(maxW/plan.paperWidth,maxH/plan.paperHeight);paper.style.width=`${plan.paperWidth*scale}px`;paper.style.height=`${plan.paperHeight*scale}px`;slotsRoot.replaceChildren();rects.forEach((rect,index)=>{const slot=document.createElement('span');slot.className='paper-mini-slot';slot.title=printPageLabel(specs[index]||null);slot.setAttribute('aria-label',slot.title);slot.textContent=specs[index]?String(specs[index].pageNumber):t('printBlank');slot.style.left=`${rect.x/plan.paperWidth*100}%`;slot.style.top=`${rect.y/plan.paperHeight*100}%`;slot.style.width=`${rect.width/plan.paperWidth*100}%`;slot.style.height=`${rect.height/plan.paperHeight*100}%`;slotsRoot.append(slot);});}
+      function renderMiniPaper(paper,slotsRoot,plan,rects,specs=[],back=false){const maxW=92,maxH=122,scale=Math.min(maxW/plan.paperWidth,maxH/plan.paperHeight);paper.style.width=`${plan.paperWidth*scale}px`;paper.style.height=`${plan.paperHeight*scale}px`;slotsRoot.replaceChildren();rects.forEach((rect,index)=>{const slot=document.createElement('span');slot.className='paper-mini-slot';slot.title=printPageLabel(specs[index]||null);slot.setAttribute('aria-label',slot.title);slot.textContent=specs[index]?String(specs[index].pageNumber):t('printBlank');const shift=printShiftForFace(back);slot.style.left=`${(rect.x+shift.x)/plan.paperWidth*100}%`;slot.style.top=`${(rect.y+shift.y)/plan.paperHeight*100}%`;slot.style.width=`${rect.width/plan.paperWidth*100}%`;slot.style.height=`${rect.height/plan.paperHeight*100}%`;slotsRoot.append(slot);});}
       function renderPrintLayout(){
         const plan=impositionPlan(),inputsValid=draftInputsValid(),exact=state.printMode==='exact',duplex=duplexEnabled(),specs=printPageSpecs(),logicalCount=pageCount();
         saveSizeTestButton.disabled=pdfBusy||sizeTestBusy||!draftInputsValid({dimensionsOnly:true});
         cropGuideRow.hidden=exact;$('#printMarginGroup').hidden=exact;$('#printMarginWarning').hidden=exact||state.printMarginMm!==0;
+        $('#printShiftBackFields').hidden=!duplex;
+        $('#printShiftWarning').hidden=!printShiftWouldClip(plan);
         printLayoutCard.hidden=exact||!plan.valid;printFitError.hidden=true;
         const notes=[];if(duplex&&specs[0]===null)notes.push(t('duplexLeadingBlank'));if(duplex&&specs.at(-1)===null)notes.push(t('duplexBlankAdded'));
         if(duplex&&duplexBackRotation(plan))notes.push(t('duplexRotatedBack'));notes.push(exact?t('duplexExactNote'):t('duplexImpositionNote'));duplexNote.hidden=!duplex;duplexNote.textContent=notes.join(' ');
@@ -2104,7 +2229,7 @@
         $('#printOutputSummaryText').textContent=`${plan.paperLabel} · ${formatSheetCount(sheets)}`;
         const first=duplex?duplexGroups(specs,plan.slots)[0]:{front:specs.slice(0,plan.slots)};
         renderMiniPaper(paperMini,paperMiniSlots,plan,placementRects(plan),first?.front);paperMiniBackSide.hidden=!duplex;
-        if(duplex)renderMiniPaper(paperMiniBack,paperMiniBackSlots,plan,backPlacementRects(plan),first?.back);
+        if(duplex)renderMiniPaper(paperMiniBack,paperMiniBackSlots,plan,backPlacementRects(plan),first?.back,true);
         generatePdfButton.disabled=pdfBusy||sizeTestBusy||!inputsValid;return plan;
       }
       function allPageSpecs(){const specs=[];viewItems().forEach((item,itemIndex)=>specs.push(...pageSpecsForItem(item,itemIndex).map(spec=>({...spec,itemIndex}))));return specs.map((spec,index)=>({...spec,pageNumber:index+1}));}
@@ -2115,7 +2240,7 @@
       function clearGeneratedPdf({outdated=false}={}){delete pdfError.dataset.i18n;if(generatedPdf.url){URL.revokeObjectURL(generatedPdf.url);generatedPdf.url=null;}generatedPdf.blob=null;generatedPdf.signature='';generatedPdf.pageCount=0;generatedPdf.scope='full';generatedPdf.scopeLabel='';generatedPdf.filenameSuffix='';savePdfButton.disabled=true;pdfResult.hidden=true;if(outdated&&!pdfBusy){pdfError.dataset.i18n='pdfOutdated';pdfError.textContent=t('pdfOutdated');pdfError.hidden=false;}else if(!pdfBusy){pdfError.hidden=true;}}
       // A monotonic revision rejects A -> B -> A edits during async rendering.
       // Raw applicable drafts participate even when committed preview state stays valid.
-      function outputDraftSignature(){const values=[];if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(hoursActive())values.push(startHourInput.value,endHourInput.value);}const invalidRefill=activeRefillInvalidField();if(invalidRefill)values.push(invalidRefill.id,invalidRefill.value);return JSON.stringify([settingsSignature(),values]);}
+      function outputDraftSignature(){const values=[];values.push($('#printShiftFrontX').value,$('#printShiftFrontY').value);if(duplexEnabled())values.push($('#printShiftBackX').value,$('#printShiftBackY').value);if(state.printMode!=='exact')values.push($('#printMarginMm').value);if(state.sizeKey==='custom')values.push(customWidth.value,customHeight.value);if(state.ringMarginMode==='manual')values.push($('#ringMarginValue').value);if(state.refillType==='notes')values.push($('#notesCount').value);else{if(isUndated())values.push($('#undatedCount').value);else if(['weekly','daily'].includes(state.refillType)){values.push($('#'+state.refillType+'StartDate').value,$('#'+state.refillType+'EndDate').value);if(state.refillType==='daily')values.push(selectedDailyWeekdays());}else values.push(startMonthInput.value,endMonthInput.value);if(hoursActive())values.push(startHourInput.value,endHourInput.value);}const invalidRefill=activeRefillInvalidField();if(invalidRefill)values.push(invalidRefill.id,invalidRefill.value);return JSON.stringify([settingsSignature(),values]);}
       function syncPdfFreshness(){const draft=outputDraftSignature();if(draft!==lastOutputDraft){lastOutputDraft=draft;outputRevision+=1;}if(generatedPdf.blob&&(!draftInputsValid()||generatedPdf.signature!==settingsSignature()))clearGeneratedPdf({outdated:true});savePdfButton.disabled=pdfBusy||!generatedPdf.blob||!draftInputsValid();if(!filenameTouched)outputFilename.value=defaultPdfFilename();}
       function undatedPageSpecs(itemIndex){
         const layout=currentLayout(),side=pageSideAt(itemIndex),spec=(kind,pageSide)=>({kind,undated:true,side:pageSide,pageLabel:pageSideText(pageSide)});
@@ -2461,9 +2586,9 @@
           else if(spec.kind==='monthly-spread')drawMonthlySpreadCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='monthly')drawMonthlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='yearly')drawYearlyCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-block')drawWeeklyBlockCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='weekly-list')drawWeeklyListCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='notes')drawNotesCanvas(ctx,pxWidth,pxHeight);else if(spec.kind==='weekly-vertical')drawWeeklyVerticalCanvas(ctx,pxWidth,pxHeight,spec);else if(spec.kind==='daily')drawDailyCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);else drawPatternCanvas(ctx,pxWidth,pxHeight,spec,widthMm,heightMm);};if(direct)draw();else withRingTransform(ctx,pxWidth,widthMm,spec.side||'right',draw);drawPunchGuidesCanvas(ctx,pxWidth,pxHeight,spec.side||'right',widthMm);drawPhysicalPageNumber(ctx,spec.pageNumber,pxWidth,pxHeight);renderingRefillPage=false;return canvas;}
       async function canvasJpeg(canvas,quality=.96){const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!blob)throw new Error(t('pdfPageRasterError'));return{bytes:new Uint8Array(await blob.arrayBuffer()),width:canvas.width,height:canvas.height};}
       function drawPrintPageCanvas(ctx,pageCanvas,x,y,w,h,rotation=0){ctx.save();if(rotation===180){ctx.translate(x+w,y+h);ctx.rotate(Math.PI);ctx.drawImage(pageCanvas,0,0,w,h);}else ctx.drawImage(pageCanvas,x,y,w,h);ctx.restore();}
-      async function rasterizePageSpec(spec,widthMm,heightMm,rotation=0){const pageCanvas=renderPageSpecCanvas(spec,widthMm,heightMm,180);if(!rotation)return canvasJpeg(pageCanvas);const canvas=document.createElement('canvas');canvas.width=pageCanvas.width;canvas.height=pageCanvas.height;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));drawPrintPageCanvas(ctx,pageCanvas,0,0,canvas.width,canvas.height,rotation);return canvasJpeg(canvas);}
+      async function rasterizePageSpec(spec,widthMm,heightMm,rotation=0,shift={x:0,y:0}){const pageCanvas=renderPageSpecCanvas(spec,widthMm,heightMm,180);if(!rotation&&!shift.x&&!shift.y)return canvasJpeg(pageCanvas);const canvas=document.createElement('canvas');canvas.width=pageCanvas.width;canvas.height=pageCanvas.height;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error(t('pdfPageRasterError'));ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.translate(shift.x*canvas.width/widthMm,shift.y*canvas.height/heightMm);drawPrintPageCanvas(ctx,pageCanvas,0,0,canvas.width,canvas.height,rotation);return canvasJpeg(canvas);}
       function drawCropGuide(ctx,x,y,w,h,dpi){if(!state.showCropGuides)return;const pxPerMm=dpi/25.4,mark=Math.max(5,3*pxPerMm),lw=Math.max(.7,.18*pxPerMm);ctx.save();ctx.strokeStyle='#737b77';ctx.lineWidth=lw;ctx.strokeRect(Math.round(x)+.5,Math.round(y)+.5,Math.max(1,Math.round(w)-1),Math.max(1,Math.round(h)-1));const corners=[[x,y,-1,-1],[x+w,y,1,-1],[x,y+h,-1,1],[x+w,y+h,1,1]];ctx.beginPath();for(const [cx,cy,sx,sy] of corners){ctx.moveTo(cx,cy);ctx.lineTo(cx+sx*mark,cy);ctx.moveTo(cx,cy);ctx.lineTo(cx,cy+sy*mark);}ctx.stroke();ctx.restore();}
-      async function rasterizeImposedSheet(specs, plan, widthMm, heightMm, onPage, rects = placementRects(plan), rotation = 0, check = () => {}) {
+      async function rasterizeImposedSheet(specs, plan, widthMm, heightMm, onPage, rects = placementRects(plan), rotation = 0, check = () => {}, shift = {x:0,y:0}) {
         check();
         const dpi = 180, pxPerMm = dpi / 25.4, canvas = document.createElement('canvas');
         canvas.width = Math.max(300, Math.round(plan.paperWidth * pxPerMm));
@@ -2471,6 +2596,7 @@
         const ctx = canvas.getContext('2d', { alpha: false });
         if (!ctx) throw new Error(t('pdfPageRasterError'));
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.save(); ctx.translate(shift.x * pxPerMm, shift.y * pxPerMm);
         for (let index = 0; index < specs.length; index += 1) {
           check();
           const spec = specs[index]; if (!spec) continue;
@@ -2481,7 +2607,7 @@
           drawCropGuide(ctx, x, y, w, h, dpi); ctx.restore();
           onPage?.(); await new Promise(resolve => requestAnimationFrame(resolve)); check();
         }
-        check();
+        ctx.restore();check();
         const image = await canvasJpeg(canvas, .96); check(); return image;
       }
       function drawSizeTestPage(ctx,w,h,paperWidth,paperHeight){const pxPerMm=w/paperWidth,mm=value=>value*pxPerMm;ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);text(ctx,t('sizeTestTitle'),mm(15),mm(18),Math.max(14,mm(5.2)),{weight:850});text(ctx,t('sizeTestInstruction'),mm(15),mm(28),Math.max(10,mm(3.4)),{weight:600,color:'#56605c',maxWidth:w-mm(30)});const y=mm(48),x=mm(15),len=mm(100);ctx.strokeStyle='#20211f';ctx.lineWidth=Math.max(1,mm(.35));ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+len,y);ctx.moveTo(x,y-mm(3));ctx.lineTo(x,y+mm(3));ctx.moveTo(x+len,y-mm(3));ctx.lineTo(x+len,y+mm(3));ctx.stroke();text(ctx,'100 mm',x+len/2,y-mm(4.5),Math.max(10,mm(3.4)),{weight:800,align:'center'});const box=mm(50),boxY=mm(66);ctx.strokeStyle='#59615d';ctx.lineWidth=Math.max(1,mm(.25));ctx.strokeRect(x,boxY,box,box);text(ctx,'50 × 50 mm',x+box/2,boxY+box/2,Math.max(9,mm(3)),{weight:700,color:'#59615d',align:'center',baseline:'middle'});text(ctx,t('sizeTestPrint'),mm(15),Math.min(h-mm(15),boxY+box+mm(12)),Math.max(10,mm(3.3)),{weight:800,color:'#16624f'});}
@@ -2501,14 +2627,16 @@
         const paperWidth = plan.valid ? plan.paperWidth : paper.width, paperHeight = plan.valid ? plan.paperHeight : paper.height;
         const dpi = 180, pxPerMm = dpi / 25.4, images = [], duplex = duplexEnabled();
         const job = beginGeneration(true), check = () => generationCheck(job);
-        const raster = async draw => {
+        const raster = async (draw,{applyShift=false,back=false}={}) => {
           check();
           const canvas = document.createElement('canvas');
           canvas.width = Math.round(paperWidth * pxPerMm); canvas.height = Math.round(paperHeight * pxPerMm);
           const ctx = canvas.getContext('2d', { alpha: false });
           if (!ctx) throw new Error(t('pdfPageRasterError'));
           ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
-          draw?.(ctx, canvas.width, canvas.height);
+          const shift=applyShift?printShiftForFace(back):{x:0,y:0};
+          ctx.save();ctx.translate(shift.x*pxPerMm,shift.y*pxPerMm);
+          draw?.(ctx, canvas.width, canvas.height);ctx.restore();
           images.push(await canvasJpeg(canvas, .96));
           check();
           pdfProgressBar.value = 1; pdfProgressText.textContent = String(images.length);
@@ -2516,10 +2644,10 @@
         };
         try {
           await raster((ctx, w, h) => drawSizeTestPage(ctx, w, h, paperWidth, paperHeight));
-          if (plan.valid) await raster((ctx, w, h) => drawRefillOutlineTest(ctx, w, h, plan));
+          if (plan.valid) await raster((ctx, w, h) => drawRefillOutlineTest(ctx, w, h, plan),{applyShift:true});
           if (duplex) {
             if (images.length % 2) await raster();
-            for (const back of [false, true]) await raster((ctx, w, h) => drawDuplexAlignmentTest(ctx, w, h, { ...plan, paperWidth, paperHeight, orientation: paperWidth > paperHeight ? 'landscape' : 'portrait' }, back));
+            for (const back of [false, true]) await raster((ctx, w, h) => drawDuplexAlignmentTest(ctx, w, h, { ...plan, paperWidth, paperHeight, orientation: paperWidth > paperHeight ? 'landscape' : 'portrait' }, back),{applyShift:true,back});
           }
           check();
           const blob = buildImagePdf(images, paperWidth, paperHeight), url = URL.createObjectURL(blob), link = document.createElement('a');
@@ -2599,22 +2727,22 @@
           if (exact) {
             for (const [faceIndex, spec] of specs.entries()) {
               check();
-              images.push(await rasterizePageSpec(spec, width, height, faceIndex % 2 ? duplexBackRotation(plan) : 0));
+              images.push(await rasterizePageSpec(spec, width, height, faceIndex % 2 ? duplexBackRotation(plan) : 0, printShiftForFace(duplex && faceIndex % 2 === 1)));
               check(); if (spec) progress();
               await new Promise(resolve => requestAnimationFrame(resolve)); check();
             }
           } else if (!duplex) {
             for (let offset = 0; offset < specs.length; offset += plan.slots) {
               check();
-              images.push(await rasterizeImposedSheet(specs.slice(offset, offset + plan.slots), plan, width, height, progress, placementRects(plan), 0, check));
+              images.push(await rasterizeImposedSheet(specs.slice(offset, offset + plan.slots), plan, width, height, progress, placementRects(plan), 0, check, printShiftForFace()));
               check();
             }
           } else {
             for (const sheet of duplexGroups(specs, plan.slots)) {
               check();
-              images.push(await rasterizeImposedSheet(sheet.front, plan, width, height, progress, placementRects(plan), 0, check));
+              images.push(await rasterizeImposedSheet(sheet.front, plan, width, height, progress, placementRects(plan), 0, check, printShiftForFace()));
               check();
-              images.push(await rasterizeImposedSheet(sheet.back, plan, width, height, progress, backPlacementRects(plan), duplexBackRotation(plan), check));
+              images.push(await rasterizeImposedSheet(sheet.back, plan, width, height, progress, backPlacementRects(plan), duplexBackRotation(plan), check, printShiftForFace(true)));
               check();
             }
           }
@@ -2731,6 +2859,9 @@
         const ctx = canvas.getContext('2d', { alpha: false });
         ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         const rects = bound ? [{ x: 0, y: 0, width, height }] : face.back ? backPlacementRects(plan) : placementRects(plan);
+        // Sheet view shows printer-relative offsets; bound view shows the cut refill.
+        const shift=bound?{x:0,y:0}:printShiftForFace(face.back);
+        ctx.save();ctx.translate(shift.x*pxPerMm,shift.y*pxPerMm);
         const labels = rects.map((rect, index) => {
           const spec = face.specs[index] || null;
           if (spec) {
@@ -2740,6 +2871,7 @@
           }
           return printPageLabel(spec);
         });
+        ctx.restore();
         const figure = document.createElement('figure'); figure.className = 'print-face';
         const image = document.createElement('div'); image.className = 'print-face-image';
         image.dataset.width = String(width); image.dataset.height = String(height);
@@ -2848,6 +2980,8 @@
         if (field) return field;
         if (state.sizeKey === 'custom' && (field = numeric('customWidth', 40, 300) || numeric('customHeight', 60, 400))) return field;
         if (state.printMode !== 'exact' && (field = numeric('printMarginMm', 0, 20))) return field;
+        if ((field = numeric('printShiftFrontX', -10, 10) || numeric('printShiftFrontY', -10, 10))) return field;
+        if (duplexEnabled() && (field = numeric('printShiftBackX', -10, 10) || numeric('printShiftBackY', -10, 10))) return field;
         if (state.ringMarginMode === 'manual' && (field = numeric('ringMarginValue', 4, 30))) return field;
         if (state.refillType === 'notes') return numeric('notesCount', 1, 100, true);
         if (isUndated()) { if ((field = numeric('undatedCount', 1, 100, true))) return field; }
@@ -2871,9 +3005,9 @@
       }
       function reviewInvalidSettings() {
         const field = activeInvalidField();
-        const margin = field?.id === 'printMarginMm';
+        const margin = field?.id === 'printMarginMm',shift=PRINT_SHIFT_KEYS.includes(field?.id);
         if (margin) { $('#printMarginPreset').value = 'custom'; $('#printMarginCustom').hidden = false; }
-        showMobilePage(margin ? 'outputPage' : 'settingsPage');
+        showMobilePage(margin||shift ? 'outputPage' : 'settingsPage');
         if (field) {
           for (let section = field.closest?.('details'); section; section = section.parentElement?.closest('details')) {
             section.open = true;
@@ -3139,12 +3273,13 @@
         settingsStorageBlocked=false;
         if(!settingsStorageBlocked)settingsStorageIssue='';
         syncControlsFromState();
-        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError','dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
+        for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError',...PRINT_SHIFT_KEYS.map(key=>key+'Error'),'dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
+        for(const key of PRINT_SHIFT_KEYS)$('#'+key).setAttribute('aria-invalid','false');
         setRefillType(state.refillType);
       }
       function saveSettingsFile(){
         if(!draftInputsValid()){showSettingsFileStatus('settingsFileDraft');return;}
-        const data={app:'planner-refill-maker',formatVersion:3,settings:settingsSnapshot()};
+        const data={app:'planner-refill-maker',formatVersion:4,settings:settingsSnapshot()};
         const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}),url=URL.createObjectURL(blob);
         const link=document.createElement('a');link.href=url;link.download=safeFilename(outputFilename.value).replace(/\.pdf$/i,'')+'.settings.json';
         document.body.append(link);
@@ -3168,7 +3303,7 @@
           if(!current())return;
           if(new TextEncoder().encode(text).length>SETTINGS_MAX_BYTES){showSettingsFileStatus('settingsFileTooLarge');return;}
           const data=JSON.parse(text);
-          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3].includes(data.formatVersion))throw new Error('Unsupported settings format');
+          if(!settingsRecord(data)||data.app!=='planner-refill-maker'||![1,2,3,4].includes(data.formatVersion))throw new Error('Unsupported settings format');
           const next=decodeSettings(data.settings,{formatVersion:data.formatVersion});
           const accepted=await AppConfirm.ask({title:t('settingsFileConfirm'),message:settingsImportSummary(next),confirmLabel:t('settingsFileReplace'),cancelLabel:t('settingsCancel')});
           if(!current())return;
@@ -3182,7 +3317,7 @@
         const checks={dateMode:state.dateMode,plannerSize:state.sizeKey,orientation:state.orientation,refillType:state.refillType,layout:currentLayout(),weekStart:state.weekStart,ringMarginMode:state.ringMarginMode,firstPageSide:state.firstPageSide,printMode:state.printMode,duplexMode:state.duplexMode,noteSpacing:String(state.noteSpacing),stylePreset:state.stylePreset,pageColor:state.pageColor,lineWeight:state.lineWeight};
         Object.entries(checks).forEach(([name,value])=>{$$(`input[name="${name}"]`).forEach(input=>{input.checked=input.value===value;});});
         for(const type of ['weekly','daily'])for(const edge of ['Start','End'])$('#'+type+edge+'Date').value=state[type+edge+'Date'];
-        $('#undatedCount').value=String(state.undatedCount);
+        for(const key of PRINT_SHIFT_KEYS)$('#'+key).value=formatMm(state[key]);$('#undatedCount').value=String(state.undatedCount);
         $$('input[name="dailyWeekday"]').forEach(input=>{input.checked=state.dailyWeekdays.includes(Number(input.value));});
         $('#ringMarginValue').value=formatMm(state.ringMarginManual);$('#printMarginMm').value=formatMm(state.printMarginMm);$('#printMarginPreset').value=[0,3,5].includes(state.printMarginMm)?String(state.printMarginMm):'custom';customWidth.value=String(state.customWidth);customHeight.value=String(state.customHeight);startMonthInput.value=state.startMonth;endMonthInput.value=state.endMonth;startHourInput.value=String(state.startHour);endHourInput.value=String(state.endHour);$('#notesCount').value=String(state.notesCount);$('#showAdjacent').checked=state.showAdjacent;$('#showHolidays').checked=state.showHolidays;$('#showHolidayNames').checked=state.showHolidayNames;$('#saturdayColor').value=state.saturdayColor;$('#sundayColor').value=state.sundayColor;$('#holidayColor').value=state.holidayColor;$('#showPunchGuides').checked=state.showPunchGuides;$('#showCropGuides').checked=state.showCropGuides;$('#showPageNumbers').checked=state.showPageNumbers;$('#showWeekNumbers').checked=state.showWeekNumbers;customFields.hidden=state.sizeKey!=='custom';
       }
@@ -3222,6 +3357,11 @@
       $('#showPunchGuides').addEventListener('change',event=>{state.showPunchGuides=event.currentTarget.checked;render();});
       $$('input[name="printMode"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.printMode=input.value;render();}}));
       for(const type of ['input','change','blur'])$('#printMarginMm').addEventListener(type,()=>{$('#printMarginPreset').value='custom';validatePrintMargin({normalize:type!=='input'});render();});
+      for(const key of PRINT_SHIFT_KEYS)for(const type of ['input','change','blur'])$('#'+key).addEventListener(type,()=>{validatePrintShift(key,{normalize:type!=='input'});render();});
+      $('#resetPrintShift').addEventListener('click',()=>{
+        PRINT_SHIFT_KEYS.forEach(key=>{state[key]=0;$('#'+key).value='0';$('#'+key+'Error').textContent='';$('#'+key).setAttribute('aria-invalid','false');});
+        render();AppToast.show({message:t('printShiftReset')});
+      });
       $('#showCropGuides').addEventListener('change',event=>{state.showCropGuides=event.currentTarget.checked;render();});
       $$('input[name="duplexMode"]').forEach(input=>input.addEventListener('change',()=>{if(input.checked){state.duplexMode=input.value;render();}}));
       $('#notesCount').addEventListener('input',()=>{validateNotesCount({normalize:false});render();});$('#notesCount').addEventListener('change',()=>{validateNotesCount({normalize:true});render();});$('#notesCount').addEventListener('blur',()=>{validateNotesCount({normalize:true});render();});

@@ -4,16 +4,18 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.2.0
+- **Current version:** 1.3.0
 - **Purpose:** Create dated, undated, and note-paper planner refills in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
 
-## 2. v1.2.0 product scope
+## 2. v1.3.0 product scope
 
 The product is a focused refill generator. Users select a planner size, choose a dated, undated, or note layout, preview it, and export a correctly sized printable PDF without manually calculating ring margins, imposition, duplex order, or crop marks.
 
 Current scope:
+
+- Optional print calibration: front horizontal/vertical correction and additional back-only horizontal/vertical correction, each -10 to +10 mm in 0.1 mm steps, defaulting to 0 mm.
 
 - Preset and custom planner sizes.
 - Year, monthly, weekly, daily, ruled, grid, and dot refills.
@@ -36,8 +38,19 @@ Current scope:
 - The optional ruling override is shared by notes paper and matching sections. Each pattern accepts 3–12 mm in 0.5 mm steps. Existing settings retain their prior spacing when no override is specified.
 - Monthly lists support one or two pages, 1–4 named writing columns, and aligned date rows on spreads. An undated month list uses generic day numbers 1–31.
 - Personal dates support one-time dates, weekly weekdays, and annual month/day values, with up to 100 enabled or disabled entries. February 29 repeats only in leap years. Date annotations distinguish days off and events, retain official holiday labels where possible, and indicate additional entries when space is limited. Yearly pages show marks. Undated pages omit personal dates.
-- Settings JSON v3 includes a validated customization record. Versions 1 and 2 remain accepted with legacy defaults. Personal dates are included in settings backups and processed locally.
+- Settings JSON v4 retains the validated customization record and adds print correction fields. Versions 1, 2, and 3 remain accepted with legacy defaults. Personal dates are included in settings backups and processed locally.
 - These layouts use the shared preview/PDF drawing path and the existing actual-size and duplex planners.
+
+### v1.3.0 printing calibration acceptance criteria
+
+- Apply the front correction to every generated single-sided or duplex front output face, after physical imposition or exact-size rendering. Apply front plus back correction to duplex back faces, after existing back mirroring and any 180-degree rotation. Positive values move output to the PDF's right or bottom; no printer-specific physical-edge auto-detection is assumed.
+- Translate the artwork and crop marks together without changing its physical dimensions, slot count, duplex pairing, or ring-side layout. The print-sheet preview uses the same correction. Bound/cut refill preview remains unchanged because its content relative to the cut edges does not change.
+- Apply the front offset to the size-test refill outline and front duplex alignment targets, and front+back to the duplex back target. Leave the 100 mm size reference unshifted.
+- Show a warning when any occupied placement at the configured offsets would cross the PDF paper boundary. Exact-size paper is also subject to clipping. Users should print at 100% scale and check actual results; this is not automatic physical printer calibration.
+- Empty or out-of-range active correction drafts block PDF and size-test creation, prevent saving old output, and are focused in the Output tab. A back-only invalid draft does not block single-sided output. Leaving a numeric field normalizes it to a tenth within the allowed bounds.
+- Correction inputs stay top-aligned across columns. Empty error messages occupy no space; invalid values show a wrapped message immediately beneath their own input without shifting the other input. Invalid inputs receive aria-invalid. The inline range note remains brief: ±10 mm for each correction, in 0.1 mm steps.
+- Daily weekday controls separate quick select actions from the seven individual weekday checkboxes. Quick actions reflect whether exactly all seven or exactly Monday–Friday are selected via aria-pressed; a custom subset leaves both unpressed. The current day count is exposed in Japanese and English.
+- Maintain defaults of 0 mm. Serialize all four values as settings format v4. Files of versions 1–3 migrate with zero corrections, and unreadable settings are not overwritten.
 
 ## 3. v1.0.0 release goal
 

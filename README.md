@@ -34,6 +34,7 @@ GitHub Pages delivers the initial HTML. After it loads, calendar generation, pre
 - **Duplex and finishing options** — Single-sided / long-edge / short-edge output, crop guides, and a 0–20 mm paper-edge margin. Duplex output adds the blank faces needed to keep left/right spreads facing after binding.
 - **Inspect before printing** — Visual layout cards, refill / print-sheet / bound previews, direct navigation, enlarged preview, and a trial PDF of the current page or spread. Phone tabs keep Settings, Preview, and PDF output close at hand.
 - **Print-size test PDF** — Includes a 100 mm reference line, 50 × 50 mm box, and duplex alignment references. PDF generation can be cancelled.
+- **Print-position calibration** — Adjust front horizontal/vertical and additional back horizontal/vertical offsets (-10 to +10 mm, 0.1 mm steps). The adjustment moves PDF artwork and crop guides together and is visible in the print-sheet preview. The size-test refill outline and duplex registration markers also use the offsets. A warning appears if artwork extends beyond the paper.
 - **Local single-HTML operation** — Japanese / English UI, desktop / smartphone layout, local settings persistence, and no runtime API/CDN requests.
 
 - **Reusable settings files** — Save your setup as local `.settings.json`, then review and restore it later. Stored settings and imported files are validated before use.
@@ -75,6 +76,7 @@ Open the [GitHub Pages demo](https://ttomohisa.github.io/htmlapps-planner-refill
 10. Export the current page/spread as a trial, or create the full PDF and save it locally. You can cancel a generation in progress.
 
 When printing, choose **100% / Actual size** and do not use **Fit to page**.
+If a test print is misaligned, open **Correct print alignment** in PDF export. Start with the front horizontal and vertical values; positive numbers shift the output toward the right or bottom of the PDF. Select duplex printing to show back-only corrections, which are added to the front values. Use **Save print-size test PDF** to check alignment, then try the current page/spread before printing a full set. The 100 mm reference remains fixed; the outline and registration marks follow the correction. This cannot fix printer scaling or guarantee alignment, and content may be clipped at the page edges.
 
 The default paper-edge margin is **0 mm**, preserving the existing maximum-fit layout. Crop guides near the paper edge may be clipped by a printer. For example, two A5 refills fit on A4 with 0 mm margin, while a 5 mm margin allows one A5 refill per side; the refill itself is never shrunk. Print a trial or the size/alignment test before a large batch, and match the printer's flip-edge setting to the PDF.
 
@@ -88,7 +90,8 @@ Under **Appearance**, choose **Save settings (.settings.json)**. The download us
 
 Choose **Load settings (JSON)**, select a supported file up to **64 KiB**, review its size, layout, and period/page count, and confirm replacement. Cancel keeps the current setup and PDF. After replacement, create the PDF again. Settings and files stay in your browser.
 
-Settings saved by earlier versions remain readable. Their weekly/daily month ranges expand to the same first and last calendar dates; new files also remember day ranges, weekday choices, undated counts, and paper-edge margin.
+Settings saved by earlier versions remain readable.
+Settings JSON format v4 contains the four print correction values. Files saved in formats v1–v3 remain supported; missing corrections default to zero. Their weekly/daily month ranges expand to the same first and last calendar dates; new files also remember day ranges, weekday choices, undated counts, and paper-edge margin.
 
 If saved browser settings cannot be read, the app shows defaults and preserves the original record. Automatic saving stays paused until a confirmed import or reset. If storage is unavailable, settings may work only for this session; save a JSON file to keep them.
 
@@ -137,12 +140,12 @@ Do not edit generated files in `dist/` directly.
 
 ## Publish a GitHub Release
 
-After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.2.0`).
+After merging the release PR, open **Actions → Publish release → Run workflow**. Select **main** and enter the version from `app.config.json`, without `v` (for this release: `1.3.0`).
 
-The workflow builds and checks the selected commit, creates `v1.2.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
+The workflow builds and checks the selected commit, creates `v1.3.0`, and publishes a GitHub Release with the corresponding changelog section and three downloads:
 
-- `planner-refill-maker-v1.2.0.html` — readable standalone app.
-- `planner-refill-maker-v1.2.0.self-extract.html` — gzip self-extracting standalone app.
+- `planner-refill-maker-v1.3.0.html` — readable standalone app.
+- `planner-refill-maker-v1.3.0.self-extract.html` — gzip self-extracting standalone app.
 - `SHA256SUMS.txt` — SHA-256 checksums of both HTML files.
 
 PR updates and merges do not publish a release automatically. The workflow rejects a mismatched version, a branch other than `main`, or an existing tag. A failed upload or publication may leave a draft release for inspection; it does not overwrite an existing release. The checked files are also retained as an Actions artifact. Release publication requires repository permission to create tags/releases.
@@ -159,6 +162,7 @@ The GitHub Pages version still requires the initial HTML request. For use with t
 
 - Bundled Japanese holiday data covers **2026 and 2027 only**. Coverage includes dates shown in full weeks and adjacent-month cells; dates outside bundled coverage are intentionally not guessed. Undated refills do not show holidays.
 - Punch-position guides are alignment references and do not guarantee a binder manufacturer's exact hole positions.
+- Print-position offsets can move content and crop guides outside the printable PDF area, especially with exact-size output or tight A4/Letter imposition. Offsets do not automatically compensate for a particular printer's duplex feeding direction. Verify the actual print and adjust gradually.
 - Supported date input is January 1900 through December 2100, with a maximum selected range of 60 months.
 - Undated generation supports Monthly, Weekly, and Daily; Yearly remains dated. Each request supports 1–100 undated units.
 - Very large date ranges, high PDF raster DPI, or constrained mobile devices can require substantial memory during PDF generation.
