@@ -106,9 +106,25 @@
     .segment input:checked+label svg { color:var(--accent); }
     .segment.three-grid { grid-column:auto; }
 
-    .weekday-filters { display:flex;flex-wrap:wrap;gap:6px;margin-top:8px; }
-    .weekday-filters label { display:flex;align-items:center;gap:6px;min-height:44px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;cursor:pointer; }
-    .weekday-filters input { accent-color:var(--accent); }
+    /* Quick actions choose a weekday set; checkboxes below select individual days. */
+    #dailyWeekdaysGroup { min-width:0;margin-top:18px;padding-top:16px;border-top:1px solid var(--line);container:weekday-selector / inline-size; }
+    #dailyWeekdaysGroup[hidden] { display:none!important; }
+    .weekday-picker-head { display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:6px 10px; }
+    .weekday-selected-count { font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums; }
+    .weekday-quick-select { display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:9px 12px;margin-top:12px;padding:10px 11px;border-radius:10px;background:var(--surface-muted); }
+    .weekday-quick-label { flex:0 0 auto;font-size:10px;font-weight:750;color:var(--muted); }
+    .weekday-quick-actions { display:flex;flex-wrap:wrap;gap:7px; }
+    .weekday-quick-action { min-width:80px;min-height:40px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--text);font-size:11px;font-weight:750;cursor:pointer; }
+    .weekday-quick-action:hover { border-color:var(--accent); }
+    .weekday-quick-action[aria-pressed="true"] { border-color:var(--accent);background:var(--accent-soft);color:var(--accent); }
+    .weekday-quick-action:focus-visible { outline:3px solid color-mix(in srgb,var(--focus) 45%,transparent);outline-offset:2px; }
+    .weekday-filters { display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:13px; }
+    .weekday-filters label { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:56px;padding:7px 3px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:12px;font-weight:750;cursor:pointer; }
+    .weekday-filters label:has(input:checked) { border-color:color-mix(in srgb,var(--accent) 65%,var(--line));background:var(--accent-soft);color:var(--accent); }
+    .weekday-filters label:has(input:focus-visible) { outline:3px solid color-mix(in srgb,var(--focus) 45%,transparent);outline-offset:2px; }
+    .weekday-filters input { flex:0 0 auto;width:17px;height:17px;margin:0;accent-color:var(--accent); }
+    .weekday-filters span { line-height:1.1; }
+    @container weekday-selector (max-width:360px) { .weekday-filters { grid-template-columns:repeat(4,minmax(0,1fr)); } }
     #dateShortcuts { display:flex;gap:6px;margin-top:10px;padding-top:0;border-top:0; }
     #dateShortcuts .secondary-action { width:auto;min-width:0;flex:1 1 0;min-height:34px;padding:5px 7px;font-size:12px; }
     #dateShortcuts[hidden],#dateShortcuts [hidden] { display:none!important; }
@@ -217,9 +233,15 @@
     .refill-types { display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px; }
     .duplex-options { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px; }
     .duplex-note { padding:9px 10px;border-radius:9px;background:var(--surface-muted);color:var(--muted);font-size:9px;line-height:1.45; }
-    .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:10px; }
-    .print-shift-fields .text-field { min-width:0; }
-    .print-shift-fields input { width:100%;min-width:0; }
+    .print-shift-fields { display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,145px),1fr));gap:12px;align-items:start;min-width:0; }
+    .print-shift-fields .text-field { display:grid;grid-template-rows:auto auto minmax(3.3em,auto);gap:5px;min-width:0;max-width:100%; }
+    .print-shift-fields .numeric-control { width:100%;min-width:0; }
+    /* Keep the error row on both columns, even when only one input is invalid. */
+    .print-shift-fields .field-error,.print-shift-fields .field-error:empty { display:block;min-width:0;max-width:100%;min-height:3.3em;line-height:1.45;white-space:normal;overflow-wrap:anywhere;word-break:normal; }
+    .print-shift-fields .numeric-control input { width:100%;min-width:0;min-height:42px;padding:8px 9px;border:0;border-radius:0;background:transparent;box-shadow:none; }
+    .print-shift-fields .numeric-control input:focus { border:0;box-shadow:none; }
+    .print-shift-fields .numeric-control:has(input[aria-invalid="true"]) { border-color:var(--danger); }
+    .print-shift-fields input[aria-invalid="true"] { color:var(--danger); }
     .print-shift-back { margin-top:12px; }
     .print-shift-reset { margin-top:12px; }
     .print-shift-hint { margin:6px 0 0;color:var(--muted);font-size:11px;line-height:1.5; }
@@ -906,9 +928,18 @@
           <button class="secondary-action" type="button" id="shortcutSevenDays" data-shortcut="sevenDays" data-shortcut-type="daily" data-i18n="sevenDays">期間</button>
         </div>
         <div class="setting-group" id="dailyWeekdaysGroup" hidden>
-          <span class="field-label" data-i18n="dailyWeekdaysLabel">出力する曜日</span>
-          <button class="secondary-action" id="dailyAllDays" type="button" data-i18n="allDays">毎日</button><button class="secondary-action" id="dailyWorkdays" type="button" data-i18n="workdays">平日</button>
-          <div class="weekday-filters">
+          <div class="weekday-picker-head">
+            <span class="setting-label" id="dailyWeekdaysLabel" data-i18n="dailyWeekdaysLabel">出力する曜日</span>
+            <span class="weekday-selected-count" id="dailyWeekdayCount" aria-live="polite">7日選択中</span>
+          </div>
+          <div class="weekday-quick-select" role="group" aria-labelledby="dailyWeekdayQuickLabel">
+            <span class="weekday-quick-label" id="dailyWeekdayQuickLabel" data-i18n="weekdayQuickLabel">まとめて選択</span>
+            <div class="weekday-quick-actions">
+              <button class="weekday-quick-action" id="dailyAllDays" type="button" data-i18n="weekdayPresetAll" aria-pressed="true">すべて選択</button>
+              <button class="weekday-quick-action" id="dailyWorkdays" type="button" data-i18n="weekdayPresetWorkdays" aria-pressed="false">平日のみ</button>
+            </div>
+          </div>
+          <div class="weekday-filters" role="group" aria-labelledby="dailyWeekdaysLabel">
             <label><input type="checkbox" id="dailyWeekday0" name="dailyWeekday" value="0" checked><span data-i18n="weekday0">曜日</span></label>
             <label><input type="checkbox" id="dailyWeekday1" name="dailyWeekday" value="1" checked><span data-i18n="weekday1">曜日</span></label>
             <label><input type="checkbox" id="dailyWeekday2" name="dailyWeekday" value="2" checked><span data-i18n="weekday2">曜日</span></label>
@@ -1809,7 +1840,7 @@
         printShiftBackHint:'両面印刷時、表面の補正に加える移動量です。',
         printShiftRange:'各 -10〜+10 mm。まずサイズ確認PDFを印刷し、少しずつ調整してください。',
         printShiftReset:'補正を0 mmに戻す',printShiftClipping:'補正によって印刷領域が用紙の外に出ます。端が欠ける場合は余白を増やすか補正量を減らしてください。',
-        printShiftInvalid:'-10〜+10 mmの数値を入力してください。',
+        printShiftInvalid:'-10〜+10 mmで入力してください。',
         helpPrintShiftBody:'印刷位置がずれるときは「印刷位置を補正」で左右・上下を調整します。プラスはPDFの右・下方向です。裏面だけ追加で動かす場合は両面印刷を選びます。サイズ確認PDFの外形・位置合わせマークにも補正が反映されます。裁断ガイドを含め用紙の端で欠けることがあるため、試し刷りで確認してください。'
       });
       Object.assign(translations.en,{
@@ -1818,8 +1849,16 @@
         printShiftBackHint:'For duplex printing, these movements are added to the front offset.',
         printShiftRange:'Each value: -10 to +10 mm. Print a size/alignment test first and adjust in small steps.',
         printShiftReset:'Reset offsets to 0 mm',printShiftClipping:'Corrected artwork extends outside the paper. Increase margins or reduce the offset if an edge is cut off.',
-        printShiftInvalid:'Enter a number from -10 to +10 mm.',
+        printShiftInvalid:'Enter -10 to +10 mm.',
         helpPrintShiftBody:'If your printer shifts the page, open “Correct print alignment” and adjust the horizontal and vertical values. Positive values move content right and down in PDF coordinates. For a back-only adjustment, select duplex printing. The refill outline and alignment marks on the print-size test also use these offsets. Artwork and crop guides can be clipped at the edge, so check a trial print.'
+      });
+      Object.assign(translations.ja,{
+        weekdayQuickLabel:'まとめて選択',weekdayPresetAll:'すべて選択',weekdayPresetWorkdays:'平日のみ',
+        weekdaySelectedCount:'{count}日選択中'
+      });
+      Object.assign(translations.en,{
+        weekdayQuickLabel:'Quick select',weekdayPresetAll:'Select all',weekdayPresetWorkdays:'Weekdays only',
+        weekdaySelectedCount:'{count} days selected'
       });
       const $=selector=>document.querySelector(selector);const $$=selector=>[...document.querySelectorAll(selector)];
       Object.assign(translations.ja,{"dated": "日付あり", "undated": "日付なし", "undatedCountLabel": "生成する単位数", "invalidUndatedCount": "1〜100単位の整数で入力してください。", "startDate": "開始日", "endDate": "終了日", "invalidDayRange": "1900-01-01〜2100-12-31の実在する日付を、開始日から終了日の順で指定してください。最大60か月です。", "dailyWeekdaysLabel": "出力する曜日", "invalidWeekdays": "曜日を1つ以上選び、期間内に選んだ曜日があることを確認してください。", "allDays": "毎日", "workdays": "平日", "thisMonth": "今月", "nextMonth": "来月", "thisYear": "今年", "nextYear": "来年", "thisWeek": "今週", "nextWeek": "来週", "fourWeeks": "今週から4週間", "today": "今日", "nextDay": "明日", "sevenDays": "今日から7日間", "weekday0": "日", "weekday1": "月", "weekday2": "火", "weekday3": "水", "weekday4": "木", "weekday5": "金", "weekday6": "土"});
@@ -1994,12 +2033,13 @@
       function validatePrintMargin({normalize=false}={}){const input=$('#printMarginMm'),error=$('#printMarginError');if(input.value.trim()===''){error.textContent=t('invalidPrintMargin');return false;}let value=Number(input.value);if(!Number.isFinite(value)){error.textContent=t('invalidPrintMargin');return false;}if(normalize){value=Math.round(Math.min(20,Math.max(0,value))*2)/2;input.value=formatMm(value);}if(value<0||value>20){error.textContent=t('invalidPrintMargin');return false;}error.textContent='';state.printMarginMm=value;return true;}
       function validatePrintShift(key,{normalize=false}={}){
         const input=$('#'+key),error=$('#'+key+'Error');
-        if(!input.value.trim()){error.textContent=t('printShiftInvalid');return false;}
+        const showError=()=>{error.textContent=t('printShiftInvalid');input.setAttribute('aria-invalid','true');return false;};
+        if(!input.value.trim())return showError();
         let value=Number(input.value);
-        if(!Number.isFinite(value)){error.textContent=t('printShiftInvalid');return false;}
+        if(!Number.isFinite(value))return showError();
         if(normalize){value=Math.round(Math.max(-10,Math.min(10,value))*10)/10;input.value=formatMm(value);}
-        if(value < -10 || value > 10){error.textContent=t('printShiftInvalid');return false;}
-        error.textContent='';state[key]=value;return true;
+        if(value < -10 || value > 10)return showError();
+        error.textContent='';input.setAttribute('aria-invalid','false');state[key]=value;return true;
       }
       // A PDF face is shifted after its optional 180° duplex rotation.
       // Back values are additional to the front offset.
@@ -2060,6 +2100,14 @@
         return true;
       }
       function selectedDailyWeekdays(){return $$('input[name="dailyWeekday"]').filter(input=>input.checked).map(input=>Number(input.value));}
+      function syncWeekdayQuickSelection(){
+        const selected=selectedDailyWeekdays();
+        $('#dailyWeekdayCount').textContent=formatTemplate(t('weekdaySelectedCount'),{count:selected.length});
+        const all=selected.length===7;
+        const workdays=selected.length===5&&[1,2,3,4,5].every(day=>selected.includes(day));
+        $('#dailyAllDays').setAttribute('aria-pressed',String(all));
+        $('#dailyWorkdays').setAttribute('aria-pressed',String(workdays));
+      }
       function syncDateControls(){
         const type=state.refillType,undated=isUndated(),dayType=['weekly','daily'].includes(type),calendar=['monthly','yearly'].includes(type);
         $('#dateModeGroup').hidden=!['monthly','weekly','daily'].includes(type);
@@ -2068,6 +2116,7 @@
         $('#dayRangeControls').hidden=!dayType||undated;
         for(const kind of ['weekly','daily'])$('#'+kind+'RangeControls').hidden=type!==kind||undated;
         $('#dailyWeekdaysGroup').hidden=type!=='daily'||undated;
+        syncWeekdayQuickSelection();
         $('#dateShortcuts').hidden=type==='notes'||undated;
         $$('[data-shortcut]').forEach(button=>{button.hidden=button.dataset.shortcutType!==(calendar?'month':type);});
         $('#holidaySettingGroup').hidden=type==='notes'||undated;
@@ -3223,6 +3272,7 @@
         if(!settingsStorageBlocked)settingsStorageIssue='';
         syncControlsFromState();
         for(const id of ['widthError','heightError','dateRangeError','timeRangeError','notesCountError','ringMarginError','printMarginError',...PRINT_SHIFT_KEYS.map(key=>key+'Error'),'dayRangeError','dailyWeekdaysError','undatedCountError']){const error=$('#'+id);if(error)error.textContent='';}
+        for(const key of PRINT_SHIFT_KEYS)$('#'+key).setAttribute('aria-invalid','false');
         setRefillType(state.refillType);
       }
       function saveSettingsFile(){
@@ -3307,7 +3357,7 @@
       for(const type of ['input','change','blur'])$('#printMarginMm').addEventListener(type,()=>{$('#printMarginPreset').value='custom';validatePrintMargin({normalize:type!=='input'});render();});
       for(const key of PRINT_SHIFT_KEYS)for(const type of ['input','change','blur'])$('#'+key).addEventListener(type,()=>{validatePrintShift(key,{normalize:type!=='input'});render();});
       $('#resetPrintShift').addEventListener('click',()=>{
-        PRINT_SHIFT_KEYS.forEach(key=>{state[key]=0;$('#'+key).value='0';$('#'+key+'Error').textContent='';});
+        PRINT_SHIFT_KEYS.forEach(key=>{state[key]=0;$('#'+key).value='0';$('#'+key+'Error').textContent='';$('#'+key).setAttribute('aria-invalid','false');});
         render();AppToast.show({message:t('printShiftReset')});
       });
       $('#showCropGuides').addEventListener('change',event=>{state.showCropGuides=event.currentTarget.checked;render();});
