@@ -3104,7 +3104,10 @@
         $('#previewNoteText').textContent = previewPresentation.mode === 'sheets' ? t('sheetsPreviewNote') : previewPresentation.mode === 'bound' ? t('boundPreviewNote') : previewNote();
         $('#trialScopeLabel').textContent = formatTemplate(t('trialScope'), { label: trialSelection().label });
         renderPreviewContent(previewPages);
-        if ($('#enlargedPreviewDialog').open) renderPreviewContent($('#enlargedPreviewPages'), true);
+        if ($('#enlargedPreviewDialog').open) {
+          renderPreviewContent($('#enlargedPreviewPages'), true);
+          applyEnlargedZoomSizing();
+        }
         requestAnimationFrame(resizePreview);
       }
 
@@ -3600,6 +3603,131 @@
         const rect = enlargedDialog.getBoundingClientRect();
         if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeEnlargedPreview();
       });
+      // A separate zoom state for the inspection dialog; changing it never affects
+      // page geometry, generated PDFs, the settings file, or the small preview.
+      const zoomViewport = $('#enlargedPreviewViewport');
+      const zoomPages = $('#enlargedPreviewPages');
+      const ZOOM_MIN = .1, ZOOM_MAX = 4, ZOOM_STEP = .25, ZOOM_DEFAULT = 1.5;
+      let enlargedZoom = ZOOM_DEFAULT, pinchStart = null, zoomDrag = null;
+      function enlargedZoomTargets() {
+        return [...zoomPages.querySelectorAll('.sheet-holder,.print-face-image')];
+      }
+      function applyEnlargedZoomSizing() {
+        for (const target of enlargedZoomTargets()) {
+          // The existing enlarged renderer sets pixel widths at 3px per mm.
+          // A new render creates new nodes; cache their original dimensions once.
+          if (!target.dataset.enlargedBaseWidth) {
+            target.dataset.enlargedBaseWidth = String(parseFloat(target.style.width));
+            target.dataset.enlargedBaseHeight = String(parseFloat(target.style.height));
+          }
+          const width = Number(target.dataset.enlargedBaseWidth) * enlargedZoom;
+          const height = Number(target.dataset.enlargedBaseHeight) * enlargedZoom;
+          if (!(width > 0 && height > 0)) continue;
+          target.style.width = width + 'px';target.style.height = height + 'px';
+          const paper = target.querySelector('.sheet');
+          if (paper) {paper.style.width = width + 'px';paper.style.height = height + 'px';}
+          if (target.className.includes('print-face-image') && target.parentElement) target.parentElement.style.width = width + 'px';
+        }
+        $('#enlargedZoomValue').textContent = Math.round(enlargedZoom * 100) + '%';
+        $('#enlargedZoomOut').disabled = enlargedZoom <= ZOOM_MIN;
+        $('#enlargedZoomIn').disabled = enlargedZoom >= ZOOM_MAX;
+      }
+      function changeEnlargedZoom(value, clientX, clientY) {
+        const next = Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, Math.round(value * 100) / 100));
+        if (next === enlargedZoom) return;
+        const before = zoomPages.getBoundingClientRect();
+        const viewportRect = zoomViewport.getBoundingClientRect();
+        const x = Number.isFinite(clientX) ? clientX : viewportRect.left + viewportRect.width / 2;
+        const y = Number.isFinite(clientY) ? clientY : viewportRect.top + viewportRect.height / 2;
+        const relativeX = (x - before.left) / enlargedZoom;
+        const relativeY = (y - before.top) / enlargedZoom;
+        enlargedZoom = next;
+        applyEnlargedZoomSizing();
+        const after = zoomPages.getBoundingClientRect();
+        zoomViewport.scrollLeft = (zoomViewport.scrollLeft || 0) + after.left + relativeX * next - x;
+        zoomViewport.scrollTop = (zoomViewport.scrollTop || 0) + after.top + relativeY * next - y;
+      }
+      function fitEnlargedPreview() {
+        const targets = enlargedZoomTargets();
+        if (!targets.length) return;
+        const width = targets.reduce((sum,tgt) => sum + Number(tgt.dataset.enlargedBaseWidth),0) + Math.max(0,targets.length-1) * 20;
+        const height = Math.max(...targets.map(tgt => Number(tgt.dataset.enlargedBaseHeight))) + 50;
+        const rect = zoomViewport.getBoundingClientRect();
+        const availableWidth = zoomViewport.clientWidth || rect.width;
+        const availableHeight = zoomViewport.clientHeight || rect.height;
+        if (!(width > 0 && height > 0 && availableWidth > 0 && availableHeight > 0)) return;
+        changeEnlargedZoom(Math.min((availableWidth - 32) / width,(availableHeight - 35) / height));
+        zoomViewport.scrollLeft = 0;zoomViewport.scrollTop = 0;
+      }
+      // Existing click listener opens the dialog first, then this one initializes zoom.
+      $('#enlargePreviewButton').addEventListener('click', () => {
+        enlargedZoom = ZOOM_DEFAULT;pinchStart = null;zoomDrag = null;
+        applyEnlargedZoomSizing();
+        const availableWidth = zoomViewport.clientWidth || zoomViewport.getBoundingClientRect().width;
+        zoomViewport.scrollLeft = Math.max(0,(zoomPages.getBoundingClientRect().width - availableWidth) / 2);
+        zoomViewport.scrollTop = 0;
+      });
+      $('#enlargedZoomIn').addEventListener('click', () => changeEnlargedZoom(enlargedZoom + ZOOM_STEP));
+      $('#enlargedZoomOut').addEventListener('click', () => changeEnlargedZoom(enlargedZoom - ZOOM_STEP));
+      $('#enlargedZoomReset').addEventListener('click', () => changeEnlargedZoom(1));
+      $('#enlargedZoomFit').addEventListener('click', fitEnlargedPreview);
+      zoomViewport.addEventListener('wheel', event => {
+        if (!enlargedDialog.open || !(event.ctrlKey || event.metaKey)) return;
+        event.preventDefault();
+        const factor = event.deltaMode === 1 ? 18 : event.deltaMode === 2 ? 250 : 1;
+        const delta = Math.max(-240,Math.min(240,event.deltaY * factor));
+        changeEnlargedZoom(enlargedZoom * Math.exp(-delta * .0017),event.clientX,event.clientY);
+      },{passive:false});
+      // Two-finger pinch zoom. Native one-finger scrolling is left untouched.
+      function pinchDetails(touches) {
+        const a = touches[0],b = touches[1];
+        return {distance:Math.hypot(b.clientX-a.clientX,b.clientY-a.clientY),
+          x:(a.clientX+b.clientX)/2,y:(a.clientY+b.clientY)/2};
+      }
+      zoomViewport.addEventListener('touchstart',event => {
+        if (event.touches.length !== 2) {pinchStart=null;return;}
+        const pinch=pinchDetails(event.touches);
+        if(pinch.distance>0)pinchStart={distance:pinch.distance,zoom:enlargedZoom};
+        event.preventDefault();
+      },{passive:false});
+      zoomViewport.addEventListener('touchmove',event => {
+        if(!enlargedDialog.open || event.touches.length!==2)return;
+        const pinch=pinchDetails(event.touches);
+        if(!pinchStart && pinch.distance>0)pinchStart={distance:pinch.distance,zoom:enlargedZoom};
+        if(pinchStart?.distance>0) {
+          event.preventDefault();
+          changeEnlargedZoom(pinchStart.zoom * pinch.distance / pinchStart.distance,pinch.x,pinch.y);
+        }
+      },{passive:false});
+      for(const type of ['touchend','touchcancel'])zoomViewport.addEventListener(type,event => {
+        if(event.touches.length<2)pinchStart=null;
+      });
+      // Mouse drag-pan only at magnified zoom; touch uses native scrolling.
+      zoomViewport.addEventListener('pointerdown',event => {
+        if(!enlargedDialog.open || event.pointerType!=='mouse' || event.button!==0 || enlargedZoom<=1)return;
+        zoomDrag={id:event.pointerId,x:event.clientX,y:event.clientY,
+          left:zoomViewport.scrollLeft||0,top:zoomViewport.scrollTop||0};
+        zoomViewport.classList.add('is-panning');
+        zoomViewport.setPointerCapture?.(event.pointerId);
+        event.preventDefault();
+      });
+      zoomViewport.addEventListener('pointermove',event => {
+        if(!zoomDrag || zoomDrag.id!==event.pointerId)return;
+        zoomViewport.scrollLeft=zoomDrag.left+zoomDrag.x-event.clientX;
+        zoomViewport.scrollTop=zoomDrag.top+zoomDrag.y-event.clientY;
+      });
+      for(const type of ['pointerup','pointercancel','lostpointercapture'])zoomViewport.addEventListener(type,event => {
+        if(!zoomDrag || zoomDrag.id!==event.pointerId)return;
+        zoomDrag=null;zoomViewport.classList.remove('is-panning');
+        if(type!=='lostpointercapture')zoomViewport.releasePointerCapture?.(event.pointerId);
+      });
+      enlargedDialog.addEventListener('keydown',event => {
+        if(event.altKey || event.target instanceof HTMLInputElement)return;
+        if(event.key==='+' || event.key==='='){event.preventDefault();changeEnlargedZoom(enlargedZoom+ZOOM_STEP);}
+        if(event.key==='-'){event.preventDefault();changeEnlargedZoom(enlargedZoom-ZOOM_STEP);}
+        if(event.key==='0' && (event.ctrlKey || event.metaKey)){event.preventDefault();changeEnlargedZoom(1);}
+      });
+      enlargedDialog.addEventListener('close',() => {pinchStart=null;zoomDrag=null;zoomViewport.classList.remove('is-panning');});
       $('#languageButton').addEventListener('click',()=>{language=language==='ja'?'en':'ja';writeStorage(storageKeys.language,language);applyLanguage();});
       const helpDialog=$('#helpDialog');$('#helpButton').addEventListener('click',()=>helpDialog.showModal());$('#closeHelpButton').addEventListener('click',()=>helpDialog.close());helpDialog.addEventListener('click',event=>{const rect=helpDialog.getBoundingClientRect();const outside=event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom;if(outside)helpDialog.close();});
       let previewResizeFrame=0;let previewObservedSize='';function queuePreviewResize(){if(previewResizeFrame)return;previewResizeFrame=requestAnimationFrame(()=>{previewResizeFrame=0;resizePreview();});}const resizeObserver=typeof ResizeObserver==='function'?new ResizeObserver(entries=>{const rect=entries[0]?.contentRect;if(!rect)return;const key=`${Math.round(rect.width*10)/10}x${Math.round(rect.height*10)/10}`;if(key===previewObservedSize)return;previewObservedSize=key;queuePreviewResize();}):null;resizeObserver?.observe(previewStage);window.addEventListener('resize',queuePreviewResize,{passive:true});
