@@ -1,10 +1,15 @@
 name: Publish release
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - app.config.json
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version from app.config.json, without v (example: 1.2.0)'
+        description: 'Version from app.config.json, without v (example: 1.4.0)'
         required: true
         type: string
 
@@ -21,8 +26,6 @@ jobs:
     timeout-minutes: 20
     permissions:
       contents: write
-    env:
-      RELEASE_VERSION: ${{ inputs.version }}
     steps:
       - name: Require main branch
         shell: pwsh
@@ -34,27 +37,45 @@ jobs:
         with:
           ref: ${{ github.sha }}
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
+      - name: Decide whether this commit needs a release
+        id: intent
+        shell: pwsh
+        env:
+          RELEASE_EVENT: ${{ github.event_name }}
+          RELEASE_BEFORE: ${{ github.event.before }}
+          RELEASE_INPUT: ${{ inputs.version }}
+        run: |
+          node scripts/release-intent.mjs
+          if ($LASTEXITCODE -ne 0) { throw 'Release decision failed.' }
+
       - name: Validate PowerShell syntax and encoding
+        if: steps.intent.outputs.publish == 'true'
         shell: powershell
         run: .\scripts\check-powershell-syntax.ps1
 
       - name: Build and run repository checks
+        if: steps.intent.outputs.publish == 'true'
         shell: pwsh
         run: ./scripts/check-repository.ps1
 
       - name: Prepare versioned assets and checksums
+        if: steps.intent.outputs.publish == 'true'
         shell: pwsh
+        env:
+          RELEASE_VERSION: ${{ steps.intent.outputs.version }}
         run: |
           node scripts/prepare-release.mjs "$env:RELEASE_VERSION"
           if ($LASTEXITCODE -ne 0) { throw 'Release preparation failed.' }
 
       - name: Retain checked release files
+        if: steps.intent.outputs.publish == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: release-${{ github.sha }}
@@ -63,9 +84,11 @@ jobs:
           retention-days: 14
 
       - name: Create tag and publish GitHub Release
+        if: steps.intent.outputs.publish == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
+          RELEASE_VERSION: ${{ steps.intent.outputs.version }}
         run: |
           $ErrorActionPreference = 'Stop'
           $tag = "v$env:RELEASE_VERSION"

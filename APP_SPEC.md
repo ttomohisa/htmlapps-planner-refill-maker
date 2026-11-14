@@ -4,21 +4,22 @@
 
 - **English name:** Planner Refill Maker
 - **Japanese name:** システム手帳リフィルメーカー
-- **Current version:** 1.3.0
+- **Current version:** 1.4.0
 - **Purpose:** Create dated, undated, and note-paper planner refills in exact physical sizes and export them as exact-size or A4 / US Letter print PDFs.
 - **Primary users:** People who use ring-system planners such as A5, Bible, Mini 6, Micro5, HB×WA5, and Davinci Pocket.
 - **Release artifacts:** `dist/index.html` and `dist/index.self-extract.html`
 
-## 2. v1.3.0 product scope
+## 2. v1.4.0 product scope
 
 The product is a focused refill generator. Users select a planner size, choose a dated, undated, or note layout, preview it, and export a correctly sized printable PDF without manually calculating ring margins, imposition, duplex order, or crop marks.
 
 Current scope:
 
 - Optional print calibration: front horizontal/vertical correction and additional back-only horizontal/vertical correction, each -10 to +10 mm in 0.1 mm steps, defaulting to 0 mm.
+- Dedicated `purpose` type: habit-tracker, expense-tracker, reading-log, weekly-review. Each has its own 1–100 page count, default 1; notes retains its independent count of 10.
 
 - Preset and custom planner sizes.
-- Year, monthly, weekly, daily, ruled, grid, and dot refills.
+- Year, monthly, weekly, daily, ruled, grid, dot, and four purpose-specific blank forms.
 - Month-level monthly/yearly ranges, day-level weekly/daily ranges, daily weekday filters, and Monday/Sunday week starts.
 - Undated monthly/weekly/daily refills, with 1–100 units per request.
 - Japanese holidays where verified static data is bundled.
@@ -31,6 +32,26 @@ Current scope:
 - Japanese and English UI.
 - Fully local, single-HTML distribution with no runtime network requests.
 
+### v1.4.0 preview inspection and layout thumbnails
+
+- Every purpose-specific layout card uses a visually distinct inline SVG miniature of the printed paper: checkbox grid, expense ledger, reading list, or review sections. No external icons or fonts.
+- The enlarged preview has native zoom controls (minus / current percentage / plus), 100% reset and Fit to view. Default is 150%, range is 10–400%, with 25-percentage-point button increments. New windows reset to 150%; preview redraws retain the current zoom.
+- Inside the enlarged preview, Ctrl+mouse wheel (and Command+wheel on macOS trackpads) and a two-finger touch pinch zoom around the pointer/finger midpoint. Single-finger scrolling remains native; a mouse can drag the magnified preview. The ordinary wheel still scrolls.
+- Zoom changes the displayed paper boxes and the containing scroll range, not the underlying PDF scale, ring margins, generated file, current selected page, or settings backup. The same behavior applies to refill, imposed sheets, and bound previews.
+- Controls have 44 px tap targets and localized Japanese/English accessible labels. The dialog retains Escape/close/focus restoration.
+
+### v1.4.0 purpose-specific forms
+
+- **Habit tracker**: numbered day rows, checkbox columns with writable blank habit headers, and an explicit printed day count. The number of rows and columns varies with physical paper size (up to 31 day rows on A5); no calendar date is inferred or printed.
+- **Expense log**: ruled entries with date, item, amount and an optional category column at larger widths, plus a blank total row. Compact paper does not print a cramped category column.
+- **Reading log**: blank book title, finish date and thoughts fields for multiple books, with item count and writing area scaled to physical height.
+- **Weekly review**: writing sections for wins, challenges, next week, and notes; each section has ruled lines sized for the paper.
+- All use-case layouts are **unfilled paper templates**, not trackers or spreadsheets that capture user records. No data entry beyond the paper format and page count is required.
+- Canvas preview and PDF draw from the same functions with left/right ring-safe content boxes, line/font presets, custom dimensions, printed page-number options, and paper imposition (exact/A4/Letter, long/short-edge duplex).
+- The `purpose` type uses `purposeCount` (1–100 integer), separate from `notesCount`. Invalid active input drafts block PDF and settings save; switching types does not erase existing notes or date settings.
+- Settings export becomes formatVersion 5 and includes `purposeCount` and `layoutByType.purpose`. Prior settings formats 1–4 continue to import with a default of one purpose page and habit-tracker layout. Legacy localStorage settings also migrate.
+- Check A5, Bible, Mini6 and Micro5 dimensions in both Japanese and English, on smartphone and desktop. On small sheets, avoid tiny unwritable fields. Both versions of standalone HTML remain offline-capable without runtime network requests.
+
 ### v1.2.0 page customization
 
 - Daily time grid, checklist, and notes can be enabled independently with at least one visible. Active sections fill the available space. Users can change section labels, sidebar width, checklist rows, and notes ruling.
@@ -38,7 +59,7 @@ Current scope:
 - The optional ruling override is shared by notes paper and matching sections. Each pattern accepts 3–12 mm in 0.5 mm steps. Existing settings retain their prior spacing when no override is specified.
 - Monthly lists support one or two pages, 1–4 named writing columns, and aligned date rows on spreads. An undated month list uses generic day numbers 1–31.
 - Personal dates support one-time dates, weekly weekdays, and annual month/day values, with up to 100 enabled or disabled entries. February 29 repeats only in leap years. Date annotations distinguish days off and events, retain official holiday labels where possible, and indicate additional entries when space is limited. Yearly pages show marks. Undated pages omit personal dates.
-- Settings JSON v4 retains the validated customization record and adds print correction fields. Versions 1, 2, and 3 remain accepted with legacy defaults. Personal dates are included in settings backups and processed locally.
+- The current settings JSON is v5, retaining the validated customization and print-correction fields while adding use-case page count and layout. Versions 1–4 remain accepted with legacy defaults. Personal dates remain included in settings backups and processed locally.
 - These layouts use the shared preview/PDF drawing path and the existing actual-size and duplex planners.
 
 ### v1.3.0 printing calibration acceptance criteria
