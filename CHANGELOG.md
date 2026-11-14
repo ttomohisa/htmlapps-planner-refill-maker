@@ -10,6 +10,8 @@ All notable changes to this project are documented in this file.
 - Improved small-paper usability by adapting habit day/column counts, expense and reading rows, and the weekly-review writing lines to the actual paper dimensions.
 - Added an independent 1–100 tracker-page count and version-5 settings JSON, with migration defaults for v1–v4 saved files.
 - Added localized Japanese and English headings/fields and regression tests covering templates, PDF export, size adaptation, old settings, and input errors.
+- Refined all four tracker layout thumbnails into distinct inline SVG paper miniatures.
+- Added enlarged-preview zoom (10–400%, default 150%), plus/minus, reset/fit, Ctrl/Command+wheel, touch pinch, mouse drag-pan and native scrolling. Zoom does not alter printable PDF dimensions.
 
 ### Notes
 - Tracker pages are undated forms to fill out after printing. They do not collect or store tracked expenses, books, or habits.
