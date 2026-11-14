@@ -19,7 +19,11 @@ test('four purpose layouts have distinct, consistent miniature sheet SVGs with l
     return row[0].slice(row[0].indexOf('<svg'));
   });
   assert.equal(new Set(svgs).size,4,'each use-case icon shows its own paper pattern');
-  for (const id of ['enlargedZoomIn','enlargedZoomOut','enlargedZoomFit','enlargedZoomReset','enlargedZoomValue','enlargedPreviewViewport'])
+  assert.match(source,/#enlargedPreviewDialog \{[^}]*height:min\(780px,calc\(100dvh - 16px\)\)[^}]*overflow:hidden/,'dialog has a stable height with internal scrolling');
+  assert.match(source,/\.enlarged-preview-body \{[^}]*min-height:0;overflow:auto/,'zooming scrolls inside the dialog');
+  assert.match(source,/<button class="enlarged-zoom-text" id="enlargedZoomValue"[^>]*data-i18n-aria-label="enlargedZoomValueReset"/,'percentage is an accessible reset button');
+  assert.doesNotMatch(source,/id="enlargedZoomReset"/,'avoid duplicate 100% reset button');
+  for (const id of ['enlargedZoomIn','enlargedZoomOut','enlargedZoomFit','enlargedZoomValue','enlargedPreviewViewport'])
     assert.match(source,new RegExp('id="'+id+'"'),id+' control exists');
 });
 
@@ -42,7 +46,7 @@ test('enlarged preview zoom adjusts actual page geometry without touching PDF/se
   assert.ok(Math.abs(num(page.style.width)-baseWidth*1.75)<.001);
   await h.get('enlargedZoomOut').click();
   assert.equal(getZoom(h),150);
-  await h.get('enlargedZoomReset').click();
+  await h.get('enlargedZoomValue').click();
   assert.equal(getZoom(h),100);
   assert.ok(Math.abs(num(page.style.width)-baseWidth)<.001);
   await h.get('enlargedZoomFit').click();
