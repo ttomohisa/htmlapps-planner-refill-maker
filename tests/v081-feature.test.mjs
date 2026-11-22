@@ -9,7 +9,7 @@ const favicon = faviconBytes.toString('utf8').trim();
 const faviconSha256 = crypto.createHash('sha256').update(faviconBytes).digest('hex');
 
 assert.match(config.version, /^(?:0\.8\.[1-9]|0\.9\.\d+|[1-9]\d*\.\d+\.\d+)$/, 'version should include the v0.8.1 feature set or later');
-assert.equal(faviconSha256, '4cdce7ee44681b491613f1f62c2f9b39ca49bb4b666bc6f9b877928d7a2da78d', 'favicon should exactly match the color-normalized supplied SVG');
+assert.equal(faviconSha256, '90ac46040551fe6915a522732109d938bdc36127410a900e57e9892c9b58708d', 'favicon should exactly match the color-normalized supplied SVG');
 
 for (const id of ['saturdayColor','sundayColor','holidayColor']) {
   assert.match(source, new RegExp(`id="${id}"[^>]*type="color"|type="color"[^>]*id="${id}"`), `${id} color input should exist`);

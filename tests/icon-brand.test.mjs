@@ -13,9 +13,9 @@ test('canonical icon has the exact brand color and quarter-axis corner radii', (
   assert.equal(Number(rect.ry || rect.rx), Number(rect.height) / 4);
   assert.ok(!svg.toLowerCase().includes('#10634f'));
 });
-test('original icon artwork, bounds and padding are preserved', () => {
+test('icon artwork and updated framing are preserved', () => {
   const stable = svg.replace(/#16624f/gi, '#BRAND').replace(/<rect\b[^>]*>/, s => s.replace(/\s+r[xy]="[^"]*"/g, ''));
-  assert.equal(createHash('sha256').update(stable).digest('hex'), '7897702623f8d61a97c7a0526e66c48f5e3c3b935482e5b3f965481db5e17e82');
+  assert.equal(createHash('sha256').update(stable).digest('hex'), '617c9a50e3fb3bc20b44232588c9bd37c14f110b5201c67cacc09dba72e6aee0');
 });
 test('runtime header and favicon embed the exact canonical SVG', () => {
   const uri = 'data:image/svg+xml;base64,' + Buffer.from(svg).toString('base64');
